@@ -1,0 +1,88 @@
+/* Splash.razor.css */
+.splash-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: #f5f5f5;
+    font-family: Arial, sans-serif;
+}
+
+.hex-wrapper {
+    width: 200px;
+    height: 230px;
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+}
+
+.splash-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform: scale(0);
+    opacity: 0;
+    animation: popIn 0.4s ease-out forwards;
+}
+
+.top {
+    background: #B71C1C;
+    z-index: 1;
+    animation-delay: 0.2s;
+}
+
+.right1 {
+    background: #D50000;
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 50%);
+    z-index: 2;
+    animation-delay: 0.6s;
+}
+
+.left1 {
+    background: #ED3237;
+    clip-path: polygon(0% 25%, 50% 0%, 50% 50%, 0% 75%);
+    z-index: 3;
+    animation-delay: 1s;
+}
+
+.letter {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 180px;
+    font-weight: bold;
+    opacity: 0;
+    z-index: 4;
+    animation: fadeIn 0.5s ease-out 1.4s forwards;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.loading-text {
+    margin-top: 30px;
+    color: #333;
+    font-size: 1rem;
+    text-align: center;
+}
+
+@keyframes popIn {
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}

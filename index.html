@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simon360</title>
+    <base href="/Apps/Simon360/" />
+    <link rel="icon" type="image/png" href="Imagenes/favicon.ico" />
+    <!--  Estilos principales -->
+    <link rel="stylesheet" href="css/app.css" />
+    <link rel="stylesheet" href="css/Logo.css" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!--  Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!--  Iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Leaflet Maps -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <!-- (Opcional) Scoped CSS -->
+    <!-- <link href="Simon_Web.styles.css" rel="stylesheet" /> -->
+</head>
+
+<body class="bg-gray-100 dark:bg-[#121212]">
+    <div id="app">
+        <!--  Splash Screen -->
+        <div class="splash-wrapper">
+            <div class="hex-wrapper">
+                <div class="splash-container">
+                    <div class="face top"></div>
+                    <div class="face right1"></div>
+                    <div class="face left1"></div>
+                    <div class="letter">S</div>
+                </div>
+            </div>
+            <div class="loading-text">Loading...</div>
+        </div>
+
+        <!-- ⚠️ Error UI -->
+        <div id="blazor-error-ui">
+            An unhandled error has occurred.
+            <a href="" class="reload">Reload</a>
+            <a class="dismiss">🗙</a>
+        </div>
+    </div>
+
+    <!--  Scripts principales -->
+    <script src="_framework/blazor.webassembly.js"></script>
+
+    <!--  Scripts locales -->
+    <script src="js/auth.js"></script>
+    <script src="js/tokenHelper.js"></script>
+    <script src="js/cryptoHelper.js"></script>
+    <script src="js/front.js"></script>
+    <script>
+        window.downloadFile = function (fileName, base64) {
+            const link = document.createElement('a');
+            link.href = "data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64," + base64;
+            link.download = fileName;
+            link.click();
+        }
+    </script>
+    <script>
+        function descargarPdfDesdeBase64(base64Data, nombreArchivo) {
+            const byteCharacters = atob(base64Data);
+            const byteArrays = [];
+
+            for (let i = 0; i < byteCharacters.length; i += 512) {
+                const slice = byteCharacters.slice(i, i + 512);
+                const byteNumbers = new Array(slice.length);
+                for (let j = 0; j < slice.length; j++) {
+                    byteNumbers[j] = slice.charCodeAt(j);
+                }
+                const byteArray = new Uint8Array(byteNumbers);
+                byteArrays.push(byteArray);
+            }
+
+            const blob = new Blob(byteArrays, { type: "application/pdf" });
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = nombreArchivo || "Reporte.pdf";
+            link.click();
+
+            URL.revokeObjectURL(link.href);
+        }
+    </script>
+    <script>
+        window.downloadFileInNewTab = function (fileBytes, fileName) {
+            const blob = new Blob([fileBytes]);
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = fileName;
+            a.target = '_blank'; // Abrir en nueva pestaña
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        };
+
+        // Cargar la preferencia guardada
+        document.addEventListener("DOMContentLoaded", function () {
+            const theme = localStorage.getItem("theme") || "light";
+            if (theme === "dark") {
+                document.documentElement.classList.add("dark");
+            }
+        });
+
+        // Función para Blazor
+        function toggleTheme() {
+            const html = document.documentElement;
+            const isDark = html.classList.toggle("dark");
+            localStorage.setItem("theme", isDark ? "dark" : "light");
+        }
+
+    </script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class'
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="js/gps.js"></script>
+    <script src="js/deviceInfo.js"></script>
+    <script src="js/offlineDb.js"></script>
+    <script src="js/offlineDbv2.js"></script>
+    <script src="js/offlineDbMulti.js"></script>
+    <script src="js/connectivity.js"></script>
+    <script src="js/network.js"></script>
+    <script src="js/print.js"></script>
+    <script src="js/leafletMap.js"></script>
+
+</body>
+
+</html>
