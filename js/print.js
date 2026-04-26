@@ -143,19 +143,53 @@ window.simonPrint.openUrls = function (urls) {
 };
 
 window.simonPrint.printAndClose = function (delayMs) {
-    var delay = typeof delayMs === "number" ? delayMs : 800;
+    var initialDelay = typeof delayMs === "number" ? delayMs : 800;
+    var maxWaitMs = 12000; // máximo 12 segundos esperando iframes
+
+    function doPrint() {
+        try { window.focus(); window.print(); } catch (e) { }
+        setTimeout(function () {
+            try { window.close(); } catch (e) { }
+        }, 600);
+    }
+
     setTimeout(function () {
-        try {
-            window.focus();
-            window.print();
-        } catch (e) {
+        var iframes = Array.from(document.querySelectorAll('iframe'));
+        if (iframes.length === 0) {
+            doPrint();
+            return;
         }
 
-        setTimeout(function () {
+        var loaded = 0;
+        var total = iframes.length;
+        var done = false;
+
+        var fallback = setTimeout(function () {
+            if (!done) { done = true; doPrint(); }
+        }, maxWaitMs);
+
+        iframes.forEach(function (iframe) {
+            // Si ya cargó (readyState complete dentro del iframe)
             try {
-                window.close();
-            } catch (e) {
-            }
-        }, 600);
-    }, delay);
+                if (iframe.contentDocument && iframe.contentDocument.readyState === 'complete') {
+                    loaded++;
+                    if (loaded >= total && !done) {
+                        done = true;
+                        clearTimeout(fallback);
+                        setTimeout(doPrint, 400);
+                    }
+                    return;
+                }
+            } catch (e) { }
+
+            iframe.addEventListener('load', function () {
+                loaded++;
+                if (loaded >= total && !done) {
+                    done = true;
+                    clearTimeout(fallback);
+                    setTimeout(doPrint, 400); // pequeño buffer tras la última carga
+                }
+            });
+        });
+    }, initialDelay);
 };
