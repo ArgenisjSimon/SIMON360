@@ -230,6 +230,23 @@
         "cca_placeholder": "Seleccione Contrato",
         "Opp_label": "Opp",
         "numero_pedido_label": "Numero de pedido"
+      },
+      "cobranza": {
+        "titulo": "Cobranzas",
+        "boton_nuevo": "Nueva Cobranza",
+        "cargando": "Cargando cobranzas...",
+        "sin_datos": "No hay cobranzas registradas",
+        "sin_resultados": "Sin resultados",
+        "boton_registrar_primero": "Registrar primera cobranza",
+        "tabla_id": "#",
+        "cliente_label": "Cliente",
+        "referencia_label": "Referencia",
+        "bancos_label": "Bancos",
+        "monto_label": "Monto",
+        "fecha_label": "Fecha",
+        "usuario_label": "Usuario",
+        "estado_label": "Estado",
+        "acciones_label": "Acciones"
       }
     }
   },
@@ -319,6 +336,23 @@
         "observacion_placeholder": "Notas adicionales",
         "placa_label": "Placa",
         "placa_placeholder": "Ej: ABC-123"
+      },
+      "cobranza": {
+        "titulo": "Cobranzas",
+        "boton_nuevo": "Nueva Cobranza",
+        "cargando": "Cargando cobranzas...",
+        "sin_datos": "No hay cobranzas registradas",
+        "sin_resultados": "Sin resultados",
+        "boton_registrar_primero": "Registrar primera cobranza",
+        "tabla_id": "#",
+        "cliente_label": "Cliente",
+        "referencia_label": "Referencia",
+        "bancos_label": "Bancos",
+        "monto_label": "Monto",
+        "fecha_label": "Fecha",
+        "usuario_label": "Usuario",
+        "estado_label": "Estado",
+        "acciones_label": "Acciones"
       }
     }
   },
@@ -545,6 +579,23 @@
         "cca_placeholder": "Buscar cliente",
         "Opp_label": "Opp",
         "numero_pedido_label": "N° Pedido"
+      },
+      "cobranza": {
+        "titulo": "Cobranzas",
+        "boton_nuevo": "Nueva Cobranza",
+        "cargando": "Cargando cobranzas...",
+        "sin_datos": "No hay cobranzas registradas",
+        "sin_resultados": "Sin resultados",
+        "boton_registrar_primero": "Registrar primera cobranza",
+        "tabla_id": "#",
+        "cliente_label": "Cliente",
+        "referencia_label": "Referencia",
+        "bancos_label": "Bancos",
+        "monto_label": "Monto",
+        "fecha_label": "Fecha",
+        "usuario_label": "Usuario",
+        "estado_label": "Estado",
+        "acciones_label": "Acciones"
       }
     }
   },
@@ -735,6 +786,23 @@
         "cca_placeholder": "Buscar cliente",
         "Opp_label": "Opp",
         "numero_pedido_label": "N° Pedido"
+      },
+      "cobranza": {
+        "titulo": "Cobranzas",
+        "boton_nuevo": "Nueva Cobranza",
+        "cargando": "Cargando cobranzas...",
+        "sin_datos": "No hay cobranzas registradas",
+        "sin_resultados": "Sin resultados",
+        "boton_registrar_primero": "Registrar primera cobranza",
+        "tabla_id": "#",
+        "cliente_label": "Cliente",
+        "referencia_label": "Referencia",
+        "bancos_label": "Bancos",
+        "monto_label": "Monto",
+        "fecha_label": "Fecha",
+        "usuario_label": "Usuario",
+        "estado_label": "Estado",
+        "acciones_label": "Acciones"
       }
     }
   }

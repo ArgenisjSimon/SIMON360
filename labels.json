@@ -354,6 +354,23 @@
         "cca_placeholder": "Seleccione Contrato",
         "Opp_label": "Opp",
         "numero_pedido_label": "Numero de pedido"
+      },
+      "cobranza": {
+        "titulo": "Cobranzas",
+        "boton_nuevo": "Nueva Cobranza",
+        "cargando": "Cargando cobranzas...",
+        "sin_datos": "No hay cobranzas registradas",
+        "sin_resultados": "Sin resultados",
+        "boton_registrar_primero": "Registrar primera cobranza",
+        "tabla_id": "#",
+        "cliente_label": "Cliente",
+        "referencia_label": "Referencia",
+        "bancos_label": "Bancos",
+        "monto_label": "Monto",
+        "fecha_label": "Fecha",
+        "usuario_label": "Usuario",
+        "estado_label": "Estado",
+        "acciones_label": "Acciones"
       }
     }
   },
@@ -427,29 +444,6 @@
         "exito_eliminar_titulo": "Eliminado",
         "exito_eliminar_mensaje": "La CCA fue eliminada.",
         "error_eliminar_mensaje": "No se pudo eliminar la CCA."
-      }
-    }
-  },
-  "DEFAULT": {
-    "nombre": "Default",
-    "formularios": {
-      "DEFAULT": {
-        "btn_nuevo": "Nuevo",
-        "boton_volver": "Volver",
-        "boton_guardar": "Guardar",
-        "boton_actualizar": "Actualizar",
-        "boton_procesando": "Procesando...",
-        "exito_crear_titulo": "Registrado",
-        "exito_crear_mensaje": "Registro creado exitosamente.",
-        "exito_actualizar_titulo": "Actualizado",
-        "exito_actualizar_mensaje": "Registro actualizado correctamente.",
-        "error_titulo": "Error",
-        "error_crear_mensaje": "No se pudo crear el registro.",
-        "error_actualizar_mensaje": "No se pudo actualizar el registro.",
-        "confirmar_eliminar": "¿Desea eliminar este registro?",
-        "exito_eliminar_titulo": "Eliminado",
-        "exito_eliminar_mensaje": "El registro fue eliminado.",
-        "error_eliminar_mensaje": "No se pudo eliminar el registro."
       }
     }
   },
@@ -600,6 +594,23 @@
         "exito_crear_titulo": "Registrado",
         "exito_crear_mensaje": "¡Vendedor registrado exitosamente!",
         "error_crear_mensaje": "No se pudo registrar el Vendedor. Verifique los datos."
+      },
+      "cobranza": {
+        "titulo": "Cobranzas",
+        "boton_nuevo": "Nueva Cobranza",
+        "cargando": "Cargando cobranzas...",
+        "sin_datos": "No hay cobranzas registradas",
+        "sin_resultados": "Sin resultados",
+        "boton_registrar_primero": "Registrar primera cobranza",
+        "tabla_id": "#",
+        "cliente_label": "Cliente",
+        "referencia_label": "Referencia",
+        "bancos_label": "Bancos",
+        "monto_label": "Monto",
+        "fecha_label": "Fecha",
+        "usuario_label": "Usuario",
+        "estado_label": "Estado",
+        "acciones_label": "Acciones"
       }
     }
   },
@@ -887,6 +898,23 @@
           "cca_placeholder": "Buscar cliente",
           "Opp_label": "Opp",
           "numero_pedido_label": "N° Pedido"
+        },
+        "cobranza": {
+          "titulo": "Cobranzas",
+          "boton_nuevo": "Nueva Cobranza",
+          "cargando": "Cargando cobranzas...",
+          "sin_datos": "No hay cobranzas registradas",
+          "sin_resultados": "Sin resultados",
+          "boton_registrar_primero": "Registrar primera cobranza",
+          "tabla_id": "#",
+          "cliente_label": "Cliente",
+          "referencia_label": "Referencia",
+          "bancos_label": "Bancos",
+          "monto_label": "Monto",
+          "fecha_label": "Fecha",
+          "usuario_label": "Usuario",
+          "estado_label": "Estado",
+          "acciones_label": "Acciones"
         }
       }
     },
@@ -1138,6 +1166,23 @@
         "cca_placeholder": "Buscar cliente",
         "Opp_label": "Opp",
         "numero_pedido_label": "N° Pedido"
+      },
+      "cobranza": {
+        "titulo": "Cobranzas",
+        "boton_nuevo": "Nueva Cobranza",
+        "cargando": "Cargando cobranzas...",
+        "sin_datos": "No hay cobranzas registradas",
+        "sin_resultados": "Sin resultados",
+        "boton_registrar_primero": "Registrar primera cobranza",
+        "tabla_id": "#",
+        "cliente_label": "Cliente",
+        "referencia_label": "Referencia",
+        "bancos_label": "Bancos",
+        "monto_label": "Monto",
+        "fecha_label": "Fecha",
+        "usuario_label": "Usuario",
+        "estado_label": "Estado",
+        "acciones_label": "Acciones"
       }
     }
   }
