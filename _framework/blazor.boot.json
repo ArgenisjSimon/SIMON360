@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "SIMON_WEB_360",
   "resources": {
-    "hash": "sha256-Egtlict81j7+WVVqLRZ5iMq0hzMiUB6HN5mNa1yrPew=",
+    "hash": "sha256-AnrihN6yXz8zxQw0vXCzbrhL3yBVecDE5/NFjcVJTRU=",
     "jsModuleNative": {
       "dotnet.native.js": "sha256-vtotCeXt2UD6oc459laJT32vBgigZ+eLoUmdeFkvYDk="
     },
@@ -16,7 +16,7 @@
     },
     "coreAssembly": {},
     "assembly": {
-      "Microsoft.AspNetCore.Components.wasm": "sha256-9PT8CJMBiQmbjYAndhhSESlKVmYJXEwYl6nL1J5CRaA=",
+      "Microsoft.AspNetCore.Components.wasm": "sha256-pSv9jARL6KqwKZ45r+tfjQBszOmMSOa1UR5TfXJN22A=",
       "Microsoft.AspNetCore.Components.Forms.wasm": "sha256-ni5wMdEAo8jjPe8+8cZWxvjIguRgNMTr9nt8LDYvLMc=",
       "Microsoft.AspNetCore.Components.Web.wasm": "sha256-uz4NpCosq7DMJ8iaWf+sAXF/8+hszBrXhAnpwokRxBo=",
       "Microsoft.AspNetCore.Components.WebAssembly.wasm": "sha256-x8/UBobyjUM1j0jIQ+0Psu7Dmvb+p2AcMgnuza0g2CM=",
@@ -65,7 +65,7 @@
       "System.Threading.wasm": "sha256-A/T6ZqAEwCt9MvkCwK489A59CsjMeamN1y3W4hz59h4=",
       "System.wasm": "sha256-I4hhyMuUoHdrzDopL9tlnkL/Skg+0OO+gmkOXNT3dcg=",
       "System.Private.CoreLib.wasm": "sha256-BRqSO0ojhEqPt2CqbsAf7QEq4fPHL7LUbY1CQLxpdEU=",
-      "SIMON_WEB_360.wasm": "sha256-dGqbXTgo9KMji95wCW/UcrMdh1JDUSPftYMktVTTxeA="
+      "SIMON_WEB_360.wasm": "sha256-K88IoL4QEubYJTPS2y/deISV2lBPOm0SrRbcoyCuptw="
     }
   },
   "cacheBootResources": true,

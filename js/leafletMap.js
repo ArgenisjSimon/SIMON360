@@ -486,6 +486,105 @@ window.leafletMap = (function () {
         });
     }
 
+    // ── GPS Picker: punto único + círculo de radio ───────────────────────
+    function initGpsPicker(mapId, lat, lng, radioMetros, dotnetRef) {
+        if (maps[mapId]) { maps[mapId].map.remove(); delete maps[mapId]; }
+        const el = document.getElementById(mapId);
+        if (!el) return;
+
+        const hasPoint = lat !== 0 || lng !== 0;
+        const center = hasPoint ? [lat, lng] : [8.0, -66.0];
+        const zoom = hasPoint ? 15 : 6;
+
+        const map = L.map(mapId).setView(center, zoom);
+        const streetLayer = L.tileLayer(tiles.street.url, { attribution: tiles.street.attribution });
+        const satelliteLayer = L.tileLayer(tiles.satellite.url, { attribution: tiles.satellite.attribution });
+        streetLayer.addTo(map);
+
+        const s = {
+            map, streetLayer, satelliteLayer, currentLayer: 'street',
+            gpsPinMarker: null, gpsCircle: null,
+            dotnetRef: dotnetRef || null,
+            _pickClickHandler: null,
+            gpsMarkers: [], areaMarkers: [], areaPolygon: null, areaPolyline: null,
+            drawingMode: false
+        };
+
+        if (hasPoint) _setGpsPinInternal(s, lat, lng, radioMetros);
+        maps[mapId] = s;
+    }
+
+    function actualizarGpsPicker(mapId, lat, lng, radioMetros) {
+        const s = maps[mapId];
+        if (!s) return;
+        if (lat === 0 && lng === 0) {
+            if (s.gpsPinMarker) { s.map.removeLayer(s.gpsPinMarker); s.gpsPinMarker = null; }
+            if (s.gpsCircle)    { s.map.removeLayer(s.gpsCircle);    s.gpsCircle    = null; }
+            return;
+        }
+        _setGpsPinInternal(s, lat, lng, radioMetros);
+    }
+
+    function enableGpsPickerClick(mapId, dotnetRef) {
+        const s = maps[mapId];
+        if (!s) return;
+        s.dotnetRef = dotnetRef;
+        s.map.getContainer().style.cursor = 'crosshair';
+
+        if (s._pickClickHandler) s.map.off('click', s._pickClickHandler);
+
+        s._pickClickHandler = function (e) {
+            if (s.dotnetRef) {
+                s.dotnetRef.invokeMethodAsync('OnMapClick', e.latlng.lat, e.latlng.lng);
+            }
+        };
+        s.map.on('click', s._pickClickHandler);
+    }
+
+    function disableGpsPickerClick(mapId) {
+        const s = maps[mapId];
+        if (!s) return;
+        s.map.getContainer().style.cursor = '';
+        if (s._pickClickHandler) {
+            s.map.off('click', s._pickClickHandler);
+            s._pickClickHandler = null;
+        }
+    }
+
+    function _setGpsPinInternal(s, lat, lng, radioMetros) {
+        if (s.gpsPinMarker) s.map.removeLayer(s.gpsPinMarker);
+        if (s.gpsCircle)    s.map.removeLayer(s.gpsCircle);
+
+        const icon = L.divIcon({
+            className: '',
+            html: `<div style="background:#2563eb;color:white;border-radius:50%;width:32px;height:32px;
+                        display:flex;align-items:center;justify-content:center;
+                        font-size:16px;border:2px solid white;
+                        box-shadow:0 2px 8px rgba(0,0,0,.5)">&#x1F4CD;</div>`,
+            iconSize: [32, 32],
+            iconAnchor: [16, 16]
+        });
+
+        s.gpsPinMarker = L.marker([lat, lng], { icon })
+            .addTo(s.map)
+            .bindPopup(`<b>Punto GPS</b><br><small>${lat.toFixed(6)}, ${lng.toFixed(6)}</small>`);
+
+        if (radioMetros && radioMetros > 0) {
+            s.gpsCircle = L.circle([lat, lng], {
+                radius: radioMetros,
+                color: '#2563eb',
+                fillColor: '#93c5fd',
+                fillOpacity: 0.25,
+                weight: 2,
+                dashArray: '6,4'
+            }).addTo(s.map);
+            const bounds = s.gpsCircle.getBounds();
+            s.map.fitBounds(bounds.pad(0.15));
+        } else {
+            s.map.setView([lat, lng], Math.max(s.map.getZoom(), 15));
+        }
+    }
+
     return {
         init,
         addGpsMarker,
@@ -504,7 +603,11 @@ window.leafletMap = (function () {
         enablePartidaSelection,
         cancelPartidaSelection,
         agregarMarcadoresEjecucion,
-        limpiarEjecucion
+        limpiarEjecucion,
+        initGpsPicker,
+        actualizarGpsPicker,
+        enableGpsPickerClick,
+        disableGpsPickerClick
     };
 })();
 
