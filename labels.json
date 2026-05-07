@@ -426,6 +426,16 @@
         "col_total": "Tot. Pedido",
         "filtro_cliente": "Productor",
         "filtro_opp": "OEI"
+      },
+      "pedidos": {
+        "titulo": "Pedidos",
+        "nombre": "pedido",
+        "tabla_id": "#Pedido",
+        "cliente_label": "Productor",
+        "cca_label": "CCA",
+        "cca_placeholder": "Buscar productor",
+        "Opp_label": "OEI",
+        "numero_pedido_label": "# Pedido"
       }
     }
   },
