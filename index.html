@@ -26,21 +26,64 @@
     <!-- <link href="Simon_Web.styles.css" rel="stylesheet" /> -->
 </head>
 
-<body class="bg-gray-100 dark:bg-[#121212]">
-    <div id="app">
-        <!--  Splash Screen -->
-        <div class="splash-wrapper">
-            <div class="hex-wrapper">
-                <div class="splash-container">
-                    <div class="face top"></div>
-                    <div class="face right1"></div>
-                    <div class="face left1"></div>
-                    <div class="letter">S</div>
-                </div>
-            </div>
-            <div class="loading-text">Loading...</div>
-        </div>
+<style>
+    .splash-video-wrapper {
+        position: fixed;
+        inset: 0;
+        background: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        overflow: hidden;
+        transition: opacity 0.6s ease;
+    }
+    .splash-video-wrapper video {
+        width: 150vw;
+        max-width: 1000px;
+        height: auto;
+        flex-shrink: 0;
+        -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 50%, transparent 100%);
+        mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 50%, transparent 100%);
+    }
+    @media (max-width: 600px) {
+        .splash-video-wrapper video {
+            width: auto;
+            height: 70vh;
+            max-width: none;
+        }
+    }
+</style>
 
+<body class="bg-gray-100 dark:bg-[#121212]">
+
+    <!-- Splash FUERA de #app — Blazor no lo toca al cargar -->
+    <div id="splash-screen" class="splash-video-wrapper">
+        <video id="splash-video" autoplay muted playsinline preload="auto">
+            <source src="videos/Splash_modoClaro.mp4" type="video/mp4" />
+        </video>
+    </div>
+
+    <script>
+        (function () {
+            var splash = document.getElementById('splash-screen');
+            var video  = document.getElementById('splash-video');
+
+            function cerrarSplash() {
+                splash.style.opacity = '0';
+                setTimeout(function () { splash.remove(); }, 650);
+            }
+
+            // Se cierra cuando el video termina
+            video.addEventListener('ended', cerrarSplash);
+
+            // Seguro: si el video falla o tarda más de 12s, cierra igual
+            var limite = setTimeout(cerrarSplash, 12000);
+            video.addEventListener('ended', function () { clearTimeout(limite); });
+        })();
+    </script>
+
+    <div id="app">
         <!-- ⚠️ Error UI -->
         <div id="blazor-error-ui">
             An unhandled error has occurred.

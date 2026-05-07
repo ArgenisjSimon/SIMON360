@@ -239,6 +239,7 @@ window.addEventListener('DOMContentLoaded', async () => {
         'CalendarioUsuario',
         'Usuarios',
         'Estados',
-        'Propiedades'
+        'Propiedades',
+        'Proveedores'
     ]);
 });

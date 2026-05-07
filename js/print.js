@@ -95,6 +95,23 @@ window.simonPrint.compartirReporteNativo = async function (elementId, texto) {
                 });
             }
 
+            // Esperar a que todas las imágenes del elemento estén cargadas
+            var imgs = el.querySelectorAll('img');
+            if (imgs.length > 0) {
+                await Promise.all(Array.from(imgs).map(function (img) {
+                    if (img.complete && img.naturalWidth > 0) return Promise.resolve();
+                    return new Promise(function (resolve) {
+                        img.onload = resolve;
+                        img.onerror = resolve; // no bloquear si falla
+                        // Forzar recarga con timestamp para evitar cache sin CORS
+                        if (img.src && !img.src.startsWith('data:')) {
+                            var sep = img.src.indexOf('?') >= 0 ? '&' : '?';
+                            img.src = img.src + sep + '_t=' + Date.now();
+                        }
+                    });
+                }));
+            }
+
             var canvas = await html2canvas(el, {
                 scale: 2,
                 useCORS: true,
@@ -125,6 +142,32 @@ window.simonPrint.compartirReporteNativo = async function (elementId, texto) {
 
     // Fallback: texto por WhatsApp web
     window.open('https://wa.me/?text=' + encodeURIComponent(texto), '_blank');
+};
+
+// Descarga una imagen usando fetch (con token de localStorage) y la devuelve como data-URI base64.
+// Esto permite mostrar imágenes protegidas por autenticación dentro de tags <img>.
+window.simonPrint.fetchImageAsBase64 = async function (url) {
+    try {
+        var tokenEnc = localStorage.getItem('authToken');
+        var headers = {};
+        if (tokenEnc) {
+            try {
+                var token = await window.cryptoInterop.decryptData(tokenEnc);
+                if (token) headers['Authorization'] = 'Bearer ' + token;
+            } catch (e) { }
+        }
+        var resp = await fetch(url, { headers: headers });
+        if (!resp.ok) return null;
+        var blob = await resp.blob();
+        return await new Promise(function (resolve) {
+            var reader = new FileReader();
+            reader.onloadend = function () { resolve(reader.result); };
+            reader.readAsDataURL(blob);
+        });
+    } catch (e) {
+        console.warn('[simonPrint] fetchImageAsBase64 falló:', e);
+        return null;
+    }
 };
 
 window.simonPrint.openUrls = function (urls) {

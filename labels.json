@@ -416,6 +416,16 @@
         "usuario_label": "Usuario",
         "estado_label": "Estado",
         "acciones_label": "Acciones"
+      },
+      "despachos": {
+        "col_cliente": "Productor",
+        "col_opp": "OEI",
+        "col_proveedor": "Proveedor",
+        "col_ndoc": "N° Doc.",
+        "col_despachado": "Despachado",
+        "col_total": "Tot. Pedido",
+        "filtro_cliente": "Productor",
+        "filtro_opp": "OEI"
       }
     }
   },
@@ -665,6 +675,46 @@
       }
     }
   },
+  "1": {
+    "nombre": "Empresa 1",
+    "formularios": {
+      "despachos": {
+        "col_cliente": "Productor",
+        "col_opp": "OEI",
+        "col_proveedor": "Proveedor",
+        "col_ndoc": "N° Doc.",
+        "col_despachado": "Despachado",
+        "col_total": "Tot. Pedido",
+        "filtro_cliente": "Productor",
+        "filtro_opp": "OEI"
+      },
+      "pedidos": {
+        "titulo": "Pedidos",
+        "nombre": "pedido",
+        "tabla_id": "#Pedido",
+        "cliente_label": "Productor",
+        "cca_label": "CCA",
+        "cca_placeholder": "Buscar productor",
+        "Opp_label": "OEI",
+        "numero_pedido_label": "# Pedido"
+      }
+    }
+  },
+  "12": {
+    "nombre": "Empresa 12",
+    "formularios": {
+      "despachos": {
+        "col_cliente": "Productor",
+        "col_opp": "OEI",
+        "col_proveedor": "Proveedor",
+        "col_ndoc": "N° Doc.",
+        "col_despachado": "Despachado",
+        "col_total": "Tot. Pedido",
+        "filtro_cliente": "Productor",
+        "filtro_opp": "OEI"
+      }
+    }
+  },
   "DEFAULT": {
     "nombre": "General",
     "formularios": {
@@ -688,6 +738,16 @@
         "tipo_natural": "Persona Natural",
         "tipo_juridico": "Persona Jurídica",
         "titulo": "Productores"
+      },
+      "despachos": {
+        "col_cliente": "Cliente",
+        "col_opp": "OPP",
+        "col_proveedor": "Proveedor",
+        "col_ndoc": "N° Doc.",
+        "col_despachado": "Despachado",
+        "col_total": "Tot. Pedido",
+        "filtro_cliente": "Cliente",
+        "filtro_opp": "OPP"
       },
       "choferes": {
         "cedula_label": "Cédula / RIF",
