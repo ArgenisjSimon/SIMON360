@@ -666,6 +666,13 @@
         "Opp_label": "Opp",
         "numero_pedido_label": "N° Pedido"
       },
+      "vendedores": {
+        "titulo_listado": "Vendedores CHEPELCA",
+        "titulo_nuevo": "Nuevo Vendedor",
+        "titulo_editar": "Editar Vendedor",
+        "tipo_vendedor_fuerza": "Fuerza de Ventas",
+        "tipo_vendedor_coordinador": "Coordinador"
+      },
       "cobranza": {
         "titulo": "Cobranzas",
         "boton_nuevo": "Nueva Cobranza",
@@ -682,6 +689,18 @@
         "usuario_label": "Usuario",
         "estado_label": "Estado",
         "acciones_label": "Acciones"
+      }
+    }
+  },
+  "16": {
+    "nombre": "CHEPELCA 16",
+    "formularios": {
+      "vendedores": {
+        "titulo_listado": "Vendedores CHEPELCA",
+        "titulo_nuevo": "Nuevo Vendedor",
+        "titulo_editar": "Editar Vendedor",
+        "tipo_vendedor_fuerza": "Fuerza de Ventas",
+        "tipo_vendedor_coordinador": "Coordinador"
       }
     }
   },
@@ -728,6 +747,68 @@
   "DEFAULT": {
     "nombre": "General",
     "formularios": {
+      "vendedores": {
+        "titulo_listado": "Vendedores registrados",
+        "titulo_nuevo": "Nuevo Vendedor",
+        "titulo_editar": "Editar Vendedor",
+        "modo_edicion": "Modo Edición",
+        "modo_nuevo": "Nuevo Registro",
+        "boton_volver": "Volver",
+        "campos_requeridos_indicador": "Campos requeridos",
+        "seccion_info_personal_titulo": "Información Personal",
+        "seccion_info_personal_subtitulo": "Datos básicos del vendedor",
+        "cedula_label": "Cédula",
+        "cedula_placeholder": "Ej: V-12345678",
+        "cedula_hint": "La cédula no se puede modificar en modo edición",
+        "apenomb_label": "Nombre y Apellido",
+        "apenomb_placeholder": "Ingrese nombre y apellido",
+        "sexo_label": "Género",
+        "seccion_contacto_titulo": "Información de Contacto",
+        "seccion_contacto_subtitulo": "Datos de contacto del vendedor",
+        "telefono_label": "Teléfono",
+        "telefono_placeholder": "Ej: 0412-1234567",
+        "email_label": "Email",
+        "email_placeholder": "correo@ejemplo.com",
+        "direccion_label": "Dirección",
+        "direccion_placeholder": "Ingrese la dirección",
+        "seccion_ventas_titulo": "Información de Ventas",
+        "seccion_ventas_subtitulo": "Metas y configuración de ventas",
+        "tipo_vendedor_label": "Tipo",
+        "tipo_vendedor_fuerza": "Fuerza de Ventas",
+        "tipo_vendedor_coordinador": "Coordinador",
+        "reporta_a_label": "Reporta A",
+        "reporta_a_placeholder": "Sin coordinador",
+        "meta_mensual_label": "Meta Mensual ($)",
+        "meta_mensual_placeholder": "0.00",
+        "meta_semanal_label": "Meta Semanal ($)",
+        "meta_semanal_placeholder": "0.00",
+        "comentarios_label": "Comentarios",
+        "comentarios_placeholder": "Observaciones del vendedor",
+        "resumen_titulo": "Resumen del Vendedor",
+        "resumen_editando": "Editando Vendedor",
+        "resumen_id": "ID",
+        "resumen_identificacion": "Cédula",
+        "resumen_nombre": "Nombre",
+        "resumen_telefono": "Teléfono",
+        "resumen_tipo": "Tipo",
+        "resumen_meta_mensual": "Meta Mensual",
+        "boton_procesando": "Procesando...",
+        "boton_guardar": "Guardar Vendedor",
+        "boton_actualizar": "Actualizar Vendedor",
+        "info_util_titulo": "Información útil",
+        "info_util_campos_requeridos": "Los campos marcados con * son obligatorios",
+        "info_util_cedula_no_modificable": "La cédula no se puede modificar después del registro",
+        "info_util_verificar_actualizacion": "Verifique todos los datos antes de actualizar",
+        "offline_guardado_titulo": "Guardado offline",
+        "offline_guardado_mensaje": "Se sincronizará automáticamente cuando vuelva la conexión",
+        "error_titulo": "Error",
+        "exito_actualizar_titulo": "Actualizado",
+        "exito_actualizar_mensaje": "El vendedor se actualizó correctamente.",
+        "error_actualizar_mensaje": "No se pudo actualizar el vendedor. Intente nuevamente.",
+        "exito_crear_titulo": "Registrado",
+        "exito_crear_mensaje": "¡Vendedor registrado exitosamente!",
+        "error_crear_mensaje": "No se pudo registrar el vendedor. Verifique los datos."
+      },
       "proveedores": {
         "titulo": "Proveedores",
         "titulo_singular": "Proveedor",
