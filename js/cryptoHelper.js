@@ -1,29 +1,53 @@
-﻿// wwwroot/js/crypto.js
-const STORAGE_KEY = 'encryption_key';
+// wwwroot/js/cryptoHelper.js
+// Clave AES-GCM-256 almacenada en IndexedDB como CryptoKey no exportable.
+// Ningun script puede leer el material de la clave; solo el navegador la usa internamente.
 
-// Generar o recuperar una clave de encriptación
+const CRYPTO_DB_NAME = 'SimonCryptoDB';
+const CRYPTO_STORE = 'keys';
+const CRYPTO_KEY_ID = 'master';
+
+function openCryptoDb() {
+    return new Promise((resolve, reject) => {
+        const request = indexedDB.open(CRYPTO_DB_NAME, 1);
+        request.onupgradeneeded = (e) => {
+            e.target.result.createObjectStore(CRYPTO_STORE, { keyPath: 'id' });
+        };
+        request.onsuccess = (e) => resolve(e.target.result);
+        request.onerror = (e) => reject(e.target.error);
+    });
+}
+
 async function getOrCreateKey() {
-    let keyData = localStorage.getItem(STORAGE_KEY);
+    const db = await openCryptoDb();
 
-    if (keyData) {
-        return await crypto.subtle.importKey(
-            'jwk',
-            JSON.parse(keyData),
-            { name: 'AES-GCM' },
-            false,
-            ['encrypt', 'decrypt']
-        );
-    } else {
-        const key = await crypto.subtle.generateKey(
-            { name: 'AES-GCM', length: 256 },
-            true,
-            ['encrypt', 'decrypt']
-        );
+    // Intentar recuperar la clave existente
+    const existing = await new Promise((resolve, reject) => {
+        const tx = db.transaction(CRYPTO_STORE, 'readonly');
+        const req = tx.objectStore(CRYPTO_STORE).get(CRYPTO_KEY_ID);
+        req.onsuccess = () => resolve(req.result);
+        req.onerror = (e) => reject(e.target.error);
+    });
 
-        const exported = await crypto.subtle.exportKey('jwk', key);
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(exported));
-        return key;
+    if (existing && existing.key) {
+        return existing.key;
     }
+
+    // Generar clave nueva: extractable = false (no se puede exportar)
+    const key = await crypto.subtle.generateKey(
+        { name: 'AES-GCM', length: 256 },
+        false,
+        ['encrypt', 'decrypt']
+    );
+
+    // Guardar en IndexedDB (almacena el objeto CryptoKey directamente)
+    await new Promise((resolve, reject) => {
+        const tx = db.transaction(CRYPTO_STORE, 'readwrite');
+        const req = tx.objectStore(CRYPTO_STORE).put({ id: CRYPTO_KEY_ID, key: key });
+        req.onsuccess = () => resolve();
+        req.onerror = (e) => reject(e.target.error);
+    });
+
+    return key;
 }
 
 // Encriptar texto
@@ -33,7 +57,7 @@ async function encryptData(plainText) {
         const encoder = new TextEncoder();
         const data = encoder.encode(plainText);
 
-        // IV debe ser único para cada encriptación
+        // IV debe ser unico para cada encriptacion
         const iv = crypto.getRandomValues(new Uint8Array(12));
 
         const encrypted = await crypto.subtle.encrypt(
@@ -78,8 +102,21 @@ async function decryptData(cipherText) {
 }
 
 // Limpiar clave (para logout)
-function clearEncryptionKey() {
-    localStorage.removeItem(STORAGE_KEY);
+async function clearEncryptionKey() {
+    try {
+        // Limpiar clave legacy de localStorage si existe
+        localStorage.removeItem('encryption_key');
+
+        const db = await openCryptoDb();
+        await new Promise((resolve, reject) => {
+            const tx = db.transaction(CRYPTO_STORE, 'readwrite');
+            const req = tx.objectStore(CRYPTO_STORE).delete(CRYPTO_KEY_ID);
+            req.onsuccess = () => resolve();
+            req.onerror = (e) => reject(e.target.error);
+        });
+    } catch (error) {
+        console.error('Error limpiando clave:', error);
+    }
 }
 
 // Exportar funciones para Blazor

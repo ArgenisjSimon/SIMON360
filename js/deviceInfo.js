@@ -1,4 +1,16 @@
 ﻿// wwwroot/js/deviceInfo.js
+
+// Funciones seguras para evitar uso de eval() desde C#
+window.getTimeZone = function () {
+    try { return Intl.DateTimeFormat().resolvedOptions().timeZone; }
+    catch { return 'UTC'; }
+};
+
+window.getScreenWidth = function () { return window.screen.width; };
+window.getScreenHeight = function () { return window.screen.height; };
+window.getDevicePixelRatio = function () { return window.devicePixelRatio || 1; };
+window.getHardwareConcurrency = function () { return navigator.hardwareConcurrency || 0; };
+window.isCryptoInteropAvailable = function () { return typeof cryptoInterop !== 'undefined'; };
 window.getUserAgent = function () {
     return navigator.userAgent;
 };
