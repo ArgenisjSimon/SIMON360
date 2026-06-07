@@ -551,6 +551,21 @@ window.leafletMap = (function () {
         }
     }
 
+    function addRadiusCircle(mapId, lat, lng, radioMetros) {
+        const s = maps[mapId];
+        if (!s || !radioMetros || radioMetros <= 0) return;
+        if (s.gpsCircle) s.map.removeLayer(s.gpsCircle);
+        s.gpsCircle = L.circle([lat, lng], {
+            radius: radioMetros,
+            color: '#2563eb',
+            fillColor: '#93c5fd',
+            fillOpacity: 0.25,
+            weight: 2,
+            dashArray: '6,4'
+        }).addTo(s.map);
+        s.map.fitBounds(s.gpsCircle.getBounds().pad(0.15));
+    }
+
     function _setGpsPinInternal(s, lat, lng, radioMetros) {
         if (s.gpsPinMarker) s.map.removeLayer(s.gpsPinMarker);
         if (s.gpsCircle)    s.map.removeLayer(s.gpsCircle);
@@ -607,7 +622,8 @@ window.leafletMap = (function () {
         initGpsPicker,
         actualizarGpsPicker,
         enableGpsPickerClick,
-        disableGpsPickerClick
+        disableGpsPickerClick,
+        addRadiusCircle
     };
 })();
 
@@ -749,4 +765,32 @@ window.imprimirRuta = function (plan) {
     w.document.close();
     w.focus();
     setTimeout(() => { w.print(); }, 600);
+};
+
+// ── Compartir ruta (Web Share API o copiar al portapapeles) ───────────
+window.compartirRuta = async function (texto, url) {
+    if (navigator.share) {
+        try {
+            await navigator.share({ title: 'Ruta de Visitas', text: texto });
+            return true;
+        } catch (e) {
+            if (e.name === 'AbortError') return true; // usuario canceló, no es error
+        }
+    }
+    // Fallback: copiar al portapapeles
+    try {
+        await navigator.clipboard.writeText(texto);
+        return false; // indica que se copió (no se compartió nativamente)
+    } catch {
+        // Último fallback para navegadores sin clipboard API
+        const ta = document.createElement('textarea');
+        ta.value = texto;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        return false;
+    }
 };

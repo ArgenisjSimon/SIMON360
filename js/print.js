@@ -81,10 +81,11 @@ window.simonPrint.compartirGmail = function (asunto, cuerpo) {
 // En escritorio sin Web Share: cae a WhatsApp web con el texto.
 window.simonPrint.compartirReporteNativo = async function (elementId, texto) {
     var el = document.getElementById(elementId);
+    var blob = null;
 
-    if (el && typeof navigator.share === 'function') {
+    // Generar imagen del reporte si existe el elemento
+    if (el) {
         try {
-            // Cargar html2canvas dinámicamente si no está disponible
             if (typeof html2canvas === 'undefined') {
                 await new Promise(function (resolve, reject) {
                     var s = document.createElement('script');
@@ -95,22 +96,16 @@ window.simonPrint.compartirReporteNativo = async function (elementId, texto) {
                 });
             }
 
-            // Esperar a que todas las imágenes del elemento estén cargadas
+            // Convertir imágenes externas a base64 para evitar CORS en html2canvas
             var imgs = el.querySelectorAll('img');
-            if (imgs.length > 0) {
-                await Promise.all(Array.from(imgs).map(function (img) {
-                    if (img.complete && img.naturalWidth > 0) return Promise.resolve();
-                    return new Promise(function (resolve) {
-                        img.onload = resolve;
-                        img.onerror = resolve; // no bloquear si falla
-                        // Forzar recarga con timestamp para evitar cache sin CORS
-                        if (img.src && !img.src.startsWith('data:')) {
-                            var sep = img.src.indexOf('?') >= 0 ? '&' : '?';
-                            img.src = img.src + sep + '_t=' + Date.now();
-                        }
-                    });
-                }));
-            }
+            var originalSrcs = [];
+            await Promise.all(Array.from(imgs).map(async function (img, i) {
+                originalSrcs[i] = img.src;
+                if (img.src && !img.src.startsWith('data:')) {
+                    var b64 = await window.simonPrint.fetchImageAsBase64(img.src);
+                    if (b64) img.src = b64;
+                }
+            }));
 
             var canvas = await html2canvas(el, {
                 scale: 2,
@@ -120,27 +115,47 @@ window.simonPrint.compartirReporteNativo = async function (elementId, texto) {
                 logging: false
             });
 
-            var blob = await new Promise(function (resolve) {
-                canvas.toBlob(resolve, 'image/png');
+            // Restaurar srcs originales
+            Array.from(imgs).forEach(function (img, i) {
+                if (originalSrcs[i]) img.src = originalSrcs[i];
             });
 
-            var file = new File([blob], 'comprobante-simon360.png', { type: 'image/png' });
+            blob = await new Promise(function (resolve) {
+                canvas.toBlob(resolve, 'image/png');
+            });
+        } catch (e) {
+            if (e.name === 'AbortError') return;
+            console.warn('[simonPrint] Error generando imagen:', e);
+        }
+    }
 
+    // Intentar compartir con imagen via native share (móvil)
+    if (blob && typeof navigator.share === 'function') {
+        try {
+            var file = new File([blob], 'comprobante-simon360.png', { type: 'image/png' });
             if (navigator.canShare && navigator.canShare({ files: [file] })) {
                 await navigator.share({
                     files: [file],
-                    title: 'Comprobante de Pago - SIMON 360',
+                    title: 'Comprobante SIMON 360',
                     text: texto
                 });
                 return;
             }
         } catch (e) {
-            if (e.name === 'AbortError') return; // usuario canceló
-            console.warn('[simonPrint] compartirReporteNativo falló, usando fallback:', e);
+            if (e.name === 'AbortError') return;
+            console.warn('[simonPrint] Native share falló:', e);
         }
     }
 
-    // Fallback: texto por WhatsApp web
+    // Fallback: descargar imagen + abrir WhatsApp con el texto
+    if (blob) {
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'comprobante-simon360.png';
+        a.click();
+        setTimeout(function () { URL.revokeObjectURL(url); }, 5000);
+    }
     window.open('https://wa.me/?text=' + encodeURIComponent(texto), '_blank');
 };
 
