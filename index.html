@@ -8,6 +8,10 @@
     <title>Simon360</title>
     <base href="/Apps/Simon360/" />
     <link rel="icon" type="image/png" href="Imagenes/favicon.ico" />
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="apple-touch-icon" sizes="192x192" href="icon-192.png" />
+    <meta name="theme-color" content="#dc2626" />
     <!--  Estilos principales -->
     <link rel="stylesheet" href="css/app.css" />
     <link rel="stylesheet" href="css/Logo.css" />
@@ -179,6 +183,13 @@
     <script src="js/network.js"></script>
     <script src="js/print.js"></script>
     <script src="js/leafletMap.js"></script>
+
+    <!-- PWA: service worker (ruta relativa porque la app no está en la raíz del servidor) -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('service-worker.js');
+        }
+    </script>
 
 </body>
 
