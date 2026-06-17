@@ -96,29 +96,32 @@ window.simonPrint.compartirReporteNativo = async function (elementId, texto) {
                 });
             }
 
-            // Convertir imágenes externas a base64 para evitar CORS en html2canvas
-            var imgs = el.querySelectorAll('img');
-            var originalSrcs = [];
-            await Promise.all(Array.from(imgs).map(async function (img, i) {
-                originalSrcs[i] = img.src;
+            // Ocultar imágenes externas y su contenedor antes de capturar
+            // (CORS en el servidor de imágenes impide que html2canvas las lea)
+            var hiddenEls = [];
+            el.querySelectorAll('img').forEach(function (img) {
                 if (img.src && !img.src.startsWith('data:')) {
-                    var b64 = await window.simonPrint.fetchImageAsBase64(img.src);
-                    if (b64) img.src = b64;
+                    var container = img.closest('div') || img.parentElement;
+                    if (container && container !== el) {
+                        container.style.display = 'none';
+                        hiddenEls.push(container);
+                    } else {
+                        img.style.display = 'none';
+                        hiddenEls.push(img);
+                    }
                 }
-            }));
+            });
 
             var canvas = await html2canvas(el, {
                 scale: 2,
-                useCORS: true,
-                allowTaint: true,
+                useCORS: false,
+                allowTaint: false,
                 backgroundColor: '#ffffff',
                 logging: false
             });
 
-            // Restaurar srcs originales
-            Array.from(imgs).forEach(function (img, i) {
-                if (originalSrcs[i]) img.src = originalSrcs[i];
-            });
+            // Restaurar visibilidad
+            hiddenEls.forEach(function (node) { node.style.display = ''; });
 
             blob = await new Promise(function (resolve) {
                 canvas.toBlob(resolve, 'image/png');
