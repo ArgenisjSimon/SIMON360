@@ -1,5 +1,5 @@
 self.assetsManifest = {
-  "version": "T8nmp76r",
+  "version": "8ffTP4Kp",
   "assets": [
     {
       "hash": "sha256-J9aQanVM7q7gi6i9GNvRtUfFn5k09zsxgAxwQQHsJl4=",
@@ -130,7 +130,7 @@ self.assetsManifest = {
       "url": "_framework/Microsoft.JSInterop.wasm"
     },
     {
-      "hash": "sha256-MMfhI1abZN740rgN1WkDZmNBRVJhvbBqh//hyMd/Ztw=",
+      "hash": "sha256-zdXLASaGZ5FSduFX+F2RFh0JTrgtHobE4Titp50yIb4=",
       "url": "_framework/SIMON_WEB_360.wasm"
     },
     {
@@ -202,7 +202,7 @@ self.assetsManifest = {
       "url": "_framework/System.ObjectModel.wasm"
     },
     {
-      "hash": "sha256-PadgiK96kkx3nxlg1PRWdiXAg24aFGl6mBoPnYEF1lw=",
+      "hash": "sha256-YnVlTHfOn/Qfl2Nq7sYd6XusAw5XiCKLW+MMBQnOUls=",
       "url": "_framework/System.Private.CoreLib.wasm"
     },
     {
@@ -218,7 +218,7 @@ self.assetsManifest = {
       "url": "_framework/System.Runtime.Serialization.Primitives.wasm"
     },
     {
-      "hash": "sha256-mr9f5kzqgYJujFZnYSQvXFRmH5g6d6kOxe8ghzBCuCI=",
+      "hash": "sha256-trvZBXfnordJ87WgSG3bF/OWmM+AwEKV2hAiRQX98aU=",
       "url": "_framework/System.Runtime.wasm"
     },
     {
@@ -246,7 +246,7 @@ self.assetsManifest = {
       "url": "_framework/System.wasm"
     },
     {
-      "hash": "sha256-GpYt4mOwZosatE22HWpJBP7LUDHxC5tLF1RrU4KwC/I=",
+      "hash": "sha256-faFD3e0qJsnytMSC4WslyVPi9tqFJAMlYtK6pWxcYuY=",
       "url": "_framework/blazor.boot.json"
     },
     {
@@ -274,7 +274,7 @@ self.assetsManifest = {
       "url": "_framework/icudt.dat"
     },
     {
-      "hash": "sha256-koxRaZx9q6MueUxbixpFjSOUyi0uG0LNzXlrr6EIlh8=",
+      "hash": "sha256-yrKU0D0YJ08nsGrND6F2m9Ug5fdrHzNIEXIFb4avMT0=",
       "url": "appsettings.json"
     },
     {
@@ -318,7 +318,7 @@ self.assetsManifest = {
       "url": "js/deviceInfo.js"
     },
     {
-      "hash": "sha256-AuzKXjpS31tJycB4WrzeuH9k2eVOG5ds2i0eF57M140=",
+      "hash": "sha256-fxgHqgUJzEv4+ynLkfTp1FXWhJcpi4viUPEmIiX4dl0=",
       "url": "js/front.js"
     },
     {
@@ -358,7 +358,7 @@ self.assetsManifest = {
       "url": "labels.json"
     },
     {
-      "hash": "sha256-K7ljvydC9qmifmKJFzqcXAmpwlR2lI2Thg7kbptbN0Y=",
+      "hash": "sha256-W75amHI7QvI/1c4imktnJhBOaK6AklnS2kcnReF3VXQ=",
       "url": "manifest.webmanifest"
     },
     {

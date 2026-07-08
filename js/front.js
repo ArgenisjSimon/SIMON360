@@ -1,4 +1,6 @@
-﻿    // Descarga desde bytes (Blazor pasa el array, se crea blob local — sin CORS)
+﻿    window.focusElement = (id) => { document.getElementById(id)?.focus(); };
+
+    // Descarga desde bytes (Blazor pasa el array, se crea blob local — sin CORS)
     window.downloadFromBytes = (bytes, fileName) => {
         const blob = new Blob([new Uint8Array(bytes)]);
         const url = URL.createObjectURL(blob);
