@@ -12,9 +12,12 @@ window.simonPrint.printReporte = function (elementId) {
     win.document.write('<title>Comprobante de Pago - SIMON 360</title>');
     win.document.write('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous">');
     win.document.write('<style>');
-    win.document.write('@page{margin:15mm 20mm}');
+    win.document.write('@page{margin:10mm 15mm}');
     win.document.write('body{font-family:Arial,sans-serif;margin:0;padding:0;}');
     win.document.write('img{max-width:100%;height:auto;}');
+    // Todo el comprobante debe caber en UNA pagina: no partir filas ni bloques
+    // (imagen, documentos aplicados, pie) entre paginas.
+    win.document.write('tr{page-break-inside:avoid}');
     win.document.write('@media print{body{-webkit-print-color-adjust:exact;print-color-adjust:exact;}}');
     win.document.write('</style>');
     win.document.write('</head><body>');
@@ -22,7 +25,27 @@ window.simonPrint.printReporte = function (elementId) {
     win.document.write('</body></html>');
     win.document.close();
     win.focus();
-    setTimeout(function () { win.print(); }, 800);
+
+    // Esperar a que las imagenes del comprobante terminen de cargar antes de
+    // imprimir (una URL externa puede tardar mas que un delay fijo); tope 6s.
+    var imgs = Array.from(win.document.images).filter(function (img) { return !img.complete; });
+    var printed = false;
+    function doPrint() {
+        if (printed) return;
+        printed = true;
+        win.print();
+    }
+    if (imgs.length === 0) {
+        setTimeout(doPrint, 400);
+    } else {
+        var pendientes = imgs.length;
+        imgs.forEach(function (img) {
+            function listo() { if (--pendientes <= 0) setTimeout(doPrint, 200); }
+            img.addEventListener('load', listo);
+            img.addEventListener('error', listo);
+        });
+        setTimeout(doPrint, 6000); // tope de seguridad
+    }
 };
 
 // Comparte la imagen del comprobante usando el panel nativo del SO (Web Share API).

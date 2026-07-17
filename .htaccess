@@ -1,1 +1,11 @@
-ERRORPRUEBA
+RewriteEngine On
+
+# Base correcta para tu ruta completa
+RewriteBase /simonerp.net/argenis/wwwroot/
+
+# Si el archivo o carpeta existe, lo sirve
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Si NO existe → Blazor maneja la ruta
+RewriteRule ^ index.html [L]
