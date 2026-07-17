@@ -1,7 +1,7 @@
 RewriteEngine On
 
 # Base correcta para tu ruta completa
-RewriteBase /simonerp.net/argenis/wwwroot/
+RewriteBase /Apps/Simon360/
 
 # Si el archivo o carpeta existe, lo sirve
 RewriteCond %{REQUEST_FILENAME} !-f
