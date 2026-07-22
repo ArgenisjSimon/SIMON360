@@ -1812,6 +1812,21 @@
       }
     }
   },
+  "10": {
+    "nombre": "MSD3",
+    "formularios": {
+      "pedidos": {
+        "titulo": "Pedidos",
+        "nombre": "pedido",
+        "tabla_id": "#Pedido",
+        "cliente_label": "Cliente",
+        "cca_label": "Cod. Cliente",
+        "cca_placeholder": "Buscar cliente",
+        "Opp_label": "Opp",
+        "numero_pedido_label": "N° Pedido"
+      }
+    }
+  },
   "DEFAULT": {
     "nombre": "General",
     "formularios": {
