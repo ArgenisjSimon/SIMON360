@@ -1,5 +1,5 @@
 self.assetsManifest = {
-  "version": "rQt1tZmH",
+  "version": "nr4PVRac",
   "assets": [
     {
       "hash": "sha256-J9aQanVM7q7gi6i9GNvRtUfFn5k09zsxgAxwQQHsJl4=",
@@ -130,7 +130,7 @@ self.assetsManifest = {
       "url": "_framework/Microsoft.JSInterop.wasm"
     },
     {
-      "hash": "sha256-kWXB3VSsl7uOJIdGOs8eSEnqweGTVnTzMmeJDC7KiQc=",
+      "hash": "sha256-UNevh8B0SE9sutEThJHMWrk1E5xe0zPAStP1uZ2AUNM=",
       "url": "_framework/SIMON_WEB_360.wasm"
     },
     {
@@ -178,7 +178,7 @@ self.assetsManifest = {
       "url": "_framework/System.Linq.Expressions.wasm"
     },
     {
-      "hash": "sha256-EHYVeaqPqvRiZEohb3MURtPKUQZ7Oel+zsnrQ4zICcA=",
+      "hash": "sha256-Ge9PijgRqw8odVAuk1wHxJXtXMdwdHUV4+31lEaQ1no=",
       "url": "_framework/System.Linq.wasm"
     },
     {
@@ -202,7 +202,7 @@ self.assetsManifest = {
       "url": "_framework/System.ObjectModel.wasm"
     },
     {
-      "hash": "sha256-X0pfb56uoilA7cl0vkvNBFtXkdxRFjkrmzlr+Ti0kI0=",
+      "hash": "sha256-dmU0YhsTuop5Ja6G7fSCEaWa3xuvbIAwBBpeBc85tDg=",
       "url": "_framework/System.Private.CoreLib.wasm"
     },
     {
@@ -218,7 +218,7 @@ self.assetsManifest = {
       "url": "_framework/System.Runtime.Serialization.Primitives.wasm"
     },
     {
-      "hash": "sha256-I0vRdNjwx/blbt+mdFy/GGjy13KHkzR+HZJwPG8b5B8=",
+      "hash": "sha256-EBbdoigA3SqtTPWsBfPp7ne3eCFAxKpx8V/HqtMyv2c=",
       "url": "_framework/System.Runtime.wasm"
     },
     {
@@ -246,7 +246,7 @@ self.assetsManifest = {
       "url": "_framework/System.wasm"
     },
     {
-      "hash": "sha256-ySWtLtAQoF0JbfIMbLvN9mynPEfEkMs+HgvPCFZdYU8=",
+      "hash": "sha256-35aT+KzjdJ2n7Srn+g8FUkoUBM8G9rjwj3OXkEREc98=",
       "url": "_framework/blazor.boot.json"
     },
     {
@@ -274,7 +274,7 @@ self.assetsManifest = {
       "url": "_framework/icudt.dat"
     },
     {
-      "hash": "sha256-vyljgMocw8809LlfZZSaxEXA99eewqExKcIKVRzyTbs=",
+      "hash": "sha256-rMq25hLymi+9hua+muArgsu+pcTjewcROYL0Nwy0a0s=",
       "url": "appsettings.json"
     },
     {
@@ -346,7 +346,7 @@ self.assetsManifest = {
       "url": "js/offlineDbv2.js"
     },
     {
-      "hash": "sha256-Veg6BvC+bsENCvEXRkzA95IHgoZJUmm4GMDrTSS1oKc=",
+      "hash": "sha256-f9pDel7BnPInvbojmKZwtQEnaR2jorUgPOinlC9mc1E=",
       "url": "js/print.js"
     },
     {

@@ -2,14 +2,15 @@ window.simonPrint = window.simonPrint || {};
 
 // Abre el contenido del elemento en una ventana nueva e imprime.
 // Usa inline styles del div #reporte-pago-print para evitar dependencias de CSS.
-window.simonPrint.printReporte = function (elementId) {
+window.simonPrint.printReporte = function (elementId, titulo) {
     var el = document.getElementById(elementId);
     if (!el) return;
     var win = window.open('', '_blank', 'width=900,height=700,scrollbars=yes');
     if (!win) return;
+    var tituloDoc = (titulo && String(titulo).trim()) || 'Comprobante de Pago - SIMON 360';
     win.document.write('<!DOCTYPE html><html><head>');
     win.document.write('<meta charset="utf-8">');
-    win.document.write('<title>Comprobante de Pago - SIMON 360</title>');
+    win.document.write('<title>' + tituloDoc + '</title>');
     win.document.write('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous">');
     win.document.write('<style>');
     win.document.write('@page{margin:10mm 15mm}');
