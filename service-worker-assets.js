@@ -1,5 +1,5 @@
 self.assetsManifest = {
-  "version": "xzK28m7t",
+  "version": "b7SLOu6o",
   "assets": [
     {
       "hash": "sha256-J9aQanVM7q7gi6i9GNvRtUfFn5k09zsxgAxwQQHsJl4=",
@@ -130,7 +130,7 @@ self.assetsManifest = {
       "url": "_framework/Microsoft.JSInterop.wasm"
     },
     {
-      "hash": "sha256-8X8DafJ67D4hVNUx/Y8T0VUIQkpmWfa39LKlL98XjjY=",
+      "hash": "sha256-1Kyma7n8egzsqYqzx829e4z/XZ57yw337jT97YnI53c=",
       "url": "_framework/SIMON_WEB_360.wasm"
     },
     {
@@ -246,7 +246,7 @@ self.assetsManifest = {
       "url": "_framework/System.wasm"
     },
     {
-      "hash": "sha256-rVpxsG+WKGE8amdWp29TU8XAHBGYVWgB8vV7s8Gf2+Y=",
+      "hash": "sha256-9NV8PHZUkryc2UQKtEBhJ/MlrRRCzL7w4SFfa+Me0vk=",
       "url": "_framework/blazor.boot.json"
     },
     {
@@ -274,7 +274,7 @@ self.assetsManifest = {
       "url": "_framework/icudt.dat"
     },
     {
-      "hash": "sha256-gAy6I/yDLKfib3jJPFGoxeNBXgZamYqGXZ/R6JLRM3g=",
+      "hash": "sha256-POhJv+5Lz+TuJOrAil1puA/5NiawzU9mu5ua9nE0HPE=",
       "url": "appsettings.json"
     },
     {

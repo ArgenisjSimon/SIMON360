@@ -1,4 +1,4 @@
-/* Manifest version: xzK28m7t */
+/* Manifest version: b7SLOu6o */
 // ¡Precaución! Entender las implicaciones antes de publicar con soporte offline:
 // https://aka.ms/blazor-offline-considerations
 

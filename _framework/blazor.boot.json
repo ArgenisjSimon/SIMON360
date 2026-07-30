@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "SIMON_WEB_360",
   "resources": {
-    "hash": "sha256-NY9MGnWsSXb0EfgjtX5h2nxOhyWvBjpQjKGxIHJf+ow=",
+    "hash": "sha256-dYupcTbxgvPFcdBVDvRS6JYhBbgfMh5fhLp3YwviLPA=",
     "jsModuleNative": {
       "dotnet.native.js": "sha256-JTswf4CBcNmmrTGm6DppxYNII8GVEmbA3iXD3bU1fcA="
     },
@@ -65,7 +65,7 @@
       "System.Threading.wasm": "sha256-umeu0Sm9RMnVh+6GP0K2C2DZn7Zi8iU4AgHMc/tejKk=",
       "System.wasm": "sha256-j0ZGZpl3U3v6Y5aQxnvY7OqOdRv9E3uPI4tGitwhjXI=",
       "System.Private.CoreLib.wasm": "sha256-AxKvqReuw1AItHw7n/IulI8Rz+yr4/Tc4C762JN+AoU=",
-      "SIMON_WEB_360.wasm": "sha256-8X8DafJ67D4hVNUx/Y8T0VUIQkpmWfa39LKlL98XjjY="
+      "SIMON_WEB_360.wasm": "sha256-1Kyma7n8egzsqYqzx829e4z/XZ57yw337jT97YnI53c="
     }
   },
   "cacheBootResources": true,
