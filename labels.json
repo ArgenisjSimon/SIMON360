@@ -1234,6 +1234,7 @@
         "titulo": "Pedidos",
         "nombre": "pedido",
         "tabla_id": "#Pedido",
+        "cantidad_label": "Peso/Cantidad",
         "cliente_label": "Cliente",
         "cca_label": "Cod. Cliente",
         "cca_placeholder": "Buscar cliente",
@@ -1842,6 +1843,22 @@
       }
     }
   },
+  "2": {
+    "nombre": "Empresa 2",
+    "formularios": {
+      "pedidos": {
+        "titulo": "Pedidos",
+        "nombre": "pedido",
+        "tabla_id": "#Pedido",
+        "cantidad_label": "Peso/Cantidad",
+        "cliente_label": "Cliente",
+        "cca_label": "Cod. Cliente",
+        "cca_placeholder": "Buscar cliente",
+        "Opp_label": "Opp",
+        "numero_pedido_label": "N° Pedido"
+      }
+    }
+  },
   "DEFAULT": {
     "nombre": "General",
     "formularios": {
@@ -2201,6 +2218,7 @@
         "titulo": "Pedidos",
         "nombre": "pedido",
         "tabla_id": "#Pedido",
+        "cantidad_label": "Cantidad",
         "cliente_label": "Productor",
         "cca_label": "CCA",
         "cca_placeholder": "Buscar productor",

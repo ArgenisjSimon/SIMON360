@@ -92,4 +92,96 @@ code {
 .animate-modal {
     animation: zoomFade 0.25s ease-out;
 }
- 
+
+/* Home (SIMON_WEB_360/Pages/Home.razor): entrada animada del hero, chips de
+   categoria y cards de modulos. animation-delay se fija inline por elemento
+   para lograr el efecto "stagger" (cada item entra un poco despues del anterior). */
+@keyframes simonFadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-14px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes simonFadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.simon-fade-in-down {
+    animation: simonFadeInDown 0.5s ease-out both;
+}
+
+.simon-fade-in-up {
+    opacity: 0;
+    animation: simonFadeInUp 0.45s ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .simon-fade-in-down, .simon-fade-in-up {
+        animation: none;
+        opacity: 1;
+    }
+}
+
+/* Buscador de módulos (barra de categorías): el input se "despliega" desde el
+   botón de la lupa en vez de aparecer de golpe. transform-origin queda a la
+   izquierda porque el botón que lo dispara es el elemento más a la izquierda
+   del grupo alineado a la derecha (chips + buscador). */
+@keyframes simonSearchExpand {
+    0% {
+        opacity: 0;
+        transform: scaleX(0.35) scaleY(0.85);
+    }
+
+    60% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 1;
+        transform: scaleX(1) scaleY(1);
+    }
+}
+
+@keyframes simonPopIn {
+    from {
+        opacity: 0;
+        transform: scale(0.7);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.simon-search-expand {
+    transform-origin: left center;
+    animation: simonSearchExpand 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.simon-pop-in {
+    animation: simonPopIn 0.2s ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .simon-search-expand, .simon-pop-in {
+        animation: none;
+        opacity: 1;
+        transform: none;
+    }
+}
+

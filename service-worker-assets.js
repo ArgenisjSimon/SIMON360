@@ -1,5 +1,5 @@
 self.assetsManifest = {
-  "version": "b7SLOu6o",
+  "version": "YNbFC3dY",
   "assets": [
     {
       "hash": "sha256-J9aQanVM7q7gi6i9GNvRtUfFn5k09zsxgAxwQQHsJl4=",
@@ -130,7 +130,7 @@ self.assetsManifest = {
       "url": "_framework/Microsoft.JSInterop.wasm"
     },
     {
-      "hash": "sha256-1Kyma7n8egzsqYqzx829e4z/XZ57yw337jT97YnI53c=",
+      "hash": "sha256-qbSsl8f34MH1Zlp6hIQfFrkReq5Bz/8gCfpo6kieCso=",
       "url": "_framework/SIMON_WEB_360.wasm"
     },
     {
@@ -246,7 +246,7 @@ self.assetsManifest = {
       "url": "_framework/System.wasm"
     },
     {
-      "hash": "sha256-9NV8PHZUkryc2UQKtEBhJ/MlrRRCzL7w4SFfa+Me0vk=",
+      "hash": "sha256-yrWGdGEtFG9pfHeWZiHLtbmnqj6f0UKHCiGZdORtw+k=",
       "url": "_framework/blazor.boot.json"
     },
     {
@@ -274,7 +274,7 @@ self.assetsManifest = {
       "url": "_framework/icudt.dat"
     },
     {
-      "hash": "sha256-POhJv+5Lz+TuJOrAil1puA/5NiawzU9mu5ua9nE0HPE=",
+      "hash": "sha256-4T16dYQB7jcR/Ol8RyRtbDJ6uk+ml47tvgR4Wq+yeDY=",
       "url": "appsettings.json"
     },
     {
@@ -282,7 +282,7 @@ self.assetsManifest = {
       "url": "css/Logo.css"
     },
     {
-      "hash": "sha256-4yaz0XZGIM8ow7Cn6uaLpzuPcheMgdYmLkce+x+zwTg=",
+      "hash": "sha256-HqbbV8m6PlBpzN18Kd42Ma/HfrA+In964oQ02CYNSTc=",
       "url": "css/app.css"
     },
     {
@@ -298,12 +298,16 @@ self.assetsManifest = {
       "url": "icon-maskable-512.png"
     },
     {
-      "hash": "sha256-XczuYzbgzkEDy2d7FD/EzgqhCrVKU0Tn9nm3h23OZk8=",
+      "hash": "sha256-8CPuhc2s7h9//NaehPhGbTpevcICCU4V1SIn2ja8smA=",
       "url": "index.html"
     },
     {
       "hash": "sha256-tKcuyIQgQsBRYonmvxUZsfpu9szzI2caSAN5RRqfSq4=",
       "url": "js/auth.js"
+    },
+    {
+      "hash": "sha256-W3YRnAFl9xR/D2+jgWTVQwQnX7O0Zovil3pXNss3ank=",
+      "url": "js/avatarCrop.js"
     },
     {
       "hash": "sha256-TiwRZHUCpXAwdc3neDgmMlfFEtdwHyyf7tWNo+nuZss=",
@@ -354,7 +358,7 @@ self.assetsManifest = {
       "url": "js/tokenHelper.js"
     },
     {
-      "hash": "sha256-Hodv+IVxJl03MK6kZHuLz2DDrSKWb9YyUerM2OrmTpw=",
+      "hash": "sha256-tQiLdJPA15bZTHevjPIspKI5jp30KE7LX3hBpgdk0hg=",
       "url": "labels.json"
     },
     {
