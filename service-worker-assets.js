@@ -1,5 +1,5 @@
 self.assetsManifest = {
-  "version": "YNbFC3dY",
+  "version": "XKERV7HX",
   "assets": [
     {
       "hash": "sha256-J9aQanVM7q7gi6i9GNvRtUfFn5k09zsxgAxwQQHsJl4=",
@@ -58,7 +58,7 @@ self.assetsManifest = {
       "url": "_framework/Microsoft.AspNetCore.Components.WebAssembly.wasm"
     },
     {
-      "hash": "sha256-aPdkGbf/hq1StY75VJGIZdSrit2KJ7MAp7BVZWm/8hA=",
+      "hash": "sha256-grJ6oUl14SzNndg8Ngfon0E0KQgQDtnOwY/FRgofoP4=",
       "url": "_framework/Microsoft.AspNetCore.Components.wasm"
     },
     {
@@ -130,7 +130,7 @@ self.assetsManifest = {
       "url": "_framework/Microsoft.JSInterop.wasm"
     },
     {
-      "hash": "sha256-qbSsl8f34MH1Zlp6hIQfFrkReq5Bz/8gCfpo6kieCso=",
+      "hash": "sha256-7mi4/LNJ+UXhYTCrFu/D6Ay3CoQcQzTGnA3x5+i+hps=",
       "url": "_framework/SIMON_WEB_360.wasm"
     },
     {
@@ -202,7 +202,7 @@ self.assetsManifest = {
       "url": "_framework/System.ObjectModel.wasm"
     },
     {
-      "hash": "sha256-AxKvqReuw1AItHw7n/IulI8Rz+yr4/Tc4C762JN+AoU=",
+      "hash": "sha256-fsX7EVTz9cZHskH+nU7iE3kakxpYsYLkVME+tAC/s/U=",
       "url": "_framework/System.Private.CoreLib.wasm"
     },
     {
@@ -246,7 +246,7 @@ self.assetsManifest = {
       "url": "_framework/System.wasm"
     },
     {
-      "hash": "sha256-yrWGdGEtFG9pfHeWZiHLtbmnqj6f0UKHCiGZdORtw+k=",
+      "hash": "sha256-X1BXQR13b4a85IV4c4UpvyoBGdx45inAtlWngZiZ+tM=",
       "url": "_framework/blazor.boot.json"
     },
     {
@@ -274,7 +274,7 @@ self.assetsManifest = {
       "url": "_framework/icudt.dat"
     },
     {
-      "hash": "sha256-4T16dYQB7jcR/Ol8RyRtbDJ6uk+ml47tvgR4Wq+yeDY=",
+      "hash": "sha256-CnWRL0HED5ZREP5L1fI/DXDWsB6EpTB5rwnLtyIq+VY=",
       "url": "appsettings.json"
     },
     {
@@ -298,7 +298,7 @@ self.assetsManifest = {
       "url": "icon-maskable-512.png"
     },
     {
-      "hash": "sha256-8CPuhc2s7h9//NaehPhGbTpevcICCU4V1SIn2ja8smA=",
+      "hash": "sha256-wc4S1wm0IPj99kNz5d4cVneZdebwfxzxmtxYITW8lHk=",
       "url": "index.html"
     },
     {
@@ -334,6 +334,10 @@ self.assetsManifest = {
       "url": "js/leafletMap.js"
     },
     {
+      "hash": "sha256-9N8GZXPFA4aFuRmKGR3kx2jw6wqGRuVxQDLv/xTfDXc=",
+      "url": "js/lotesMap.js"
+    },
+    {
       "hash": "sha256-EQbfMc1opHtV5OoyOfAiFhQo1y2X8Uy2MJcp3rqpJOI=",
       "url": "js/network.js"
     },
@@ -358,7 +362,7 @@ self.assetsManifest = {
       "url": "js/tokenHelper.js"
     },
     {
-      "hash": "sha256-tQiLdJPA15bZTHevjPIspKI5jp30KE7LX3hBpgdk0hg=",
+      "hash": "sha256-81RKebPvLO6SqNiJhfScaihp9SpxbaZxE5Ck+Y1bmCY=",
       "url": "labels.json"
     },
     {
