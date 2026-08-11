@@ -510,6 +510,23 @@
   "20": {
     "nombre": "Pyto Don Nacho",
     "formularios": {
+      "iit": {
+        "titulo_singular": "Labor",
+        "titulo_plural": "Planificación de Labores",
+        "nuevo": "Nueva Labor",
+        "editar": "Editar Labor",
+        "desc_nuevo": "Complete la información para planificar una nueva labor",
+        "desc_editar": "Modifique la información de la labor existente",
+        "btn_crear": "Crear Labor",
+        "btn_actualizar": "Actualizar Labor",
+        "info_titulo": "Información de la Labor",
+        "actividades_en": "en esta labor",
+        "error_cargar": "Error al cargar la labor",
+        "aviso_creado": "Labor Creada",
+        "aviso_no_creado": "Labor No Creada",
+        "msg_creado": "La labor #{0} se creó exitosamente",
+        "msg_offline": "Labor guardada localmente. Se sincronizará cuando vuelva el internet."
+      },
       "productores": {
         "cedula_label": "Cédula / RIF",
         "cedula_placeholder": "Ej: V-12345678",
@@ -2060,6 +2077,23 @@
   "DEFAULT": {
     "nombre": "General",
     "formularios": {
+      "iit": {
+        "titulo_singular": "IIT",
+        "titulo_plural": "IIT",
+        "nuevo": "Nuevo IIT",
+        "editar": "Editar IIT",
+        "desc_nuevo": "Complete la información para crear una nueva IIT",
+        "desc_editar": "Modifique la información del IIT existente",
+        "btn_crear": "Crear IIT",
+        "btn_actualizar": "Actualizar IIT",
+        "info_titulo": "Información del IIT",
+        "actividades_en": "en este IIT",
+        "error_cargar": "Error al cargar el IIT",
+        "aviso_creado": "IIT Creado",
+        "aviso_no_creado": "IIT No Creado",
+        "msg_creado": "El IIT #{0} se creó exitosamente",
+        "msg_offline": "IIT guardado localmente. Se sincronizará cuando vuelva el internet."
+      },
       "vendedores": {
         "titulo_listado": "Vendedores registrados",
         "titulo_nuevo": "Nuevo Vendedor",

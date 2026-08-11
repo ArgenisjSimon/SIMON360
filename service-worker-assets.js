@@ -1,5 +1,5 @@
 self.assetsManifest = {
-  "version": "XKERV7HX",
+  "version": "INZpPXGG",
   "assets": [
     {
       "hash": "sha256-J9aQanVM7q7gi6i9GNvRtUfFn5k09zsxgAxwQQHsJl4=",
@@ -130,7 +130,7 @@ self.assetsManifest = {
       "url": "_framework/Microsoft.JSInterop.wasm"
     },
     {
-      "hash": "sha256-7mi4/LNJ+UXhYTCrFu/D6Ay3CoQcQzTGnA3x5+i+hps=",
+      "hash": "sha256-QpFdt2ynzMtr2UqMLXeBd/FBiMsH4GXCcMboAZdklsA=",
       "url": "_framework/SIMON_WEB_360.wasm"
     },
     {
@@ -178,7 +178,7 @@ self.assetsManifest = {
       "url": "_framework/System.Linq.Expressions.wasm"
     },
     {
-      "hash": "sha256-iWuuBoLtGNkqSB3//CwCcDvocYKDRpjCgxCpf83d000=",
+      "hash": "sha256-2nhrlb14zV8thnvF9BYyFfT3QpwDxkQEcUnOVkZU120=",
       "url": "_framework/System.Linq.wasm"
     },
     {
@@ -202,7 +202,7 @@ self.assetsManifest = {
       "url": "_framework/System.ObjectModel.wasm"
     },
     {
-      "hash": "sha256-fsX7EVTz9cZHskH+nU7iE3kakxpYsYLkVME+tAC/s/U=",
+      "hash": "sha256-ZgP5FQuDkQiZ5eMWU52jFQCpdqtO2dSkvU402QjKXXw=",
       "url": "_framework/System.Private.CoreLib.wasm"
     },
     {
@@ -218,7 +218,7 @@ self.assetsManifest = {
       "url": "_framework/System.Runtime.Serialization.Primitives.wasm"
     },
     {
-      "hash": "sha256-EBbdoigA3SqtTPWsBfPp7ne3eCFAxKpx8V/HqtMyv2c=",
+      "hash": "sha256-UYA1LF6auQcodtyeu1uCe3NGVgBnzNaooqgYAUB/UVo=",
       "url": "_framework/System.Runtime.wasm"
     },
     {
@@ -246,7 +246,7 @@ self.assetsManifest = {
       "url": "_framework/System.wasm"
     },
     {
-      "hash": "sha256-X1BXQR13b4a85IV4c4UpvyoBGdx45inAtlWngZiZ+tM=",
+      "hash": "sha256-2mwi4rgHylwqzutI8IYb7cKdE5NaKedv8oMLMBvXPbs=",
       "url": "_framework/blazor.boot.json"
     },
     {
@@ -274,7 +274,7 @@ self.assetsManifest = {
       "url": "_framework/icudt.dat"
     },
     {
-      "hash": "sha256-CnWRL0HED5ZREP5L1fI/DXDWsB6EpTB5rwnLtyIq+VY=",
+      "hash": "sha256-s5pD3MOB5c15L+/F+NBmpFM1a53jnqzCd9fPmJEezB8=",
       "url": "appsettings.json"
     },
     {
@@ -362,7 +362,7 @@ self.assetsManifest = {
       "url": "js/tokenHelper.js"
     },
     {
-      "hash": "sha256-81RKebPvLO6SqNiJhfScaihp9SpxbaZxE5Ck+Y1bmCY=",
+      "hash": "sha256-d0nux54ChwRsVaS9pCk90Mxm3KB/TVSFSDBrBNSsoJE=",
       "url": "labels.json"
     },
     {
