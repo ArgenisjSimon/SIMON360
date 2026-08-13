@@ -47,20 +47,69 @@ window.lotesMap = (function () {
     // s.relleno lo mueve el usuario con el control de transparencia. En 0
     // el lote queda solo delimitado: el fill sigue existiendo (transparente)
     // para que el poligono no deje de responder al click.
+    // Colores del filtro por labor. No se toma el color del lote: el punto
+    // del filtro es leer el estado de un vistazo, y para eso los 23
+    // tablones tienen que hablar el mismo idioma de color.
+    const COLOR_ESTADO = {
+        ejecutada:  '#16a34a',
+        vencida:    '#dc2626',
+        pendiente:  '#d97706'
+    };
+    // El tablon que no tiene esa labor. Gris, no invisible: sigue siendo
+    // terreno de la finca y su ausencia tambien es informacion.
+    const COLOR_SIN_LABOR = '#9ca3af';
+
     function _estilo(s, lote, resaltado) {
         const base = s.relleno ?? RELLENO_DEFECTO;
-        const opacidad = lote.esSembrable ? base : base * FACTOR_NO_SEMBRABLE;
+        let opacidad = lote.esSembrable ? base : base * FACTOR_NO_SEMBRABLE;
+
+        // El que no pasa el filtro no se esconde: se atenua. Esconderlo
+        // dejaria huecos en el terreno y se perderia la referencia de
+        // donde esta lo que si cumple.
+        if (lote.atenuado) opacidad = Math.min(opacidad, 0.12);
 
         // Sin relleno, un borde gris fino se pierde contra el satelite y el
         // lote deja de ser identificable: la linea toma el color del lote.
         const sinRelleno = opacidad < 0.15;
 
+        // Con filtro por labor manda el estado; sin el, el color del lote.
+        const relleno = lote.estadoLabor
+            ? (COLOR_ESTADO[lote.estadoLabor] || COLOR_SIN_LABOR)
+            : (lote.atenuado ? COLOR_SIN_LABOR : (lote.color || COLOR_DEFECTO));
+
         return {
-            color: resaltado ? '#facc15' : (sinRelleno ? (lote.color || COLOR_DEFECTO) : '#222222'),
-            weight: resaltado ? 3 : (sinRelleno ? 2 : 1),
-            fillColor: lote.color || COLOR_DEFECTO,
+            color: resaltado ? '#facc15'
+                 : lote.atenuado ? '#9ca3af'
+                 : (sinRelleno ? relleno : '#222222'),
+            weight: resaltado ? 3 : (lote.atenuado ? 1 : (sinRelleno ? 2 : 1)),
+            // Atenuado tambien en el borde: con el contorno a plena
+            // opacidad el lote sigue saltando a la vista y el filtro no se
+            // nota.
+            opacity: lote.atenuado ? 0.45 : 1,
+            fillColor: relleno,
             fillOpacity: opacidad
         };
+    }
+
+    // ── Filtros: repinta sin rehacer el mapa ─────────────────────
+    // cambios: [{ id, atenuado, estadoLabor }]
+    //
+    // Existe para no llamar a init en cada cambio de filtro: init destruye
+    // el mapa y vuelve a encuadrar, asi que el usuario perderia el zoom y
+    // el encuadre cada vez que toca un desplegable.
+    function setFiltros(mapId, cambios) {
+        const s = estados[mapId];
+        if (!s) return;
+
+        (cambios || []).forEach(c => {
+            const p = s.poligonos[c.id];
+            if (!p) return;
+
+            p.lote.atenuado    = !!c.atenuado;
+            p.lote.estadoLabor = c.estadoLabor || null;
+
+            p.capa.setStyle(_estilo(s, p.lote, String(p.lote.id) === String(s.resaltado)));
+        });
     }
 
     // ── Transparencia del relleno (0 = solo contorno) ────────────
@@ -87,17 +136,44 @@ window.lotesMap = (function () {
         const desc = lote.descripcion
             ? `<br><span style="font-size:11px;color:#444">${_escapar(lote.descripcion)}</span>`
             : '';
-        return `<div style="font-family:system-ui,sans-serif;min-width:150px;max-width:240px">
+
+        // Variedad, clase y fecha de corte del CCA vigente. El bloque
+        // entero se omite si el lote no tiene CCA: un tablon que no entro
+        // a ningun presupuesto no tiene nada que mostrar, y tres guiones
+        // ocupan lo mismo que el dato sin decir nada.
+        const filas = [
+            ['Variedad', lote.variedad],
+            ['Clase',    lote.clase],
+            ['F. corte', lote.fCorte]
+        ].filter(([, v]) => v);
+
+        const cca = filas.length
+            ? `<div style="margin-top:6px;padding-top:6px;border-top:1px solid #e5e7eb;font-size:11px;color:#374151">
+                   ${filas.map(([k, v]) =>
+                       `<div style="display:flex;gap:8px;justify-content:space-between">
+                            <span style="color:#6b7280">${k}</span>
+                            <b>${_escapar(String(v))}</b>
+                        </div>`).join('')}
+               </div>`
+            : '';
+
+        return `<div style="font-family:system-ui,sans-serif;min-width:170px;max-width:240px">
                     <b style="font-size:13px">Lote ${_escapar(lote.nombre || '')}</b><br>
                     ${badge}<br>
                     <span style="font-size:12px">${_escapar(lote.tipo || '')}</span><br>
-                    <b>${ha} ha</b>${sql}${desc}
+                    <b>${ha} ha</b>${sql}${desc}${cca}
                 </div>`;
     }
 
     // ── init ─────────────────────────────────────────────────────
     // lotes: [{ id, nombre, descripcion, geometria, color, esSembrable,
-    //           areaLote, areaSql, tipo }]
+    //           areaLote, areaSql, tipo, variedad, clase, fCorte,
+    //           atenuado, estadoLabor }]
+    // variedad/clase/fCorte vienen del CCA vigente y pueden faltar: el lote
+    // sin CCA no tiene variedad ni corte todavia.
+    // atenuado = no pasa el filtro de ciclo o rubro.
+    // estadoLabor = 'ejecutada' | 'vencida' | 'pendiente' | 'sin', o null
+    // cuando no hay filtro por labor.
     function init(mapId, lotes, dotnetRef) {
         destroy(mapId);
 
@@ -481,6 +557,7 @@ window.lotesMap = (function () {
         aislarLote,
         mostrarTodos,
         setRelleno,
+        setFiltros,
         verTodo,
         marcarPunto,
         limpiarPunto,

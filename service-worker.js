@@ -1,4 +1,3 @@
-/* Manifest version: INZpPXGG */
 // ¡Precaución! Entender las implicaciones antes de publicar con soporte offline:
 // https://aka.ms/blazor-offline-considerations
 
@@ -56,3 +55,4 @@ async function onFetch(event) {
 
     return cachedResponse || fetch(event.request);
 }
+/* Manifest version: 6Ev8/gD3 */

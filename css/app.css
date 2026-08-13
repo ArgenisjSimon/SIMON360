@@ -185,3 +185,89 @@ code {
     }
 }
 
+
+/* ============================================================
+   Botón burbuja — botón flotante que se recuesta contra el borde
+   ============================================================
+   Lo usa el "Nuevo pedido" de /Inventario. Va acá y no en clases de Tailwind
+   porque el efecto depende de un atributo (data-lado, que escribe
+   botonBurbuja.js al pegarlo a un costado) y de estados que no son variantes
+   de Tailwind. La POSICIÓN la pone el JS; esto es cómo se recuesta y cómo
+   vuelve.
+   ============================================================ */
+
+.burbuja {
+    position: fixed;
+    z-index: 40;
+
+    /* El arrastre lo maneja el JS con eventos de puntero: sin esto, en teléfono
+       el gesto se lo lleva el scroll de la página y el botón no se mueve. */
+    touch-action: none;
+
+    transition: transform .28s cubic-bezier(.4, 0, .2, 1),
+                opacity .28s ease,
+                box-shadow .28s ease;
+}
+
+/* En reposo se recuesta contra el costado y queda a media tinta: asoma lo
+   suficiente para verse y agarrarse, sin tapar lo que hay debajo. */
+.burbuja[data-lado="der"] {
+    transform: translateX(46%);
+    opacity: .55;
+}
+
+.burbuja[data-lado="izq"] {
+    transform: translateX(-46%);
+    opacity: .55;
+}
+
+/* Apuntarlo lo trae entero. .burbuja-visible es la misma llegada por otro
+   camino: la pista del arranque y el toque en pantalla táctil, donde no hay
+   hover que valga. */
+.burbuja[data-lado]:hover,
+.burbuja[data-lado]:focus-visible,
+.burbuja[data-lado].burbuja-visible {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+/* Mientras se arrastra manda el left/top que escribe el JS: un transform acá
+   dejaría el botón corrido respecto del dedo. */
+.burbuja.burbuja-arrastrando {
+    transform: none !important;
+    opacity: 1;
+    transition: none;
+    box-shadow: 0 25px 50px -12px rgb(0 0 0 / .45);
+}
+
+/* El texto solo existe cuando el botón está a la vista. Escondido tiene que
+   medir lo del ícono: si midiera lo del texto, recostarlo dejaría asomando
+   media palabra en vez de un ícono redondo. */
+.burbuja .burbuja-texto {
+    max-width: 0;
+    opacity: 0;
+    margin-left: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    transition: max-width .28s cubic-bezier(.4, 0, .2, 1),
+                opacity .18s ease,
+                margin-left .28s ease;
+}
+
+.burbuja[data-lado]:hover .burbuja-texto,
+.burbuja[data-lado]:focus-visible .burbuja-texto,
+.burbuja[data-lado].burbuja-visible .burbuja-texto {
+    max-width: 10rem;
+    opacity: 1;
+    margin-left: .5rem;
+}
+
+/* Sin el JS —un script que no cargó, un error temprano— el botón se queda sin
+   data-lado: entonces no se recuesta ni se transparenta, y sigue siendo un
+   botón normal en su esquina. Vale más eso que un control invisible. */
+
+@media (prefers-reduced-motion: reduce) {
+    .burbuja, .burbuja .burbuja-texto {
+        transition: none;
+    }
+}
