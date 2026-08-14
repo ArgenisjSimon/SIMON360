@@ -37,14 +37,31 @@ window.dictado = (function () {
         rec.interimResults = true;
 
         rec.onresult = (evento) => {
+            // Un reconocedor de una sesión anterior puede seguir largando
+            // eventos después de detenerlo: lo que diga ya no es de este
+            // informe.
+            if (!estado || estado.rec !== rec) return;
+
             let confirmado = '';
             let provisorio = '';
 
-            for (let i = evento.resultIndex; i < evento.results.length; i++) {
+            // NO se usa evento.resultIndex. En Chrome de Android suele venir
+            // en 0 aunque el array ya traiga resultados viejos: arrancar el
+            // recorrido ahí reenvía TODO lo dicho en cada evento y el informe
+            // termina con "se supone que se supone que..." creciendo solo. La
+            // cuenta de qué se mandó se lleva acá y no se le cree al motor.
+            for (let i = 0; i < evento.results.length; i++) {
                 const texto = evento.results[i][0].transcript;
-                if (evento.results[i].isFinal) confirmado += texto;
-                else provisorio += texto;
+
+                if (!evento.results[i].isFinal) { provisorio += texto; continue; }
+
+                if (i >= estado.emitidos) {
+                    confirmado += texto;
+                    estado.emitidos = i + 1;
+                }
             }
+
+            if (!confirmado && !provisorio) return;
 
             // Lo confirmado se agrega al informe; lo provisorio solo se
             // muestra en gris y se reemplaza en la siguiente pasada.
@@ -63,11 +80,14 @@ window.dictado = (function () {
         // vuelve a arrancar.
         rec.onend = () => {
             if (estado && estado.modo === 'envivo' && !estado.detenido) {
+                // Sesión nueva: el motor arranca su lista de resultados de
+                // cero, así que la cuenta de lo emitido también.
+                estado.emitidos = 0;
                 try { rec.start(); } catch { /* ya arrancado */ }
             }
         };
 
-        estado = { modo: 'envivo', ref: dotnetRef, rec: rec, detenido: false };
+        estado = { modo: 'envivo', ref: dotnetRef, rec: rec, detenido: false, emitidos: 0 };
         rec.start();
         return 'envivo';
     }

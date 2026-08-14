@@ -25,7 +25,7 @@
       "url": "_framework\/icudt.dat"
     },
     {
-      "hash": "sha256-VNzgbLVLQNNwWwrjEsXW48gL5XQnOsP2eOnmtykDHCE=",
+      "hash": "sha256-aR0B7W2q1TvAurUIH2qWVqD7Dg66G8am7aewrQPi0uk=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -113,7 +113,7 @@
       "url": "_framework\/Microsoft.JSInterop.WebAssembly.wasm"
     },
     {
-      "hash": "sha256-pEnJSPG7bNRR\/6kair66PVdUHhAVbKLTzXjS3ujzPCc=",
+      "hash": "sha256-x8PhDNwBFtvmX2E\/Crv431GFezoc1YyaLe1LL09hiWA=",
       "url": "_framework\/SIMON_WEB_360.wasm"
     },
     {
@@ -185,7 +185,7 @@
       "url": "_framework\/System.ObjectModel.wasm"
     },
     {
-      "hash": "sha256-gJ6pOdUFt\/1jafeiqgPXJfCZszZmZHm0+V4qWfcIEMo=",
+      "hash": "sha256-VdYRjLftctsz5lAk5KFriiz+J2s9LmqOJOumOZd84AY=",
       "url": "_framework\/System.Private.CoreLib.wasm"
     },
     {
@@ -201,7 +201,7 @@
       "url": "_framework\/System.Runtime.Serialization.Primitives.wasm"
     },
     {
-      "hash": "sha256-3cVk5D2m6O01qyzrr3iF7TNi6PFagSTFKa2b\/\/6\/r5I=",
+      "hash": "sha256-oJECe\/pFgAEPMtzOAzHRO\/febQ5WHvRvIQ9dq+fyyrc=",
       "url": "_framework\/System.Runtime.wasm"
     },
     {
@@ -229,7 +229,7 @@
       "url": "_framework\/System.wasm"
     },
     {
-      "hash": "sha256-3cfPVx1erfTKLfW0eoTqsEUyE6ObBs5x5dMYKYEJlpI=",
+      "hash": "sha256-qGoMQ4L\/fc7Rj5Biu4TfyeoFobSP3WAlJexL4KyoVQw=",
       "url": "appsettings.json"
     },
     {
@@ -243,6 +243,10 @@
     {
       "hash": "sha256-AyQ7nIfwP6mL9w3aBDxW\/6t91Iqy1RLoo+Z7Z9KgUd8=",
       "url": "css\/Logo.css"
+    },
+    {
+      "hash": "sha256-aXtn3P3BQToN6bpBmBZMSH0GO6ffdJiZdi+cfSYpoR8=",
+      "url": "css\/tema-tokens.css"
     },
     {
       "hash": "sha256-fumU0R8m0sLjKbj3v\/uBqk36\/FOb4fh8IeMq+mP7A18=",
@@ -297,7 +301,7 @@
       "url": "Imagenes\/simon.png"
     },
     {
-      "hash": "sha256-MK6+GXz8FXJHInfjlClcQ\/Y+BGNOtp0SJfgzp1ZPKOg=",
+      "hash": "sha256-czUbR1AOsk4mhOk6n8WTjTn+6one1WCKgmuqBQV02Sk=",
       "url": "index.html"
     },
     {
@@ -325,7 +329,7 @@
       "url": "js\/deviceInfo.js"
     },
     {
-      "hash": "sha256-xea2FjXHd\/TOq86\/Rm3uUJFfkYrrTiD7uEGA\/s2hrUM=",
+      "hash": "sha256-hcVHsS2LkronZzC6I6VFOc2lOtD8K2+2EiDge+1GIxM=",
       "url": "js\/dictado.js"
     },
     {
@@ -385,5 +389,5 @@
       "url": "videos\/Splash_modoClaro.mp4"
     }
   ],
-  "version": "6Ev8\/gD3"
+  "version": "Zyr55CW7"
 };

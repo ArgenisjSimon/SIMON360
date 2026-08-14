@@ -1,0 +1,296 @@
+/* ============================================================
+   tema-tokens.css — la paleta de la app, como variables
+   ============================================================
+   Fase 0 del tema por empresa (ver .ai/PLAN_TEMA_POR_EMPRESA.md).
+
+   Los ~8.000 colores de la app están escritos como clases de Tailwind
+   (bg-blue-600, text-emerald-500, …). En vez de migrar 190 archivos, en
+   index.html se remapean las escalas de Tailwind a los ROLES de acá, y
+   entonces cambiar la marca de una empresa es escribir estas variables.
+
+        escala Tailwind        rol            qué significa en la app
+        ──────────────────     ────────────   ───────────────────────────
+        blue      (1.959 usos) primary        color de marca
+        indigo    (  824 usos) primary-alt    marca secundaria
+        emerald   (1.203 usos) accent         acento (menú, chips)
+        green     (1.085 usos) ok             confirmado / ejecutado
+        red       (1.312 usos) crit           error / vencido / anulado
+        amber     (1.036 usos) warn           pendiente / alerta
+        yellow    (  188 usos) warn-soft
+        orange    (  204 usos) warn-strong
+        purple    (  336 usos) new
+        teal      (   71 usos) info
+
+   REGLAS
+   1. Los valores de este archivo son EXACTAMENTE los de Tailwind 3.4.17
+      (la versión que sirve el CDN). Verificado tono por tono contra el
+      bundle: 110/110 idénticos. Una empresa sin tema configurado tiene
+      que ver la app igual que siempre — si acá se cambia un número, se
+      le cambia el color a TODOS los clientes.
+   2. El formato es "R G B" sin coma y sin rgb(): así el puente de
+      index.html puede hacer rgb(var(--c-…) / <alpha-value>) y las
+      clases con opacidad (bg-blue-600/40) siguen funcionando.
+   3. Al aplicar un tema hay que escribir SIEMPRE los 11 escalones de un
+      rol. Si se pisa solo el 600, el 500 queda con el azul de fábrica y
+      la escala sale de dos colores distintos.
+   ============================================================ */
+
+:root {
+
+  /* primary  ← blue */
+  --c-primary-50: 239 246 255;    /* #eff6ff */
+  --c-primary-100: 219 234 254;   /* #dbeafe */
+  --c-primary-200: 191 219 254;   /* #bfdbfe */
+  --c-primary-300: 147 197 253;   /* #93c5fd */
+  --c-primary-400: 96 165 250;    /* #60a5fa */
+  --c-primary-500: 59 130 246;    /* #3b82f6 */
+  --c-primary-600: 37 99 235;     /* #2563eb */
+  --c-primary-700: 29 78 216;     /* #1d4ed8 */
+  --c-primary-800: 30 64 175;     /* #1e40af */
+  --c-primary-900: 30 58 138;     /* #1e3a8a */
+  --c-primary-950: 23 37 84;      /* #172554 */
+
+  /* primary-alt  ← indigo */
+  --c-primary-alt-50: 238 242 255;   /* #eef2ff */
+  --c-primary-alt-100: 224 231 255;  /* #e0e7ff */
+  --c-primary-alt-200: 199 210 254;  /* #c7d2fe */
+  --c-primary-alt-300: 165 180 252;  /* #a5b4fc */
+  --c-primary-alt-400: 129 140 248;  /* #818cf8 */
+  --c-primary-alt-500: 99 102 241;   /* #6366f1 */
+  --c-primary-alt-600: 79 70 229;    /* #4f46e5 */
+  --c-primary-alt-700: 67 56 202;    /* #4338ca */
+  --c-primary-alt-800: 55 48 163;    /* #3730a3 */
+  --c-primary-alt-900: 49 46 129;    /* #312e81 */
+  --c-primary-alt-950: 30 27 75;     /* #1e1b4b */
+
+  /* accent  ← emerald */
+  --c-accent-50: 236 253 245;    /* #ecfdf5 */
+  --c-accent-100: 209 250 229;   /* #d1fae5 */
+  --c-accent-200: 167 243 208;   /* #a7f3d0 */
+  --c-accent-300: 110 231 183;   /* #6ee7b7 */
+  --c-accent-400: 52 211 153;    /* #34d399 */
+  --c-accent-500: 16 185 129;    /* #10b981 */
+  --c-accent-600: 5 150 105;     /* #059669 */
+  --c-accent-700: 4 120 87;      /* #047857 */
+  --c-accent-800: 6 95 70;       /* #065f46 */
+  --c-accent-900: 6 78 59;       /* #064e3b */
+  --c-accent-950: 2 44 34;       /* #022c22 */
+
+  /* ok  ← green */
+  --c-ok-50: 240 253 244;    /* #f0fdf4 */
+  --c-ok-100: 220 252 231;   /* #dcfce7 */
+  --c-ok-200: 187 247 208;   /* #bbf7d0 */
+  --c-ok-300: 134 239 172;   /* #86efac */
+  --c-ok-400: 74 222 128;    /* #4ade80 */
+  --c-ok-500: 34 197 94;     /* #22c55e */
+  --c-ok-600: 22 163 74;     /* #16a34a */
+  --c-ok-700: 21 128 61;     /* #15803d */
+  --c-ok-800: 22 101 52;     /* #166534 */
+  --c-ok-900: 20 83 45;      /* #14532d */
+  --c-ok-950: 5 46 22;       /* #052e16 */
+
+  /* crit  ← red */
+  --c-crit-50: 254 242 242;    /* #fef2f2 */
+  --c-crit-100: 254 226 226;   /* #fee2e2 */
+  --c-crit-200: 254 202 202;   /* #fecaca */
+  --c-crit-300: 252 165 165;   /* #fca5a5 */
+  --c-crit-400: 248 113 113;   /* #f87171 */
+  --c-crit-500: 239 68 68;     /* #ef4444 */
+  --c-crit-600: 220 38 38;     /* #dc2626 */
+  --c-crit-700: 185 28 28;     /* #b91c1c */
+  --c-crit-800: 153 27 27;     /* #991b1b */
+  --c-crit-900: 127 29 29;     /* #7f1d1d */
+  --c-crit-950: 69 10 10;      /* #450a0a */
+
+  /* warn  ← amber */
+  --c-warn-50: 255 251 235;    /* #fffbeb */
+  --c-warn-100: 254 243 199;   /* #fef3c7 */
+  --c-warn-200: 253 230 138;   /* #fde68a */
+  --c-warn-300: 252 211 77;    /* #fcd34d */
+  --c-warn-400: 251 191 36;    /* #fbbf24 */
+  --c-warn-500: 245 158 11;    /* #f59e0b */
+  --c-warn-600: 217 119 6;     /* #d97706 */
+  --c-warn-700: 180 83 9;      /* #b45309 */
+  --c-warn-800: 146 64 14;     /* #92400e */
+  --c-warn-900: 120 53 15;     /* #78350f */
+  --c-warn-950: 69 26 3;       /* #451a03 */
+
+  /* warn-soft  ← yellow */
+  --c-warn-soft-50: 254 252 232;    /* #fefce8 */
+  --c-warn-soft-100: 254 249 195;   /* #fef9c3 */
+  --c-warn-soft-200: 254 240 138;   /* #fef08a */
+  --c-warn-soft-300: 253 224 71;    /* #fde047 */
+  --c-warn-soft-400: 250 204 21;    /* #facc15 */
+  --c-warn-soft-500: 234 179 8;     /* #eab308 */
+  --c-warn-soft-600: 202 138 4;     /* #ca8a04 */
+  --c-warn-soft-700: 161 98 7;      /* #a16207 */
+  --c-warn-soft-800: 133 77 14;     /* #854d0e */
+  --c-warn-soft-900: 113 63 18;     /* #713f12 */
+  --c-warn-soft-950: 66 32 6;       /* #422006 */
+
+  /* warn-strong  ← orange */
+  --c-warn-strong-50: 255 247 237;    /* #fff7ed */
+  --c-warn-strong-100: 255 237 213;   /* #ffedd5 */
+  --c-warn-strong-200: 254 215 170;   /* #fed7aa */
+  --c-warn-strong-300: 253 186 116;   /* #fdba74 */
+  --c-warn-strong-400: 251 146 60;    /* #fb923c */
+  --c-warn-strong-500: 249 115 22;    /* #f97316 */
+  --c-warn-strong-600: 234 88 12;     /* #ea580c */
+  --c-warn-strong-700: 194 65 12;     /* #c2410c */
+  --c-warn-strong-800: 154 52 18;     /* #9a3412 */
+  --c-warn-strong-900: 124 45 18;     /* #7c2d12 */
+  --c-warn-strong-950: 67 20 7;       /* #431407 */
+
+  /* new  ← purple */
+  --c-new-50: 250 245 255;    /* #faf5ff */
+  --c-new-100: 243 232 255;   /* #f3e8ff */
+  --c-new-200: 233 213 255;   /* #e9d5ff */
+  --c-new-300: 216 180 254;   /* #d8b4fe */
+  --c-new-400: 192 132 252;   /* #c084fc */
+  --c-new-500: 168 85 247;    /* #a855f7 */
+  --c-new-600: 147 51 234;    /* #9333ea */
+  --c-new-700: 126 34 206;    /* #7e22ce */
+  --c-new-800: 107 33 168;    /* #6b21a8 */
+  --c-new-900: 88 28 135;     /* #581c87 */
+  --c-new-950: 59 7 100;      /* #3b0764 */
+
+  /* info  ← teal */
+  --c-info-50: 240 253 250;    /* #f0fdfa */
+  --c-info-100: 204 251 241;   /* #ccfbf1 */
+  --c-info-200: 153 246 228;   /* #99f6e4 */
+  --c-info-300: 94 234 212;    /* #5eead4 */
+  --c-info-400: 45 212 191;    /* #2dd4bf */
+  --c-info-500: 20 184 166;    /* #14b8a6 */
+  --c-info-600: 13 148 136;    /* #0d9488 */
+  --c-info-700: 15 118 110;    /* #0f766e */
+  --c-info-800: 17 94 89;      /* #115e59 */
+  --c-info-900: 19 78 74;      /* #134e4a */
+  --c-info-950: 4 47 46;       /* #042f2e */
+
+  /* ── Escalas secundarias ──────────────────────────────────
+     Menos usadas, pero presentes: la paleta de categorías del Home
+     (MenuTest.ColoresCategoria) usa rose y cyan, así que sin estas el
+     tema teñiría media pantalla y dejaría la otra mitad de fábrica. */
+
+  /* crit-alt  ← rose (57 usos) */
+  --c-crit-alt-50: 255 241 242;    /* #fff1f2 */
+  --c-crit-alt-100: 255 228 230;   /* #ffe4e6 */
+  --c-crit-alt-200: 254 205 211;   /* #fecdd3 */
+  --c-crit-alt-300: 253 164 175;   /* #fda4af */
+  --c-crit-alt-400: 251 113 133;   /* #fb7185 */
+  --c-crit-alt-500: 244 63 94;     /* #f43f5e */
+  --c-crit-alt-600: 225 29 72;     /* #e11d48 */
+  --c-crit-alt-700: 190 18 60;     /* #be123c */
+  --c-crit-alt-800: 159 18 57;     /* #9f1239 */
+  --c-crit-alt-900: 136 19 55;     /* #881337 */
+  --c-crit-alt-950: 76 5 25;       /* #4c0519 */
+
+  /* info-alt  ← cyan (8 usos) */
+  --c-info-alt-50: 236 254 255;    /* #ecfeff */
+  --c-info-alt-100: 207 250 254;   /* #cffafe */
+  --c-info-alt-200: 165 243 252;   /* #a5f3fc */
+  --c-info-alt-300: 103 232 249;   /* #67e8f9 */
+  --c-info-alt-400: 34 211 238;    /* #22d3ee */
+  --c-info-alt-500: 6 182 212;     /* #06b6d4 */
+  --c-info-alt-600: 8 145 178;     /* #0891b2 */
+  --c-info-alt-700: 14 116 144;    /* #0e7490 */
+  --c-info-alt-800: 21 94 117;     /* #155e75 */
+  --c-info-alt-900: 22 78 99;      /* #164e63 */
+  --c-info-alt-950: 8 51 68;       /* #083344 */
+
+  /* info-soft  ← sky (23 usos) */
+  --c-info-soft-50: 240 249 255;    /* #f0f9ff */
+  --c-info-soft-100: 224 242 254;   /* #e0f2fe */
+  --c-info-soft-200: 186 230 253;   /* #bae6fd */
+  --c-info-soft-300: 125 211 252;   /* #7dd3fc */
+  --c-info-soft-400: 56 189 248;    /* #38bdf8 */
+  --c-info-soft-500: 14 165 233;    /* #0ea5e9 */
+  --c-info-soft-600: 2 132 199;     /* #0284c7 */
+  --c-info-soft-700: 3 105 161;     /* #0369a1 */
+  --c-info-soft-800: 7 89 133;      /* #075985 */
+  --c-info-soft-900: 12 74 110;     /* #0c4a6e */
+  --c-info-soft-950: 8 47 73;       /* #082f49 */
+
+  /* new-alt  ← violet (29 usos) */
+  --c-new-alt-50: 245 243 255;    /* #f5f3ff */
+  --c-new-alt-100: 237 233 254;   /* #ede9fe */
+  --c-new-alt-200: 221 214 254;   /* #ddd6fe */
+  --c-new-alt-300: 196 181 253;   /* #c4b5fd */
+  --c-new-alt-400: 167 139 250;   /* #a78bfa */
+  --c-new-alt-500: 139 92 246;    /* #8b5cf6 */
+  --c-new-alt-600: 124 58 237;    /* #7c3aed */
+  --c-new-alt-700: 109 40 217;    /* #6d28d9 */
+  --c-new-alt-800: 91 33 182;     /* #5b21b6 */
+  --c-new-alt-900: 76 29 149;     /* #4c1d95 */
+  --c-new-alt-950: 46 16 101;     /* #2e1065 */
+
+  /* new-soft  ← fuchsia (4 usos) */
+  --c-new-soft-50: 253 244 255;    /* #fdf4ff */
+  --c-new-soft-100: 250 232 255;   /* #fae8ff */
+  --c-new-soft-200: 245 208 254;   /* #f5d0fe */
+  --c-new-soft-300: 240 171 252;   /* #f0abfc */
+  --c-new-soft-400: 232 121 249;   /* #e879f9 */
+  --c-new-soft-500: 217 70 239;    /* #d946ef */
+  --c-new-soft-600: 192 38 211;    /* #c026d3 */
+  --c-new-soft-700: 162 28 175;    /* #a21caf */
+  --c-new-soft-800: 134 25 143;    /* #86198f */
+  --c-new-soft-900: 112 26 117;    /* #701a75 */
+  --c-new-soft-950: 74 4 78;       /* #4a044e */
+
+  /* ── Neutros ──────────────────────────────────────────────
+     gray son 12.443 usos: es el esqueleto de la app (texto, bordes,
+     fondos). Está acá porque es la única forma de llegar al papel
+     crema del mockup de TerraLote, pero es el rol más delicado de
+     pisar: tocarlo mal deja texto ilegible en toda la aplicación.
+     Que una empresa lo redefina tiene que ser una decisión aparte. */
+
+  /* neutral  ← gray (12.443 usos) */
+  --c-neutral-50: 249 250 251;    /* #f9fafb */
+  --c-neutral-100: 243 244 246;   /* #f3f4f6 */
+  --c-neutral-200: 229 231 235;   /* #e5e7eb */
+  --c-neutral-300: 209 213 219;   /* #d1d5db */
+  --c-neutral-400: 156 163 175;   /* #9ca3af */
+  --c-neutral-500: 107 114 128;   /* #6b7280 */
+  --c-neutral-600: 75 85 99;      /* #4b5563 */
+  --c-neutral-700: 55 65 81;      /* #374151 */
+  --c-neutral-800: 31 41 55;      /* #1f2937 */
+  --c-neutral-900: 17 24 39;      /* #111827 */
+  --c-neutral-950: 3 7 18;        /* #030712 */
+
+  /* neutral-cool  ← slate (96 usos) */
+  --c-neutral-cool-50: 248 250 252;    /* #f8fafc */
+  --c-neutral-cool-100: 241 245 249;   /* #f1f5f9 */
+  --c-neutral-cool-200: 226 232 240;   /* #e2e8f0 */
+  --c-neutral-cool-300: 203 213 225;   /* #cbd5e1 */
+  --c-neutral-cool-400: 148 163 184;   /* #94a3b8 */
+  --c-neutral-cool-500: 100 116 139;   /* #64748b */
+  --c-neutral-cool-600: 71 85 105;     /* #475569 */
+  --c-neutral-cool-700: 51 65 85;      /* #334155 */
+  --c-neutral-cool-800: 30 41 59;      /* #1e293b */
+  --c-neutral-cool-900: 15 23 42;      /* #0f172a */
+  --c-neutral-cool-950: 2 6 23;        /* #020617 */
+
+  /* neutral-flat  ← zinc (1 uso) */
+  --c-neutral-flat-50: 250 250 250;    /* #fafafa */
+  --c-neutral-flat-100: 244 244 245;   /* #f4f4f5 */
+  --c-neutral-flat-200: 228 228 231;   /* #e4e4e7 */
+  --c-neutral-flat-300: 212 212 216;   /* #d4d4d8 */
+  --c-neutral-flat-400: 161 161 170;   /* #a1a1aa */
+  --c-neutral-flat-500: 113 113 122;   /* #71717a */
+  --c-neutral-flat-600: 82 82 91;      /* #52525b */
+  --c-neutral-flat-700: 63 63 70;      /* #3f3f46 */
+  --c-neutral-flat-800: 39 39 42;      /* #27272a */
+  --c-neutral-flat-900: 24 24 27;      /* #18181b */
+  --c-neutral-flat-950: 9 9 11;        /* #09090b */
+
+  /* ── Superficies del modo oscuro ──────────────────────────
+     Hoy están escritas a mano como bg-[#1E1E21] y compañía en 340
+     lugares (ver .ai/INVENTARIO_COLORES.md). Se declaran acá para
+     que la fase 4 las pueda ir reemplazando por clases tematizables
+     sin volver a buscar los valores. Todavía NO las usa nadie. */
+  --c-noche-900: 18 18 18;     /* #121212 — fondo principal      */
+  --c-noche-800: 26 26 29;     /* #1A1A1D — fondo secundario     */
+  --c-noche-700: 30 30 33;     /* #1E1E21 — tarjetas             */
+  --c-noche-600: 24 24 27;     /* #18181B — bordes / superficies */
+  --c-noche-500: 37 37 40;     /* #252528                        */
+}
