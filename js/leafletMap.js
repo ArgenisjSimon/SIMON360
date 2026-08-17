@@ -12,6 +12,19 @@ window.leafletMap = (function () {
         }
     };
 
+    // ── Colores ──────────────────────────────────────────────────
+    // Leaflet los recibe como string al dibujar, asi que no pueden salir de
+    // una clase de Tailwind: se leen del tema. Dentro de cada uso y no en
+    // constantes de arriba, porque el tema llega despues de que se evalua
+    // este archivo y cambia al entrar con otra empresa.
+    //
+    // El reporte imprimible del final NO usa esto a proposito: es un
+    // documento aparte que se manda a papel, con su propia identidad y sus
+    // propios problemas de contraste sobre blanco.
+    function _color(token, respaldo) {
+        return (window.tema && tema.color) ? tema.color(token, respaldo) : respaldo;
+    }
+
     // ── Inicializar mapa con marcadores GPS ──────────────────────
     function init(mapId, locations, dotnetRef) {
         if (maps[mapId]) {
@@ -39,7 +52,7 @@ window.leafletMap = (function () {
             locations.forEach(function (loc, i) {
                 const icon = L.divIcon({
                     className: '',
-                    html: `<div style="background:#2563eb;color:white;border-radius:50%;width:28px;height:28px;
+                    html: `<div style="background:${_color('primary-600', '#2563eb')};color:white;border-radius:50%;width:28px;height:28px;
                                 display:flex;align-items:center;justify-content:center;
                                 font-weight:bold;font-size:12px;border:2px solid white;
                                 box-shadow:0 2px 6px rgba(0,0,0,.4)">${i + 1}</div>`,
@@ -83,7 +96,7 @@ window.leafletMap = (function () {
 
         const icon = L.divIcon({
             className: '',
-            html: `<div style="background:#2563eb;color:white;border-radius:50%;width:28px;height:28px;
+            html: `<div style="background:${_color('primary-600', '#2563eb')};color:white;border-radius:50%;width:28px;height:28px;
                         display:flex;align-items:center;justify-content:center;
                         font-weight:bold;font-size:12px;border:2px solid white;
                         box-shadow:0 2px 6px rgba(0,0,0,.4)">${num}</div>`,
@@ -150,7 +163,7 @@ window.leafletMap = (function () {
     function _makeAreaMarker(map, lat, lng, num, nombre) {
         const icon = L.divIcon({
             className: '',
-            html: `<div style="background:#dc2626;color:white;border-radius:50%;width:24px;height:24px;
+            html: `<div style="background:${_color('crit-600', '#dc2626')};color:white;border-radius:50%;width:24px;height:24px;
                         display:flex;align-items:center;justify-content:center;
                         font-weight:bold;font-size:11px;border:2px solid white;
                         box-shadow:0 2px 6px rgba(0,0,0,.4)">${num}</div>`,
@@ -184,13 +197,13 @@ window.leafletMap = (function () {
 
         if (latlngs.length === 2) {
             // Solo línea si hay 2 puntos
-            s.areaPolyline = L.polyline(latlngs, { color: '#dc2626', weight: 2, dashArray: '6,4' })
+            s.areaPolyline = L.polyline(latlngs, { color: _color('crit-600', '#dc2626'), weight: 2, dashArray: '6,4' })
                 .addTo(s.map);
         } else {
             // Polígono relleno con 3+ puntos
             s.areaPolygon = L.polygon(latlngs, {
-                color: '#dc2626',
-                fillColor: '#fca5a5',
+                color: _color('crit-600', '#dc2626'),
+                fillColor: _color('crit-300', '#fca5a5'),
                 fillOpacity: 0.35,
                 weight: 2
             }).addTo(s.map);
@@ -256,8 +269,8 @@ window.leafletMap = (function () {
         if (latlngs.length < 3) return false;
 
         s.gpsPolygon = L.polygon(latlngs, {
-            color: '#2563eb',
-            fillColor: '#93c5fd',
+            color: _color('primary-600', '#2563eb'),
+            fillColor: _color('primary-300', '#93c5fd'),
             fillOpacity: 0.3,
             weight: 2
         }).addTo(s.map);
@@ -322,7 +335,7 @@ window.leafletMap = (function () {
         // 1. Marcadores numerados
         waypoints.forEach(function (wp, i) {
             const esPartida = wp.esPartida === true;
-            const bg = esPartida ? '#16a34a' : '#2563eb';
+            const bg = esPartida ? _color('ok-600', '#16a34a') : _color('primary-600', '#2563eb');
             const label = esPartida ? '▶' : String(i);
             const icon = L.divIcon({
                 className: '',
@@ -376,7 +389,7 @@ window.leafletMap = (function () {
                     if (controller.signal.aborted) return;
                     const geometry = data.features[0].geometry;
                     s.rutaLayer = L.geoJSON(geometry, {
-                        style: { color: '#3b82f6', weight: 4, opacity: 0.9 }
+                        style: { color: _color('primary-500', '#3b82f6'), weight: 4, opacity: 0.9 }
                     }).addTo(s.map);
                     s.rutaAbortController = null;
                     return; // éxito — no dibujar línea recta
@@ -389,7 +402,7 @@ window.leafletMap = (function () {
         // 3. Fallback: línea recta punteada
         const latlngs = waypoints.map(wp => [wp.latitud, wp.longitud]);
         s.rutaLayer = L.polyline(latlngs, {
-            color: '#3b82f6', weight: 3, opacity: 0.75, dashArray: '10,6'
+            color: _color('primary-500', '#3b82f6'), weight: 3, opacity: 0.75, dashArray: '10,6'
         }).addTo(s.map);
     }
 
@@ -402,7 +415,7 @@ window.leafletMap = (function () {
         puntos.forEach(function (p) {
             const icon = L.divIcon({
                 className: '',
-                html: `<div style="background:#f97316;color:white;border-radius:50%;width:32px;height:32px;
+                html: `<div style="background:${_color('warn-strong-500', '#f97316')};color:white;border-radius:50%;width:32px;height:32px;
                             display:flex;align-items:center;justify-content:center;
                             font-weight:bold;font-size:14px;border:2px solid white;
                             box-shadow:0 2px 8px rgba(0,0,0,.5)">✔</div>`,
@@ -442,7 +455,7 @@ window.leafletMap = (function () {
             if (s._partidaTempMarker) s.map.removeLayer(s._partidaTempMarker);
             const icon = L.divIcon({
                 className: '',
-                html: `<div style="background:#16a34a;color:white;border-radius:50%;width:32px;height:32px;
+                html: `<div style="background:${_color('ok-600', '#16a34a')};color:white;border-radius:50%;width:32px;height:32px;
                             display:flex;align-items:center;justify-content:center;
                             font-weight:bold;font-size:13px;border:2px solid white;
                             box-shadow:0 2px 8px rgba(0,0,0,.5)">▶</div>`,
@@ -557,8 +570,8 @@ window.leafletMap = (function () {
         if (s.gpsCircle) s.map.removeLayer(s.gpsCircle);
         s.gpsCircle = L.circle([lat, lng], {
             radius: radioMetros,
-            color: '#2563eb',
-            fillColor: '#93c5fd',
+            color: _color('primary-600', '#2563eb'),
+            fillColor: _color('primary-300', '#93c5fd'),
             fillOpacity: 0.25,
             weight: 2,
             dashArray: '6,4'
@@ -572,7 +585,7 @@ window.leafletMap = (function () {
 
         const icon = L.divIcon({
             className: '',
-            html: `<div style="background:#2563eb;color:white;border-radius:50%;width:32px;height:32px;
+            html: `<div style="background:${_color('primary-600', '#2563eb')};color:white;border-radius:50%;width:32px;height:32px;
                         display:flex;align-items:center;justify-content:center;
                         font-size:16px;border:2px solid white;
                         box-shadow:0 2px 8px rgba(0,0,0,.5)">&#x1F4CD;</div>`,
@@ -587,8 +600,8 @@ window.leafletMap = (function () {
         if (radioMetros && radioMetros > 0) {
             s.gpsCircle = L.circle([lat, lng], {
                 radius: radioMetros,
-                color: '#2563eb',
-                fillColor: '#93c5fd',
+                color: _color('primary-600', '#2563eb'),
+                fillColor: _color('primary-300', '#93c5fd'),
                 fillOpacity: 0.25,
                 weight: 2,
                 dashArray: '6,4'

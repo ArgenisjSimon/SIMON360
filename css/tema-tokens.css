@@ -257,6 +257,36 @@
   --c-neutral-900: 17 24 39;      /* #111827 */
   --c-neutral-950: 3 7 18;        /* #030712 */
 
+  /* ── La tinta ─────────────────────────────────────────────
+     ink ← gray, pero SOLO en las clases de texto (text-gray-*).
+     El fondo, los bordes y los rellenos siguen colgando de neutral.
+
+     Existe porque en Tailwind bg-gray-100 y text-gray-700 salen de la
+     MISMA escala, y eso hacía imposible pedir "las letras en otro color"
+     sin arrastrar el papel detrás. La separación se hace en el puente de
+     index.html, que le da a textColor su propia escala: es un cambio de
+     configuración y no el reemplazo de las 12.443 clases gray, que sigue
+     siendo lo que haría falta para separar bordes de fondos.
+
+     Los 11 escalones arrancan IGUALES a neutral, así que mientras nadie
+     elija un color de letras la app se ve exactamente como antes.
+
+     Sirve a los dos modos con la misma escala, porque así están escritas
+     las clases: de día el texto es text-gray-700 (extremo oscuro) y de
+     noche dark:text-gray-200 (extremo claro). Con un color de base, cada
+     modo toma la punta que le toca. */
+  --c-ink-50: 249 250 251;    /* #f9fafb */
+  --c-ink-100: 243 244 246;   /* #f3f4f6 */
+  --c-ink-200: 229 231 235;   /* #e5e7eb */
+  --c-ink-300: 209 213 219;   /* #d1d5db */
+  --c-ink-400: 156 163 175;   /* #9ca3af */
+  --c-ink-500: 107 114 128;   /* #6b7280 */
+  --c-ink-600: 75 85 99;      /* #4b5563 */
+  --c-ink-700: 55 65 81;      /* #374151 */
+  --c-ink-800: 31 41 55;      /* #1f2937 */
+  --c-ink-900: 17 24 39;      /* #111827 */
+  --c-ink-950: 3 7 18;        /* #030712 */
+
   /* neutral-cool  ← slate (96 usos) */
   --c-neutral-cool-50: 248 250 252;    /* #f8fafc */
   --c-neutral-cool-100: 241 245 249;   /* #f1f5f9 */
@@ -283,14 +313,90 @@
   --c-neutral-flat-900: 24 24 27;      /* #18181b */
   --c-neutral-flat-950: 9 9 11;        /* #09090b */
 
+  /* ── Blanco y negro ───────────────────────────────────────
+     bg-white son 880 usos: es el papel de las tarjetas, el header y los
+     modales. Sin esto, un tema puede cambiar los acentos pero la app
+     sigue viéndose blanca — que es justo lo que se notó al probar.
+
+     OJO: en Tailwind, bg-white y text-white salen del MISMO color, y
+     text-white son otros 1.086 usos, casi todos texto sobre un botón de
+     color. Entonces --c-surface es a la vez el papel y la tinta sobre
+     color, y tiene que quedarse en un tono claro: un crema (#F7F6F1)
+     anda perfecto, un gris medio deja los botones ilegibles. Para un
+     look oscuro está el modo oscuro, no este token.
+
+     La separación limpia (bg-white → bg-surface, dejando text-white en
+     blanco puro) es un reemplazo mecánico de 880 clases; queda para la
+     fase 4, cuando se toquen los módulos. */
+  --c-surface: 255 255 255;   /* #ffffff */
+  --c-ink-max: 0 0 0;         /* #000000 */
+
+  /* ── El mapa de lotes ─────────────────────────────────────
+     Leaflet recibe el color como string al dibujar el poligono, asi que
+     estos no pueden salir de una clase de Tailwind: los lee lotesMap.js
+     con tema.color(). Los estados de labor (ejecutada/vencida/pendiente)
+     ya cuelgan de ok/crit/warn, que son los mismos de la leyenda. */
+  --c-lote: 99 153 31;        /* #63991F — verde del lote sin color propio */
+  --c-lote-borde: 34 34 34;   /* #222222 — el contorno sobre el satelite  */
+
+  /* ── El chrome: barra superior y sidebar ──────────────────
+     Van aparte del neutro a propósito. El fondo de la página sigue al
+     rol neutral (es papel), pero el rail es donde la marca se planta:
+     los dos mockups le dan color propio —verde profundo en TerraLote,
+     azul casi negro en Mantenimiento— mientras el contenido queda
+     claro. Con rail atado a gray-100 eso no se podía expresar.
+
+     Los defaults son exactamente lo de hoy: rail = gray-100,
+     texto = gray-700, hover = gray-200, barra = blanco. */
+  --c-rail: 243 244 246;        /* #f3f4f6 = gray-100 */
+  --c-rail-ink: 55 65 81;       /* #374151 = gray-700 */
+  --c-rail-ink-soft: 75 85 99;  /* #4b5563 = gray-600 */
+  --c-rail-hover: 229 231 235;  /* #e5e7eb = gray-200 */
+  --c-topbar: 255 255 255;      /* #ffffff */
+
+  /* El "SIMON" de la barra. Es rojo de marca, no rojo de error: si
+     colgara del rol crit, cambiarlo teñiría también los vencidos. */
+  --c-marca: 239 68 68;         /* #ef4444 = red-500, el rojo de SIMON */
+
+  /* "Salir", el único botón peligroso del sidebar. Mismo argumento que
+     marca: es rojo de chrome, no rojo de dato vencido. Y sobre un rail
+     oscuro el red-600 de fábrica queda estridente, así que el tema tiene
+     que poder ablandarlo sin tocar los estados de los módulos. */
+  --c-rail-crit: 220 38 38;        /* #dc2626 = red-600 */
+  --c-rail-crit-wash: 254 242 242; /* #fef2f2 = red-50, el fondo del hover */
+
   /* ── Superficies del modo oscuro ──────────────────────────
      Hoy están escritas a mano como bg-[#1E1E21] y compañía en 340
      lugares (ver .ai/INVENTARIO_COLORES.md). Se declaran acá para
-     que la fase 4 las pueda ir reemplazando por clases tematizables
-     sin volver a buscar los valores. Todavía NO las usa nadie. */
+     ahora se usan como clases (bg-noche-700 y compania): la fase 4 las
+     saco de los hex escritos a mano. El orden es al reves del habitual:
+     900 es el mas oscuro, 400 el mas claro. */
   --c-noche-900: 18 18 18;     /* #121212 — fondo principal      */
   --c-noche-800: 26 26 29;     /* #1A1A1D — fondo secundario     */
   --c-noche-700: 30 30 33;     /* #1E1E21 — tarjetas             */
   --c-noche-600: 24 24 27;     /* #18181B — bordes / superficies */
   --c-noche-500: 37 37 40;     /* #252528                        */
+  --c-noche-400: 59 57 57;     /* #3B3939 — el mas claro de los oscuros */
+}
+
+/* ── El chrome en modo oscuro ──────────────────────────────────────────
+   Los roles del rail necesitan un valor propio de noche. Antes esto lo
+   resolvían clases dark: puestas al lado (dark:bg-noche-400,
+   dark:text-white, dark:text-gray-200), y ahí estaba el problema: esas
+   clases GANABAN sobre bg-rail y text-marca, así que de noche el color
+   del menú y del nombre no se podían cambiar — el tema los escribía y no
+   se veían.
+
+   Los valores son exactamente los que tenían esas clases, así que la app
+   se ve igual que siempre; la diferencia es que ahora una empresa puede
+   pisarlos desde su paleta oscura. */
+html.dark {
+  --c-rail: 59 57 57;            /* #3B3939 — era dark:bg-noche-400  */
+  --c-topbar: 59 57 57;          /* #3B3939                          */
+  --c-rail-ink: 229 231 235;     /* gray-200 — era dark:text-gray-200 */
+  --c-rail-ink-soft: 209 213 219;/* gray-300 — era dark:text-gray-300 */
+  --c-rail-hover: 31 41 55;      /* gray-800 — era dark:hover:bg-gray-800 */
+  --c-rail-crit: 248 113 113;    /* red-400  — era dark:text-red-400  */
+  --c-rail-crit-wash: 45 15 15;  /* el rojo apagado del hover de noche */
+  --c-marca: 255 255 255;        /* blanco   — era dark:text-white    */
 }

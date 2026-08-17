@@ -271,3 +271,31 @@ code {
         transition: none;
     }
 }
+
+/* ── Destello al llegar a un elemento desde otro lado de la pantalla ──────
+   Lo usa scrollAElemento() en front.js. Nace del calendario del IIT: al tocar1
+   una fecha se salta a esa actividad en la lista, y si la tarjeta ya estaba a
+   la vista el scroll no mueve nada — sin el destello el click parece perdido.
+
+   El anillo va con box-shadow y no con border ni con outline: el borde
+   cambiaria el tamaño de la tarjeta y correria las de al lado, y el outline
+   queda tapado por el overflow del carrusel horizontal. */
+@keyframes destello-foco {
+    0%   { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0); }
+    25%  { box-shadow: 0 0 0 4px rgba(99, 102, 241, .55); }
+    100% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0); }
+}
+
+.destello-foco {
+    animation: destello-foco 1.6s ease-out;
+    border-radius: inherit;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    /* Sin parpadeo, pero el anillo se queda un momento: el aviso de "es esta"
+       tiene que existir igual para quien pidió menos movimiento. */
+    .destello-foco {
+        animation: none;
+        box-shadow: 0 0 0 4px rgba(99, 102, 241, .55);
+    }
+}

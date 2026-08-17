@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="google" content="notranslate" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-   <title>Simon360</title>
+    <title>Simon360</title>
     <base href="/Apps/Simon360/" />
     <link rel="icon" type="image/png" href="Imagenes/favicon.ico" />
     <!-- PWA -->
@@ -14,7 +14,6 @@
     <meta name="theme-color" content="#dc2626" />
     <!--  Estilos principales -->
     <link rel="stylesheet" href="css/app.css" />
-    <link rel="stylesheet" href="css/Logo.css" />
     <!-- Paleta de la app como variables. Va ANTES de Tailwind: el puente de
          abajo las lee, y si no están definidas las clases salen sin color. -->
     <link rel="stylesheet" href="css/tema-tokens.css" />
@@ -75,9 +74,62 @@
                 colors[ROLES[esc]] = escala(ROLES[esc]); // para código nuevo: bg-primary-600
             }
 
-            tailwind.config = { darkMode: 'class', theme: { extend: { colors: colors } } };
+            // Blanco y negro no son escalas, son colores sueltos, y bg-white
+            // (880 usos) es el papel de tarjetas, header y modales: sin esto
+            // un tema cambia los acentos y la app se sigue viendo blanca.
+            // Cuidado: bg-white y text-white salen del mismo color, así que
+            // --c-surface es papel Y tinta sobre botones de color. Ver la nota
+            // en css/tema-tokens.css.
+            colors.white = 'rgb(var(--c-surface) / <alpha-value>)';
+            colors.black = 'rgb(var(--c-ink-max) / <alpha-value>)';
+            colors.surface = colors.white;
+            colors['ink-max'] = colors.black;
+
+            // El chrome (barra y sidebar) tiene rol propio: es donde la marca
+            // se planta, mientras el contenido queda claro.
+            var PLANOS = ['rail', 'rail-ink', 'rail-ink-soft', 'rail-hover', 'topbar', 'marca',
+                          'rail-crit', 'rail-crit-wash',
+                          'lote', 'lote-borde'];
+
+            // Superficies del modo oscuro. Escala corta y al reves: 900 es el
+            // mas oscuro. Estaban escritas a mano como bg-noche-700 en ~340
+            // lugares, fuera del alcance de cualquier tema.
+            colors.noche = {};
+            [400, 500, 600, 700, 800, 900].forEach(function (n) {
+                colors.noche[n] = 'rgb(var(--c-noche-' + n + ') / <alpha-value>)';
+            });
+            for (var p = 0; p < PLANOS.length; p++) {
+                colors[PLANOS[p]] = 'rgb(var(--c-' + PLANOS[p] + ') / <alpha-value>)';
+            }
+
+            // ── Las letras, aparte del papel ──────────────────────
+            // En Tailwind, bg-gray-100 y text-gray-700 salen de la MISMA
+            // escala, asi que pedir "las letras en otro color" arrastraba
+            // el fondo detras. textColor tiene su propia entrada en la
+            // config: se le da la escala ink y las clases de TEXTO pasan a
+            // leer --c-ink-*, mientras bg-gray-* y border-gray-* siguen en
+            // neutral. Cero cambios en los .razor.
+            //
+            // Solo gray: son 12.443 usos, el esqueleto de la app. slate y
+            // zinc (96 y pocos mas) se quedan en su neutro — no justifican
+            // otra escala de tokens.
+            //
+            // Los tokens de ink arrancan identicos a los de neutral, asi
+            // que esto no cambia nada hasta que una empresa elija color.
+            var textColor = { gray: escala('ink'), ink: escala('ink') };
+
+            tailwind.config = {
+                darkMode: 'class',
+                theme: { extend: { colors: colors, textColor: textColor } }
+            };
         })();
     </script>
+    <!-- El tema de la empresa se pinta acá, antes de que arranque Blazor: con
+         lo último que se cacheó de esta empresa y sin tocar la red. Si se
+         esperara al framework, el usuario ve medio segundo de azul SIMON y
+         después el salto a su marca. -->
+    <script src="js/tema.js"></script>
+    <script>tema.aplicarDesdeCache();</script>
 
     <!--  Iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha384-iw3OoTErCYJJB9mCa8LNS2hbsQ7M3C0EpIsO/H5+EGAkPGc6rk+V8i04oW/K5xq0" crossorigin="anonymous">
@@ -121,9 +173,20 @@
             max-width: none;
         }
     }
+
+    /* Fundido al cambiar de tema con la sesión ya abierta. La clase la pone y
+       la quita tema.js, y dura 400 ms: dejarla fija convertiría cada hover del
+       resto de la sesión en una animación. */
+    html.tema-cambiando * {
+        transition: background-color .4s ease, color .4s ease,
+                    border-color .4s ease, fill .4s ease, stroke .4s ease !important;
+    }
+    @media (prefers-reduced-motion: reduce) {
+        html.tema-cambiando * { transition: none !important; }
+    }
 </style>
 
-<body class="bg-gray-100 dark:bg-[#121212]">
+<body class="bg-gray-100 dark:bg-noche-900">
 
     <!-- Splash FUERA de #app — Blazor no lo toca al cargar -->
     <div id="splash-screen" class="splash-video-wrapper">
@@ -136,6 +199,23 @@
         (function () {
             var splash = document.getElementById('splash-screen');
             var video  = document.getElementById('splash-video');
+
+            // Video de arranque propio de la empresa, si tiene uno cargado.
+            // Se cambia ANTES de que empiece a reproducirse; hacerlo después
+            // se veria como un corte a mitad del splash.
+            try {
+                var propio = window.tema && tema.splashUrl && tema.splashUrl();
+                if (propio) {
+                    var fuente = video.querySelector('source');
+                    fuente.src = propio;
+                    // El evento de error va en el <source> y no en el <video>:
+                    // cuando falla una fuente, el que se entera es el source.
+                    // Sin esto, un video mal cargado deja la pantalla en blanco
+                    // hasta que salta el limite de 12s.
+                    fuente.addEventListener('error', function () { cerrarSplash(); });
+                    video.load();
+                }
+            } catch (e) { /* sin tema: queda el splash de SIMON */ }
 
             function cerrarSplash() {
                 splash.style.opacity = '0';

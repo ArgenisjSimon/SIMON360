@@ -42,25 +42,52 @@ window.dictado = (function () {
             // informe.
             if (!estado || estado.rec !== rec) return;
 
-            let confirmado = '';
+            // Los motores no entregan lo mismo y hay que aguantar las dos formas:
+            //
+            //   incremental → ["hola", " a ver", " si no"]   cada uno es la parte nueva
+            //   acumulativo → ["hola", "hola a ver", "hola a ver si no"]
+            //                 cada uno REPITE lo anterior (Chrome de Android)
+            //
+            // Concatenar a ciegas rompe el segundo caso y el informe queda con
+            // "a ver / a ver si / a ver si no" pegado uno atras del otro. Por eso
+            // no se mira el indice sino el texto: si el nuevo pedazo empieza con
+            // lo que ya se venia armando, REEMPLAZA; si no, se concatena.
+            const unir = (acumulado, pedazo) => {
+                const limpio = (pedazo || '').trim();
+                if (!limpio) return acumulado;
+                if (!acumulado) return limpio;
+                if (limpio.startsWith(acumulado)) return limpio;   // acumulativo
+                if (acumulado.endsWith(limpio)) return acumulado;  // repetido tal cual
+                return acumulado + ' ' + limpio;                   // incremental
+            };
+
+            let finales = '';
             let provisorio = '';
 
-            // NO se usa evento.resultIndex. En Chrome de Android suele venir
-            // en 0 aunque el array ya traiga resultados viejos: arrancar el
-            // recorrido ahí reenvía TODO lo dicho en cada evento y el informe
-            // termina con "se supone que se supone que..." creciendo solo. La
-            // cuenta de qué se mandó se lleva acá y no se le cree al motor.
             for (let i = 0; i < evento.results.length; i++) {
                 const texto = evento.results[i][0].transcript;
 
-                if (!evento.results[i].isFinal) { provisorio += texto; continue; }
-
-                if (i >= estado.emitidos) {
-                    confirmado += texto;
-                    estado.emitidos = i + 1;
-                }
+                if (evento.results[i].isFinal) finales    = unir(finales, texto);
+                else                           provisorio = unir(provisorio, texto);
             }
 
+            // Se manda solo lo que todavia no se mando. La cuenta se lleva por
+            // TEXTO y no por indice: cuando el motor se corta solo y rearranca,
+            // el array puede volver a traer lo viejo, y comparando el texto eso
+            // se descarta igual. Si la frase nueva no continua a la anterior
+            // (arranco otra), no es prefijo y se manda entera.
+            let confirmado = '';
+            if (finales) {
+                const yaEmitido = estado.emitidoTexto || '';
+
+                if (!yaEmitido)                     confirmado = finales;
+                else if (finales.startsWith(yaEmitido)) confirmado = finales.slice(yaEmitido.length);
+                else if (!yaEmitido.endsWith(finales)) confirmado = finales;
+
+                estado.emitidoTexto = finales.startsWith(yaEmitido) ? finales : yaEmitido + ' ' + finales;
+            }
+
+            confirmado = confirmado.trim();
             if (!confirmado && !provisorio) return;
 
             // Lo confirmado se agrega al informe; lo provisorio solo se
@@ -80,14 +107,15 @@ window.dictado = (function () {
         // vuelve a arrancar.
         rec.onend = () => {
             if (estado && estado.modo === 'envivo' && !estado.detenido) {
-                // Sesión nueva: el motor arranca su lista de resultados de
-                // cero, así que la cuenta de lo emitido también.
-                estado.emitidos = 0;
+                // OJO: no se reinicia emitidoTexto. Hay motores que al rearrancar
+                // vuelven a mandar lo de la sesión anterior; conservando el texto
+                // ya emitido eso se descarta solo. Y si lo que viene es una frase
+                // nueva, no es prefijo del anterior y entra completa igual.
                 try { rec.start(); } catch { /* ya arrancado */ }
             }
         };
 
-        estado = { modo: 'envivo', ref: dotnetRef, rec: rec, detenido: false, emitidos: 0 };
+        estado = { modo: 'envivo', ref: dotnetRef, rec: rec, detenido: false, emitidoTexto: '' };
         rec.start();
         return 'envivo';
     }

@@ -106,6 +106,36 @@
     element?.scrollIntoView({behavior: "smooth", block: "start" });
     };
 
+    // Lleva a un elemento y lo resalta un instante.
+    //
+    // Recibe un SELECTOR y no un id, y entre todos los que coinciden se queda
+    // con el que esta VISIBLE. Eso es lo importante: las pantallas con vista
+    // de movil y vista de escritorio dibujan el mismo dato dos veces y ocultan
+    // una con display:none. getElementById devolvia siempre la primera, que en
+    // escritorio es la de movil — y scrollIntoView sobre un elemento oculto no
+    // hace nada, ni falla. El salto se perdia en silencio.
+    //
+    // offsetParent === null es la prueba de que el elemento (o alguno de sus
+    // padres) esta en display:none.
+    //
+    // block e inline en "center" a proposito: en el IIT la lista de escritorio
+    // es un carrusel HORIZONTAL, asi que centrar solo en vertical no alcanza
+    // para traer a la vista una tarjeta corrida hacia la derecha.
+    //
+    // El destello no es decoracion: si la tarjeta ya se estaba viendo, el
+    // scroll no mueve nada y sin el parpadeo el click parece perdido.
+    window.scrollAVisible = (selector) => {
+        const el = Array.from(document.querySelectorAll(selector))
+                        .find(e => e.offsetParent !== null);
+        if (!el) return false;
+
+        el.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" });
+
+        el.classList.add("destello-foco");
+        setTimeout(() => el.classList.remove("destello-foco"), 1600);
+        return true;
+    };
+
     window.getScreenWidth = () => window.innerWidth;
 
     document.addEventListener("DOMContentLoaded", () => {

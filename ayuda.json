@@ -1,0 +1,71 @@
+{
+  "_lee_esto_primero": [
+    "Contenido del MANUAL DE AYUDA AL USUARIO. Mismo patrón que labels.json: un",
+    "archivo estático que viaja con la aplicación, versionado en git.",
+    "",
+    "La clave de cada entrada es la MISMA que en PermisosPaginas de appsettings.json",
+    "(ListadoFincas, ListadoLotes, ...). De ahí sale el título, el subtítulo y el",
+    "icono del módulo, así que acá no se repiten: si mañana el módulo se renombra,",
+    "el manual se renombra solo.",
+    "",
+    "El manual muestra únicamente los módulos que la empresa tiene habilitados, y",
+    "por eso mismo un módulo sin entrada acá no rompe nada: sale como 'contenido en",
+    "preparación'.",
+    "",
+    "Las secciones vacías no se dibujan. Se puede publicar un módulo con solo el",
+    "'para_que' y completarlo después.",
+    "",
+    "'por_empresa' es la excepción, no la regla: la mayoría de los módulos se usan",
+    "igual en todas. Solo escribir ahí cuando el comportamiento CAMBIA de verdad."
+  ],
+
+  "ListadoFincas": {
+    "para_que": "",
+    "quien_lo_usa": "",
+    "antes_de_empezar": [],
+    "pasos": [],
+    "errores_comunes": [],
+    "que_sigue": "",
+    "por_empresa": {}
+  },
+
+  "ListadoLotes": {
+    "para_que": "",
+    "quien_lo_usa": "",
+    "antes_de_empezar": [],
+    "pasos": [],
+    "errores_comunes": [],
+    "que_sigue": "",
+    "por_empresa": {}
+  },
+
+  "ListadoPatrones": {
+    "para_que": "",
+    "quien_lo_usa": "",
+    "antes_de_empezar": [],
+    "pasos": [],
+    "errores_comunes": [],
+    "que_sigue": "",
+    "por_empresa": {}
+  },
+
+  "ListadoSolicitudes": {
+    "para_que": "",
+    "quien_lo_usa": "",
+    "antes_de_empezar": [],
+    "pasos": [],
+    "errores_comunes": [],
+    "que_sigue": "",
+    "por_empresa": {}
+  },
+
+  "MonitorCampo": {
+    "para_que": "",
+    "quien_lo_usa": "",
+    "antes_de_empezar": [],
+    "pasos": [],
+    "errores_comunes": [],
+    "que_sigue": "",
+    "por_empresa": {}
+  }
+}

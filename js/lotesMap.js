@@ -26,7 +26,19 @@ window.lotesMap = (function () {
         }
     };
 
-    const COLOR_DEFECTO = '#63991F';
+    // ── Colores ──────────────────────────────────────────────────
+    // Leaflet recibe el color como string al dibujar, así que nada de esto
+    // puede pasar por una clase de Tailwind: se lee del tema con
+    // tema.color(), y si el módulo no está cargado queda el valor de hoy.
+    //
+    // Se leen DENTRO de cada función y no en constantes de arriba: el tema
+    // llega después de que este archivo se evalúa, y ademas cambia al
+    // entrar con otra empresa. Una constante se quedaría con el color viejo.
+    function _color(token, respaldo) {
+        return (window.tema && tema.color) ? tema.color(token, respaldo) : respaldo;
+    }
+
+    const COLOR_DEFECTO_FIJO = '#63991F';
     const estados = {};
 
     // Nombre y descripcion los escribe el usuario y terminan dentro de un
@@ -50,14 +62,15 @@ window.lotesMap = (function () {
     // Colores del filtro por labor. No se toma el color del lote: el punto
     // del filtro es leer el estado de un vistazo, y para eso los 23
     // tablones tienen que hablar el mismo idioma de color.
-    const COLOR_ESTADO = {
-        ejecutada:  '#16a34a',
-        vencida:    '#dc2626',
-        pendiente:  '#d97706'
-    };
+    function colorEstado(estado) {
+        if (estado === 'ejecutada') return _color('ok-600', '#16a34a');
+        if (estado === 'vencida') return _color('crit-600', '#dc2626');
+        if (estado === 'pendiente') return _color('warn-600', '#d97706');
+        return null;
+    }
     // El tablon que no tiene esa labor. Gris, no invisible: sigue siendo
     // terreno de la finca y su ausencia tambien es informacion.
-    const COLOR_SIN_LABOR = '#9ca3af';
+    function colorSinLabor() { return _color('neutral-400', '#9ca3af'); }
 
     function _estilo(s, lote, resaltado) {
         const base = s.relleno ?? RELLENO_DEFECTO;
@@ -73,14 +86,17 @@ window.lotesMap = (function () {
         const sinRelleno = opacidad < 0.15;
 
         // Con filtro por labor manda el estado; sin el, el color del lote.
+        // El color del lote (lote.color) viene de la base y es del usuario:
+        // ese no lo toca el tema.
         const relleno = lote.estadoLabor
-            ? (COLOR_ESTADO[lote.estadoLabor] || COLOR_SIN_LABOR)
-            : (lote.atenuado ? COLOR_SIN_LABOR : (lote.color || COLOR_DEFECTO));
+            ? (colorEstado(lote.estadoLabor) || colorSinLabor())
+            : (lote.atenuado ? colorSinLabor()
+                             : (lote.color || _color('lote', COLOR_DEFECTO_FIJO)));
 
         return {
-            color: resaltado ? '#facc15'
-                 : lote.atenuado ? '#9ca3af'
-                 : (sinRelleno ? relleno : '#222222'),
+            color: resaltado ? _color('warn-soft-400', '#facc15')
+                 : lote.atenuado ? colorSinLabor()
+                 : (sinRelleno ? relleno : _color('lote-borde', '#222222')),
             weight: resaltado ? 3 : (lote.atenuado ? 1 : (sinRelleno ? 2 : 1)),
             // Atenuado tambien en el borde: con el contorno a plena
             // opacidad el lote sigue saltando a la vista y el filtro no se
@@ -91,8 +107,44 @@ window.lotesMap = (function () {
         };
     }
 
+    // ── Etiqueta del centro del lote ─────────────────────────────
+    //
+    // El nombre del tablon y, cuando la labor elegida se hizo mas de una
+    // vez, cuantas. El "x3" va PEGADO al nombre y no en un marcador
+    // aparte: en un plano de 23 tablones cada elemento suelto mas es otra
+    // cosa que se superpone con el vecino al alejar el zoom.
+    //
+    // Solo a partir de 2. Un "x1" sobre cada poligono seria ruido fijo: lo
+    // que se esta buscando es el tablon al que se le paso de mas.
+    function _htmlEtiqueta(lote) {
+        const nombre = _escapar(lote.nombre || '');
+
+        // Mismo verde que "ejecutada" en la leyenda, y a proposito: el
+        // contador cuenta pasadas HECHAS, asi que tiene que hablar el mismo
+        // idioma de color que el resto del plano.
+        const veces = Number(lote.pasadas) || 0;
+        const badge = veces > 1
+            ? `<span style="background:${colorEstado('ejecutada')};color:#fff;
+                        border-radius:99px;padding:0 5px;margin-left:4px;
+                        font-size:10px;text-shadow:none">x${veces}</span>`
+            : '';
+
+        return `<div style="font-weight:700;color:#fff;font-size:11px;
+                     text-shadow:0 0 3px #000,0 0 3px #000;white-space:nowrap;
+                     text-align:center">${nombre}${badge}</div>`;
+    }
+
+    function _iconoEtiqueta(lote) {
+        return L.divIcon({
+            className: '',
+            html: _htmlEtiqueta(lote),
+            iconSize: [60, 14],
+            iconAnchor: [30, 7]
+        });
+    }
+
     // ── Filtros: repinta sin rehacer el mapa ─────────────────────
-    // cambios: [{ id, atenuado, estadoLabor }]
+    // cambios: [{ id, atenuado, estadoLabor, pasadas, actividad }]
     //
     // Existe para no llamar a init en cada cambio de filtro: init destruye
     // el mapa y vuelve a encuadrar, asi que el usuario perderia el zoom y
@@ -107,8 +159,18 @@ window.lotesMap = (function () {
 
             p.lote.atenuado    = !!c.atenuado;
             p.lote.estadoLabor = c.estadoLabor || null;
+            p.lote.pasadas     = Number(c.pasadas) || 0;
+            p.lote.actividad   = c.actividad || null;
 
             p.capa.setStyle(_estilo(s, p.lote, String(p.lote.id) === String(s.resaltado)));
+
+            // El contador y el globo tambien dependen de la labor elegida:
+            // sin rehacerlos, cambiar de labor dejaba el "x3" de la anterior
+            // pegado en el plano.
+            const etiqueta = s.etiquetas[c.id];
+            if (etiqueta) etiqueta.setIcon(_iconoEtiqueta(p.lote));
+
+            p.capa.setPopupContent(_popup(p.lote));
         });
     }
 
@@ -129,8 +191,8 @@ window.lotesMap = (function () {
             ? `<br><small style="color:#666">Medido: ${lote.areaSql.toFixed(3)} ha</small>`
             : '';
         const badge = lote.esSembrable
-            ? '<span style="background:#dcfce7;color:#166534;padding:1px 6px;border-radius:99px;font-size:10px">Sembrable</span>'
-            : '<span style="background:#f1f5f9;color:#475569;padding:1px 6px;border-radius:99px;font-size:10px">No sembrable</span>';
+            ? `<span style="background:${_color('ok-100','#dcfce7')};color:${_color('ok-800','#166534')};padding:1px 6px;border-radius:99px;font-size:10px">Sembrable</span>`
+            : `<span style="background:${_color('neutral-cool-100','#f1f5f9')};color:${_color('neutral-cool-600','#475569')};padding:1px 6px;border-radius:99px;font-size:10px">No sembrable</span>`;
         // La descripcion se escapa: es texto que escribe el usuario y va
         // dentro de un innerHTML.
         const desc = lote.descripcion
@@ -141,17 +203,30 @@ window.lotesMap = (function () {
         // entero se omite si el lote no tiene CCA: un tablon que no entro
         // a ningun presupuesto no tiene nada que mostrar, y tres guiones
         // ocupan lo mismo que el dato sin decir nada.
+        // La edad va debajo del corte porque se calcula desde el: leidas
+        // juntas se entiende de donde sale, y sueltas parece otro dato mas.
+        // Las pasadas van rotuladas con el nombre de la actividad principal
+        // ("RIEGO  3 veces") y no con un "Pasadas" pelado: el desplegable
+        // dice "1ER RIEGO" y el numero cuenta TODOS los riegos, asi que sin
+        // el rotulo se lee como que el primer riego se hizo tres veces.
+        const veces = Number(lote.pasadas) || 0;
+        const filaPasadas = veces > 1
+            ? [lote.actividad || 'Labor', `${veces} veces`]
+            : null;
+
         const filas = [
             ['Variedad', lote.variedad],
             ['Clase',    lote.clase],
-            ['F. corte', lote.fCorte]
-        ].filter(([, v]) => v);
+            ['F. corte', lote.fCorte],
+            ['Edad',     lote.edad],
+            filaPasadas
+        ].filter(f => f && f[1]);
 
         const cca = filas.length
-            ? `<div style="margin-top:6px;padding-top:6px;border-top:1px solid #e5e7eb;font-size:11px;color:#374151">
+            ? `<div style="margin-top:6px;padding-top:6px;border-top:1px solid ${_color('neutral-200','#e5e7eb')};font-size:11px;color:${_color('neutral-700','#374151')}">
                    ${filas.map(([k, v]) =>
                        `<div style="display:flex;gap:8px;justify-content:space-between">
-                            <span style="color:#6b7280">${k}</span>
+                            <span style="color:${_color('neutral-500','#6b7280')}">${k}</span>
                             <b>${_escapar(String(v))}</b>
                         </div>`).join('')}
                </div>`
@@ -167,13 +242,18 @@ window.lotesMap = (function () {
 
     // ── init ─────────────────────────────────────────────────────
     // lotes: [{ id, nombre, descripcion, geometria, color, esSembrable,
-    //           areaLote, areaSql, tipo, variedad, clase, fCorte,
-    //           atenuado, estadoLabor }]
+    //           areaLote, areaSql, tipo, variedad, clase, fCorte, edad,
+    //           atenuado, estadoLabor, pasadas, actividad }]
     // variedad/clase/fCorte vienen del CCA vigente y pueden faltar: el lote
     // sin CCA no tiene variedad ni corte todavia.
+    // edad = edad del cultivo YA en texto ("8 meses"), calculada en C# desde
+    // fCorte. Llega resuelta y no como fecha porque el globo es HTML plano.
     // atenuado = no pasa el filtro de ciclo o rubro.
     // estadoLabor = 'ejecutada' | 'vencida' | 'pendiente' | 'sin', o null
     // cuando no hay filtro por labor.
+    // pasadas = veces que se EJECUTO la actividad principal de la labor
+    // elegida en ese lote. Se dibuja sobre el poligono solo si pasa de 1.
+    // actividad = su nombre (RIEGO), para rotular el dato en el globo.
     function init(mapId, lotes, dotnetRef) {
         destroy(mapId);
 
@@ -253,17 +333,11 @@ window.lotesMap = (function () {
             grupo.addLayer(capa);
             s.poligonos[lote.id] = { capa: capa, lote: lote };
 
-            // Etiqueta con el nombre en el centro del lote
+            // Etiqueta con el nombre en el centro del lote, y el contador
+            // de pasadas si la labor elegida se hizo mas de una vez.
             const centro = capa.getBounds().getCenter();
             const etiqueta = L.marker(centro, {
-                icon: L.divIcon({
-                    className: '',
-                    html: `<div style="font-weight:700;color:#fff;font-size:11px;
-                                 text-shadow:0 0 3px #000,0 0 3px #000;white-space:nowrap;
-                                 text-align:center">${_escapar(lote.nombre || '')}</div>`,
-                    iconSize: [60, 14],
-                    iconAnchor: [30, 7]
-                }),
+                icon: _iconoEtiqueta(lote),
                 interactive: false
             }).addTo(map);
             s.etiquetas[lote.id] = etiqueta;
@@ -382,6 +456,33 @@ window.lotesMap = (function () {
         s.map.fitBounds(L.featureGroup(capas).getBounds(), { padding: [25, 25] });
     }
 
+    // ── Recalcular el tamaño y volver a encuadrar ────────────────
+    //
+    // Leaflet mide el contenedor UNA vez, al crear el mapa. Si en ese
+    // momento el div todavia no tiene su tamaño final --porque nacio
+    // dentro de una pestaña que se acaba de mostrar, o de un panel que
+    // aun se estaba armando-- el mapa queda creyendo que mide casi nada:
+    // los tiles no se piden y el fitBounds calcula un zoom absurdo. Se ve
+    // como un rectangulo gris con las etiquetas amontonadas en el centro.
+    //
+    // invalidateSize() le hace volver a medir. El re-encuadre va despues
+    // porque el fitBounds anterior se calculo con el tamaño equivocado.
+    //
+    // Va dentro de requestAnimationFrame para que corra cuando el
+    // navegador ya termino de aplicar el layout, no en el medio.
+    function invalidar(mapId) {
+        const s = estados[mapId];
+        if (!s) return;
+
+        requestAnimationFrame(function () {
+            s.map.invalidateSize();
+
+            const capas = Object.values(s.poligonos).map(p => p.capa);
+            if (capas.length > 0)
+                s.map.fitBounds(L.featureGroup(capas).getBounds(), { padding: [25, 25] });
+        });
+    }
+
     // ── Marcar un punto GPS consultado ───────────────────────────
     function marcarPunto(mapId, lat, lng) {
         const s = estados[mapId];
@@ -391,7 +492,7 @@ window.lotesMap = (function () {
 
         s.marcadorPunto = L.circleMarker([lat, lng], {
             radius: 7, color: '#fff', weight: 2,
-            fillColor: '#dc2626', fillOpacity: 1
+            fillColor: _color('crit-600', '#dc2626'), fillOpacity: 1
         }).addTo(s.map);
 
         s.map.setView([lat, lng], 16);
@@ -452,7 +553,7 @@ window.lotesMap = (function () {
             s.dibujoCapas.push(
                 L.circleMarker([p.lat, p.lng], {
                     radius: 5, color: '#fff', weight: 2,
-                    fillColor: '#dc2626', fillOpacity: 1
+                    fillColor: _color('crit-600', '#dc2626'), fillOpacity: 1
                 }).addTo(s.map));
         });
 
@@ -461,9 +562,9 @@ window.lotesMap = (function () {
             // Con 3+ puntos se muestra ya como poligono cerrado, que es lo
             // que el usuario va a guardar. Con 2 es solo una linea.
             const capa = s.dibujo.length >= 3
-                ? L.polygon(latlngs, { color: '#dc2626', weight: 2,
-                                       fillColor: '#fca5a5', fillOpacity: 0.35, dashArray: '5,5' })
-                : L.polyline(latlngs, { color: '#dc2626', weight: 2, dashArray: '5,5' });
+                ? L.polygon(latlngs, { color: _color('crit-600', '#dc2626'), weight: 2,
+                                       fillColor: _color('crit-300', '#fca5a5'), fillOpacity: 0.35, dashArray: '5,5' })
+                : L.polyline(latlngs, { color: _color('crit-600', '#dc2626'), weight: 2, dashArray: '5,5' });
             capa.addTo(s.map);
             s.dibujoCapas.push(capa);
         }
@@ -559,6 +660,7 @@ window.lotesMap = (function () {
         setRelleno,
         setFiltros,
         verTodo,
+        invalidar,
         marcarPunto,
         limpiarPunto,
         destroy,
