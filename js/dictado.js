@@ -27,6 +27,65 @@ window.dictado = (function () {
     }
 
     // ── 1. Dictado en vivo ───────────────────────────────────────
+    //
+    // Este modulo NO manda pedacitos para que el .NET los vaya pegando: manda
+    // el texto COMPLETO de la sesion de dictado en cada pasada, y el .NET lo
+    // reemplaza. La diferencia importa: pegando pedazos, cualquier pasada
+    // repetida del motor queda impresa en el informe para siempre y termina
+    // como "una prueba para ver una prueba para ver una prueba para ver".
+    // Mandando el texto entero, el peor caso de una fusion errada es un
+    // renglon raro que la pasada siguiente corrige sola.
+
+    /// Normaliza para COMPARAR, nunca para mostrar. Chrome de Android reescribe
+    /// mayusculas y puntuacion entre pasadas ("estoy haciendo" → "Estoy
+    /// haciendo,"), y comparando literal esas dos parecen frases distintas: es
+    /// exactamente por ahi por donde se colaba la repeticion.
+    function _norm(t) {
+        return (t || '')
+            .toLowerCase()
+            .replace(/[.,;:!?¡¿"'()\[\]{}…—–-]/g, ' ')
+            .replace(/\s+/g, ' ')
+            .trim();
+    }
+
+    /// Une dos tramos de transcripcion sin repetir lo que ya estaba.
+    ///
+    /// Los motores no entregan lo mismo y hay que aguantar las dos formas:
+    ///
+    ///   incremental → ["hola", " a ver", " si no"]   cada uno es la parte nueva
+    ///   acumulativo → ["hola", "hola a ver", "hola a ver si no"]
+    ///                 cada uno REPITE lo anterior (Chrome de Android)
+    ///
+    /// y ademas el caso del medio, que es el que rompia: solapamiento parcial
+    /// ("estoy haciendo una" + "haciendo una prueba"), donde el nuevo no es
+    /// prefijo del viejo pero tampoco arranca de cero.
+    function _fundir(acumulado, pedazo) {
+        const nuevo = (pedazo || '').trim();
+        const viejo = (acumulado || '').trim();
+        if (!nuevo) return viejo;
+        if (!viejo) return nuevo;
+
+        const a = _norm(viejo), b = _norm(nuevo);
+        if (!b) return viejo;
+        if (!a) return nuevo;
+
+        if (b.indexOf(a) === 0) return nuevo;    // acumulativo: el nuevo trae todo
+        if (a.indexOf(b) !== -1) return viejo;   // ya esta dicho, no se agrega nada
+
+        // Solapamiento parcial: se busca el pedazo mas largo del final de lo
+        // viejo que sea el arranque de lo nuevo, y se pega solo el resto.
+        const pa = a.split(' '), pb = b.split(' ');
+        const max = Math.min(pa.length, pb.length);
+        for (let n = max; n > 0; n--) {
+            if (pa.slice(pa.length - n).join(' ') === pb.slice(0, n).join(' ')) {
+                const resto = nuevo.split(/\s+/).slice(n).join(' ');
+                return resto ? viejo + ' ' + resto : viejo;
+            }
+        }
+
+        return viejo + ' ' + nuevo;
+    }
+
     function _iniciarEnVivo(dotnetRef, idioma) {
         const rec = new Reconocimiento();
         rec.lang = idioma || 'es-ES';
@@ -42,57 +101,35 @@ window.dictado = (function () {
             // informe.
             if (!estado || estado.rec !== rec) return;
 
-            // Los motores no entregan lo mismo y hay que aguantar las dos formas:
-            //
-            //   incremental → ["hola", " a ver", " si no"]   cada uno es la parte nueva
-            //   acumulativo → ["hola", "hola a ver", "hola a ver si no"]
-            //                 cada uno REPITE lo anterior (Chrome de Android)
-            //
-            // Concatenar a ciegas rompe el segundo caso y el informe queda con
-            // "a ver / a ver si / a ver si no" pegado uno atras del otro. Por eso
-            // no se mira el indice sino el texto: si el nuevo pedazo empieza con
-            // lo que ya se venia armando, REEMPLAZA; si no, se concatena.
-            const unir = (acumulado, pedazo) => {
-                const limpio = (pedazo || '').trim();
-                if (!limpio) return acumulado;
-                if (!acumulado) return limpio;
-                if (limpio.startsWith(acumulado)) return limpio;   // acumulativo
-                if (acumulado.endsWith(limpio)) return acumulado;  // repetido tal cual
-                return acumulado + ' ' + limpio;                   // incremental
-            };
-
+            // El array trae TODOS los resultados de este reconocedor, asi que
+            // se rearma desde cero en cada pasada: lo que valga es lo ultimo
+            // que dijo el motor, no lo que se venia acumulando acá.
             let finales = '';
             let provisorio = '';
 
             for (let i = 0; i < evento.results.length; i++) {
                 const texto = evento.results[i][0].transcript;
 
-                if (evento.results[i].isFinal) finales    = unir(finales, texto);
-                else                           provisorio = unir(provisorio, texto);
+                if (evento.results[i].isFinal) finales    = _fundir(finales, texto);
+                else                           provisorio = _fundir(provisorio, texto);
             }
 
-            // Se manda solo lo que todavia no se mando. La cuenta se lleva por
-            // TEXTO y no por indice: cuando el motor se corta solo y rearranca,
-            // el array puede volver a traer lo viejo, y comparando el texto eso
-            // se descarta igual. Si la frase nueva no continua a la anterior
-            // (arranco otra), no es prefijo y se manda entera.
-            let confirmado = '';
-            if (finales) {
-                const yaEmitido = estado.emitidoTexto || '';
+            // Se funde contra lo que ya habia por si el motor poda resultados
+            // viejos del array; si los trae todos, esto devuelve `finales` tal
+            // cual y no cambia nada.
+            estado.sesionFinal = _fundir(estado.sesionFinal, finales);
 
-                if (!yaEmitido)                     confirmado = finales;
-                else if (finales.startsWith(yaEmitido)) confirmado = finales.slice(yaEmitido.length);
-                else if (!yaEmitido.endsWith(finales)) confirmado = finales;
+            // textoFijo es lo de los reconocedores anteriores (el motor se
+            // corta solo en los silencios y se lo rearranca).
+            const completo = _fundir(estado.textoFijo, estado.sesionFinal);
 
-                estado.emitidoTexto = finales.startsWith(yaEmitido) ? finales : yaEmitido + ' ' + finales;
-            }
+            if (completo === estado.ultimoEmitido && !provisorio && !estado.habiaProvisorio) return;
+            estado.ultimoEmitido = completo;
+            estado.habiaProvisorio = !!provisorio;
 
-            confirmado = confirmado.trim();
-            if (!confirmado && !provisorio) return;
-
-            // Lo confirmado se agrega al informe; lo provisorio solo se
+            // El texto completo pisa el informe dictado; lo provisorio solo se
             // muestra en gris y se reemplaza en la siguiente pasada.
-            dotnetRef.invokeMethodAsync('OnDictado', confirmado, provisorio);
+            dotnetRef.invokeMethodAsync('OnDictado', completo, provisorio);
         };
 
         rec.onerror = (evento) => {
@@ -107,15 +144,20 @@ window.dictado = (function () {
         // vuelve a arrancar.
         rec.onend = () => {
             if (estado && estado.modo === 'envivo' && !estado.detenido) {
-                // OJO: no se reinicia emitidoTexto. Hay motores que al rearrancar
-                // vuelven a mandar lo de la sesión anterior; conservando el texto
-                // ya emitido eso se descarta solo. Y si lo que viene es una frase
-                // nueva, no es prefijo del anterior y entra completa igual.
+                // Lo de este reconocedor pasa a texto fijo ANTES de rearrancar:
+                // el proximo empieza con el array vacio y sin esto se perderia
+                // todo lo dictado hasta el silencio. Si el motor igual vuelve a
+                // mandar lo viejo, _fundir lo reconoce y no lo duplica.
+                estado.textoFijo = _fundir(estado.textoFijo, estado.sesionFinal);
+                estado.sesionFinal = '';
                 try { rec.start(); } catch { /* ya arrancado */ }
             }
         };
 
-        estado = { modo: 'envivo', ref: dotnetRef, rec: rec, detenido: false, emitidoTexto: '' };
+        estado = {
+            modo: 'envivo', ref: dotnetRef, rec: rec, detenido: false,
+            textoFijo: '', sesionFinal: '', ultimoEmitido: '', habiaProvisorio: false
+        };
         rec.start();
         return 'envivo';
     }

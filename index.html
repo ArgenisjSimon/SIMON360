@@ -5,13 +5,18 @@
     <meta charset="utf-8" />
     <meta name="google" content="notranslate" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Simon360</title>
+	<title>Simon360</title>
     <base href="/Apps/Simon360/" />
     <link rel="icon" type="image/png" href="Imagenes/favicon.ico" />
     <!-- PWA -->
     <link rel="manifest" href="manifest.webmanifest" />
     <link rel="apple-touch-icon" sizes="192x192" href="icon-192.png" />
-    <meta name="theme-color" content="#dc2626" />
+    <!-- La franja del sistema en Android. Este valor es solo el arranque: la
+         app es marca blanca y el color real sale de --c-topbar, que lo escribe
+         tema.js apenas se sabe la empresa (ver _pintarBarraNavegador). Estaba
+         clavado en el rojo de SIMON y una empresa de marca verde veía su barra
+         verde con una franja roja encima. -->
+    <meta name="theme-color" content="#ffffff" />
     <!--  Estilos principales -->
     <link rel="stylesheet" href="css/app.css" />
     <!-- Paleta de la app como variables. Va ANTES de Tailwind: el puente de
@@ -300,6 +305,9 @@
             if (theme === "dark") {
                 document.documentElement.classList.add("dark");
             }
+            // El topbar del modo oscuro es otro color: la franja del sistema
+            // tiene que seguirlo o queda blanca sobre un header oscuro.
+            try { tema.pintarBarraNavegador(); } catch (e) { }
         });
 
         // Función para Blazor
@@ -307,6 +315,7 @@
             const html = document.documentElement;
             const isDark = html.classList.toggle("dark");
             localStorage.setItem("theme", isDark ? "dark" : "light");
+            try { tema.pintarBarraNavegador(); } catch (e) { }
         }
 
         // Fija el tema en vez de alternarlo. La configuración ofrece "claro" y
@@ -315,6 +324,7 @@
         function setTheme(dark) {
             document.documentElement.classList.toggle("dark", dark);
             localStorage.setItem("theme", dark ? "dark" : "light");
+            try { tema.pintarBarraNavegador(); } catch (e) { }
         }
 
     </script>

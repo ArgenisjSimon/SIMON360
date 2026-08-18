@@ -181,6 +181,42 @@ window.tema = (function () {
         if (habia) _conFundido();
 
         hoja.textContent = css;
+        _pintarBarraNavegador();
+    }
+
+    // ── La barra del sistema (theme-color) ───────────────────
+    //
+    // En Android la franja de la hora y la señal la pinta el navegador con
+    // <meta name="theme-color">, que es un hex fijo en el HTML y NO lee
+    // variables CSS. Estaba clavado en el rojo de SIMON: una empresa con
+    // marca verde veía su barra verde con una franja roja encima.
+    //
+    // Se copia el color de --c-topbar, que es la barra de arriba de la app:
+    // asi la franja del sistema y el header quedan del mismo color y se ven
+    // como una sola pieza. Hay que releerlo en cada cambio —de paleta y de
+    // claro/oscuro— porque el topbar del modo oscuro es otro.
+    function _pintarBarraNavegador() {
+        try {
+            var meta = document.querySelector('meta[name="theme-color"]');
+            if (!meta) {
+                meta = document.createElement('meta');
+                meta.setAttribute('name', 'theme-color');
+                document.head.appendChild(meta);
+            }
+
+            var v = getComputedStyle(document.documentElement)
+                .getPropertyValue('--c-topbar').trim();
+            if (!v) return;
+
+            var p = v.split(/\s+/);
+            if (p.length < 3) return;
+
+            var hex = '#' + p.slice(0, 3).map(function (n) {
+                return ('0' + (parseInt(n, 10) & 255).toString(16)).slice(-2);
+            }).join('');
+
+            if (meta.getAttribute('content') !== hex) meta.setAttribute('content', hex);
+        } catch (e) { /* sin barra teñida: no es motivo para romper el tema */ }
     }
 
     /// Suaviza el salto de color durante 400 ms. Pasa poco —cuando el API trae
@@ -232,6 +268,10 @@ window.tema = (function () {
                 if (clave && clave.indexOf('tema:') === 0) localStorage.removeItem(clave);
             }
         } catch (e) { /* storage bloqueado: la hoja ya se fue igual */ }
+
+        // La barra del sistema también vuelve al default: si no, el próximo
+        // que entre en esa máquina ve la franja de la empresa anterior.
+        _pintarBarraNavegador();
     }
 
     // ── Modo forzado por un módulo ───────────────────────────
@@ -262,6 +302,7 @@ window.tema = (function () {
         // oscuro al entrar a un módulo se ve como un parpadeo.
         _conFundido();
         raiz.classList.toggle('dark', oscuro);
+        _pintarBarraNavegador();   // el topbar del modo oscuro es otro color
         return oscuro;
     }
 
@@ -328,15 +369,21 @@ window.tema = (function () {
     function aplicarDesdeCache() {
         try {
             var id = localStorage.getItem('empresaSeleccionada');
-            if (!id) return null;
-            var tema = leer(id);
+            var tema = id ? leer(id) : null;
             if (!tema) return null;
+
             aplicar(tema.paleta, tema.paletaOscura);
             if (tema.modoDefault && !localStorage.getItem('theme')) {
                 if (tema.modoDefault === 'dark') document.documentElement.classList.add('dark');
             }
             return tema;
         } catch (e) { return null; }
+        finally {
+            // Siempre, incluso sin tema cacheado: el <meta> del HTML viene con
+            // el rojo de SIMON escrito a mano y hay que bajarlo al color real
+            // del topbar igual.
+            _pintarBarraNavegador();
+        }
     }
 
     return {
@@ -347,6 +394,7 @@ window.tema = (function () {
         esOscuro: esOscuro,
         color: color,
         splashUrl: splashUrl,
+        pintarBarraNavegador: _pintarBarraNavegador,
         guardar: guardar,
         leer: leer,
         completar: completar

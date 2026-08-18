@@ -25,7 +25,7 @@
       "url": "_framework\/icudt.dat"
     },
     {
-      "hash": "sha256-Pr3YHPAJilzAlhZqMosXCu9W4NmWF5Els7\/gAZKAWF8=",
+      "hash": "sha256-3emdYDQow9DVYhe9OuMbRKegPUaTqFxeX1cqc8NkMxk=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -113,7 +113,7 @@
       "url": "_framework\/Microsoft.JSInterop.WebAssembly.wasm"
     },
     {
-      "hash": "sha256-+qZYeO3JS78XMCGDfigRA3+a4eL1lAWx2meOf1JX\/aA=",
+      "hash": "sha256-452MqZY38Ry8U964taCRq+1TMQcAUsbCWdLgHblufvY=",
       "url": "_framework\/SIMON_WEB_360.wasm"
     },
     {
@@ -301,7 +301,7 @@
       "url": "Imagenes\/simon.png"
     },
     {
-      "hash": "sha256-kbzG25FmSX1EDiF\/Q71yd3ay4tflXRLXYdfBcz\/n\/3w=",
+      "hash": "sha256-qmRmToXb2fMfbFRBlvEljK6j5sOvk4eWdBn9341emxk=",
       "url": "index.html"
     },
     {
@@ -329,7 +329,7 @@
       "url": "js\/deviceInfo.js"
     },
     {
-      "hash": "sha256-UWKAEl9xqb4b2uopS8IoP+6aw0jii3xtvrgH7+BOFI8=",
+      "hash": "sha256-STxJxQurNUkwoZD\/yBmA5fE+472Or2iLBssnOcQpPKk=",
       "url": "js\/dictado.js"
     },
     {
@@ -341,7 +341,7 @@
       "url": "js\/gps.js"
     },
     {
-      "hash": "sha256-dX0T1ty++IIGOUWguO7Jbh9tnBdyHpeuT3++70wGzTI=",
+      "hash": "sha256-Z9lAi\/TVNqpl7aa9s0YjvfdcQg1TkRXWlkUIrhLo3Zk=",
       "url": "js\/leafletMap.js"
     },
     {
@@ -369,7 +369,7 @@
       "url": "js\/print.js"
     },
     {
-      "hash": "sha256-rIXZoLlcjtYOL0DGrW7an9+k56bkax3oc2Nvs1pn2Ck=",
+      "hash": "sha256-JjUSgnnh\/aRHhJbGtiUw7UJgJb+FkUk8VmBki4\/MmnA=",
       "url": "js\/tema.js"
     },
     {
@@ -385,7 +385,7 @@
       "url": "labels.json"
     },
     {
-      "hash": "sha256-W75amHI7QvI\/1c4imktnJhBOaK6AklnS2kcnReF3VXQ=",
+      "hash": "sha256-xBmLgswMKCQ8rX2lq5kekFsy1XICYdQ7A3OXpAZXTmc=",
       "url": "manifest.webmanifest"
     },
     {
@@ -393,5 +393,5 @@
       "url": "videos\/Splash_modoClaro.mp4"
     }
   ],
-  "version": "lcaR9gkp"
+  "version": "H2ds9BCQ"
 };
