@@ -8,15 +8,15 @@ window.offlineDbV3 = (function () {
 
     let db = null;
 
-    // Canal de difusi髇 para comunicaci髇 entre pesta馻s
+    // Canal de difusi贸n para comunicaci贸n entre pesta帽as
     const bc = new BroadcastChannel('offline-db-channel');
 
-    // Escuchar mensajes de otras pesta馻s pidiendo cerrar la DB
+    // Escuchar mensajes de otras pesta帽as pidiendo cerrar la DB
     bc.onmessage = (event) => {
         if (event.data === 'close-db' && db) {
             db.close();
             db = null;
-            console.log('Conexi髇 con IndexedDB cerrada por solicitud de otra pesta馻.');
+            console.log('Conexi贸n con IndexedDB cerrada por solicitud de otra pesta帽a.');
         }
     };
 
@@ -65,7 +65,7 @@ window.offlineDbV3 = (function () {
         return db.transaction(storeName, mode).objectStore(storeName);
     }
 
-    // ================= OPERACIONES GEN蒖ICAS DE ENTIDADES =================
+    // ================= OPERACIONES GEN脡RICAS DE ENTIDADES =================
 
     async function save(entity, item) {
         await ensureDb();
@@ -128,43 +128,53 @@ window.offlineDbV3 = (function () {
     // ================= ELIMINAR BASE DE DATOS MEJORADA =================
     /**
      * Elimina la base de datos IndexedDB.
-     * @param {number} timeoutMs - Tiempo m醲imo de espera en milisegundos (por defecto 5000).
+     * @param {number} timeoutMs - Tiempo m谩ximo de espera en milisegundos (por defecto 5000).
      * @returns {Promise<void>}
      */
     async function deleteDatabase(timeoutMs = 5000) {
         return new Promise((resolve, reject) => {
-            // Cerrar nuestra propia conexi髇 primero
+            // Cerrar nuestra propia conexi贸n primero
             if (db) {
                 db.close();
                 db = null;
             }
 
-            // Pedir a otras pesta馻s que cierren sus conexiones
+            // Pedir a otras pesta帽as que cierren sus conexiones
             bc.postMessage('close-db');
 
             const req = indexedDB.deleteDatabase(DB_NAME);
             let bloqueado = false;
+            let terminado = false;
 
-            // Establecer un tiempo l韒ite para el bloqueo
+            // El timeout tiene que cortar SIEMPRE, no solo cuando lleg贸
+            // 'blocked'. Hay navegadores que dejan la petici贸n sin resolver y
+            // sin disparar onblocked; si ah铆 no rechazamos, esta promesa no
+            // termina nunca y el logout se queda colgado sin llegar al login.
             const timeout = setTimeout(() => {
-                if (bloqueado) {
-                    reject(new Error('No se pudo eliminar la base de datos porque hay otras pesta馻s abiertas. Por favor, ci閞ralas e int閚talo de nuevo.'));
-                }
+                if (terminado) return;
+                terminado = true;
+                reject(new Error(bloqueado
+                    ? 'No se pudo eliminar la base de datos porque hay otras pesta帽as abiertas. Por favor, ci茅rralas e int茅ntalo de nuevo.'
+                    : 'No se pudo eliminar la base de datos: la operaci贸n no respondi贸 a tiempo.'));
             }, timeoutMs);
 
             req.onsuccess = () => {
                 clearTimeout(timeout);
+                if (terminado) return;
+                terminado = true;
                 resolve();
             };
 
             req.onerror = () => {
                 clearTimeout(timeout);
+                if (terminado) return;
+                terminado = true;
                 reject(req.error);
             };
 
             req.onblocked = () => {
                 bloqueado = true;
-                console.warn('Bloqueado: hay otra pesta馻 con la base de datos abierta. Esperando a que se cierre...');
+                console.warn('Bloqueado: hay otra pesta帽a con la base de datos abierta. Esperando a que se cierre...');
             };
         });
     }
@@ -216,7 +226,7 @@ window.offlineDbV3 = (function () {
         getPending,
         removePending,
 
-        // Borrar DB (versi髇 mejorada)
+        // Borrar DB (versi贸n mejorada)
         deleteDatabase
     };
 })();

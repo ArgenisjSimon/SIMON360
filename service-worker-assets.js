@@ -25,7 +25,7 @@
       "url": "_framework\/icudt.dat"
     },
     {
-      "hash": "sha256-3emdYDQow9DVYhe9OuMbRKegPUaTqFxeX1cqc8NkMxk=",
+      "hash": "sha256-UP8nzwfo2BER\/5VBh6PfOC84uECcxVzdwHt8SVDBM24=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -33,7 +33,7 @@
       "url": "_framework\/Microsoft.AspNetCore.Components.Forms.wasm"
     },
     {
-      "hash": "sha256-Ilh1d2eBoxCZhE6moeYLIQItjilU6bYNH14YKXWVne0=",
+      "hash": "sha256-P5KHlLXcG6ZqdMLQbHk8MikHz+PpZhr8T2Il+ElE0eY=",
       "url": "_framework\/Microsoft.AspNetCore.Components.wasm"
     },
     {
@@ -113,7 +113,7 @@
       "url": "_framework\/Microsoft.JSInterop.WebAssembly.wasm"
     },
     {
-      "hash": "sha256-452MqZY38Ry8U964taCRq+1TMQcAUsbCWdLgHblufvY=",
+      "hash": "sha256-BTHRIoQQc1t8c2N6vreNYlhrT3bN76vJksOV3n1kCCw=",
       "url": "_framework\/SIMON_WEB_360.wasm"
     },
     {
@@ -185,7 +185,7 @@
       "url": "_framework\/System.ObjectModel.wasm"
     },
     {
-      "hash": "sha256-YZ958AgjFvCM9jwPPDZugtPgKFA+3JT3SEYAD4nYx48=",
+      "hash": "sha256-ZiPkiIKZZi7esEOOXFx0sGgdyuhUr8FIXkDGmnGQbek=",
       "url": "_framework\/System.Private.CoreLib.wasm"
     },
     {
@@ -229,7 +229,7 @@
       "url": "_framework\/System.wasm"
     },
     {
-      "hash": "sha256-LI2JPyRk91bXZdp3+BA+SQhd01vI4khHiPHhIfR6KGk=",
+      "hash": "sha256-4g3A9Vij\/2JBZhqD1Uv2q\/LTJPIGSLBunvJt6kIE7Tc=",
       "url": "appsettings.json"
     },
     {
@@ -301,7 +301,7 @@
       "url": "Imagenes\/simon.png"
     },
     {
-      "hash": "sha256-qmRmToXb2fMfbFRBlvEljK6j5sOvk4eWdBn9341emxk=",
+      "hash": "sha256-yZ6eXGoX1ddDxhibFq3ayuchJdKd2shESQfbAyPuvTU=",
       "url": "index.html"
     },
     {
@@ -357,7 +357,7 @@
       "url": "js\/offlineDb.js"
     },
     {
-      "hash": "sha256-UgyF9ywHIpSNPXi4I6Q2DYgkWFzOve9UD1hjfSsb9Vs=",
+      "hash": "sha256-De4yNBUzVc\/pAyV6y8inJH9UjyZuvNwTTDN8oCU2qt8=",
       "url": "js\/offlineDbMulti.js"
     },
     {
@@ -365,7 +365,7 @@
       "url": "js\/offlineDbv2.js"
     },
     {
-      "hash": "sha256-f9pDel7BnPInvbojmKZwtQEnaR2jorUgPOinlC9mc1E=",
+      "hash": "sha256-VVhCzB5R5IPgLcaUPu3pY6OHhsSdLkwpCv8rLwujxWk=",
       "url": "js\/print.js"
     },
     {
@@ -393,5 +393,5 @@
       "url": "videos\/Splash_modoClaro.mp4"
     }
   ],
-  "version": "H2ds9BCQ"
+  "version": "xi7XejTJ"
 };

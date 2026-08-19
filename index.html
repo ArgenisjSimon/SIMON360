@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="google" content="notranslate" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>Simon360</title>
+   <title>Simon360</title>
     <base href="/Apps/Simon360/" />
     <link rel="icon" type="image/png" href="Imagenes/favicon.ico" />
     <!-- PWA -->
@@ -133,6 +133,21 @@
          lo último que se cacheó de esta empresa y sin tocar la red. Si se
          esperara al framework, el usuario ve medio segundo de azul SIMON y
          después el salto a su marca. -->
+    <script>
+        // El modo claro/oscuro que el usuario dejo elegido, ANTES del primer
+        // pintado. Va aca arriba y no al final del body por lo mismo que la
+        // marca de la empresa: aplicado despues, la pantalla se ve un instante
+        // en claro y despues salta a oscuro.
+        //
+        // Su propio try: si algo falla mas abajo, la preferencia igual quedo
+        // puesta. localStorage puede tirar en modo privado de algunos
+        // navegadores, y ahi simplemente se arranca en claro.
+        try {
+            if (localStorage.getItem("theme") === "dark") {
+                document.documentElement.classList.add("dark");
+            }
+        } catch (e) { /* sin storage: queda el claro por defecto */ }
+    </script>
     <script src="js/tema.js"></script>
     <script>tema.aplicarDesdeCache();</script>
 
@@ -299,14 +314,14 @@
             window.URL.revokeObjectURL(url);
         };
 
-        // Cargar la preferencia guardada
+        // (La preferencia guardada se aplica en el <head>, antes del primer
+        //  pintado. Repetirla aca no agrega nada: la clase 'dark' ya esta
+        //  puesta desde antes de que el DOM termine de cargar.)
+        //
+        // El topbar del modo oscuro es otro color: la franja del sistema tiene
+        // que seguirlo o queda blanca sobre un header oscuro. Esto si va aca —
+        // tema.js ya esta cargado y el DOM listo.
         document.addEventListener("DOMContentLoaded", function () {
-            const theme = localStorage.getItem("theme") || "light";
-            if (theme === "dark") {
-                document.documentElement.classList.add("dark");
-            }
-            // El topbar del modo oscuro es otro color: la franja del sistema
-            // tiene que seguirlo o queda blanca sobre un header oscuro.
             try { tema.pintarBarraNavegador(); } catch (e) { }
         });
 

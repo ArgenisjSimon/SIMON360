@@ -2,23 +2,32 @@ window.simonPrint = window.simonPrint || {};
 
 // Abre el contenido del elemento en una ventana nueva e imprime.
 // Usa inline styles del div #reporte-pago-print para evitar dependencias de CSS.
-window.simonPrint.printReporte = function (elementId, titulo) {
+//
+// `orientacion` es opcional y vale 'landscape' para las tablas anchas (el
+// detalle de comisiones no entra en vertical). Omitirlo deja el comportamiento
+// de siempre: vertical, que es lo que esperan los comprobantes de cobranza.
+window.simonPrint.printReporte = function (elementId, titulo, orientacion) {
     var el = document.getElementById(elementId);
     if (!el) return;
     var win = window.open('', '_blank', 'width=900,height=700,scrollbars=yes');
     if (!win) return;
     var tituloDoc = (titulo && String(titulo).trim()) || 'Comprobante de Pago - SIMON 360';
+    var horizontal = String(orientacion || '').toLowerCase() === 'landscape';
     win.document.write('<!DOCTYPE html><html><head>');
     win.document.write('<meta charset="utf-8">');
     win.document.write('<title>' + tituloDoc + '</title>');
     win.document.write('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous">');
     win.document.write('<style>');
-    win.document.write('@page{margin:10mm 15mm}');
+    win.document.write(horizontal ? '@page{size:landscape;margin:8mm 10mm}' : '@page{margin:10mm 15mm}');
     win.document.write('body{font-family:Arial,sans-serif;margin:0;padding:0;}');
     win.document.write('img{max-width:100%;height:auto;}');
     // Todo el comprobante debe caber en UNA pagina: no partir filas ni bloques
     // (imagen, documentos aplicados, pie) entre paginas.
     win.document.write('tr{page-break-inside:avoid}');
+    // Los reportes de varias hojas repiten el encabezado de la tabla en cada
+    // una; sin esto la segunda pagina del detalle son numeros sin titulo.
+    win.document.write('thead{display:table-header-group}');
+    win.document.write('.salto-pagina{page-break-before:always}');
     win.document.write('@media print{body{-webkit-print-color-adjust:exact;print-color-adjust:exact;}}');
     win.document.write('</style>');
     win.document.write('</head><body>');
