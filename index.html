@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="google" content="notranslate" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-   <title>Simon360</title>
+    <title>Simon360</title>
     <base href="/Apps/Simon360/" />
     <link rel="icon" type="image/png" href="Imagenes/favicon.ico" />
     <!-- PWA -->
@@ -25,110 +25,30 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" integrity="sha384-XGjxtQfXaH2tnPFa9x+ruJTuLE3Aa6LhHSWRr1XeTyhezb4abCG4ccI5AkVDxqC+" crossorigin="anonymous">
     <!--  Tailwind -->
-    <script src="https://cdn.tailwindcss.com"></script>
     <!-- ============================================================
-         Puente Tailwind ↔ tokens (fase 0 del tema por empresa)
+         Tailwind, compilado en BUILD TIME
          ============================================================
-         Cada escala de color de Tailwind queda apuntando a un rol de
-         css/tema-tokens.css. Con esto, los ~8.000 bg-blue-600 /
-         text-emerald-500 que ya están escritos en los .razor se tiñen
-         cambiando variables CSS, sin tocar un solo archivo.
+         Antes acá vivían dos cosas: el CDN de Tailwind
+         (cdn.tailwindcss.com) y ~90 líneas de configuración que armaban
+         las escalas de color. El CDN no es una hoja de estilos: es un
+         compilador que corría en el navegador de CADA usuario, mirando
+         el DOM y generando el CSS sobre la marcha.
 
-         Hoy los tokens valen exactamente lo mismo que la paleta de
-         fábrica de Tailwind 3.4.17, así que esto NO cambia ni un pixel:
-         verificado tono por tono contra el bundle del CDN (110/110), con
-         opacidades (bg-blue-600/40) y gradientes incluidos.
+         En Blazor WASM eso se notaba: el framework renderizaba miles de
+         elementos y Tailwind venía corriendo detrás. De ahí el parpadeo
+         de colores al arrancar y el "muevo algo y se acomoda" — cada
+         interacción disparaba una regeneración.
 
-         La config va acá y no al final del body: si se declara después,
-         el navegador alcanza a pintar con la config de fábrica y se ve
-         el salto.
+         Ahora el CSS se genera con el CLI durante el build (ver el Target
+         CompilarTailwind en SIMON_WEB_360.csproj) y el navegador solo
+         descarga una hoja ya minificada.
+
+         La configuración se mudó a tailwind.config.js, en la raíz del
+         proyecto. El theming por empresa NO cambió: los colores siguen
+         viajando en variables CSS (--c-*) que inyecta js/tema.js en
+         runtime, así que una empresa cambia su marca sin recompilar.
          ============================================================ -->
-    <script>
-        (function () {
-            var NIVELES = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
-
-            // Rol por escala. El azul y el índigo son marca; el resto son
-            // semánticos y NO los pisa el tema de la empresa salvo que los
-            // mande explícitos (un primario naranja no puede volver naranja
-            // el "vencido").
-            var ROLES = {
-                blue: 'primary', indigo: 'primary-alt', emerald: 'accent',
-                green: 'ok', red: 'crit', amber: 'warn',
-                yellow: 'warn-soft', orange: 'warn-strong',
-                purple: 'new', teal: 'info',
-                // Secundarias: rose y cyan pintan las categorías del Home, así
-                // que sin ellas el tema teñiría media pantalla.
-                rose: 'crit-alt', cyan: 'info-alt', sky: 'info-soft',
-                violet: 'new-alt', fuchsia: 'new-soft',
-                // Neutros. gray son 12.443 usos: el esqueleto de la app.
-                gray: 'neutral', slate: 'neutral-cool', zinc: 'neutral-flat'
-            };
-
-            // <alpha-value> es lo que mantiene vivas las clases con opacidad.
-            function escala(rol) {
-                var o = {};
-                for (var i = 0; i < NIVELES.length; i++) {
-                    o[NIVELES[i]] = 'rgb(var(--c-' + rol + '-' + NIVELES[i] + ') / <alpha-value>)';
-                }
-                return o;
-            }
-
-            var colors = {};
-            for (var esc in ROLES) {
-                colors[esc] = escala(ROLES[esc]);        // lo ya escrito: bg-blue-600
-                colors[ROLES[esc]] = escala(ROLES[esc]); // para código nuevo: bg-primary-600
-            }
-
-            // Blanco y negro no son escalas, son colores sueltos, y bg-white
-            // (880 usos) es el papel de tarjetas, header y modales: sin esto
-            // un tema cambia los acentos y la app se sigue viendo blanca.
-            // Cuidado: bg-white y text-white salen del mismo color, así que
-            // --c-surface es papel Y tinta sobre botones de color. Ver la nota
-            // en css/tema-tokens.css.
-            colors.white = 'rgb(var(--c-surface) / <alpha-value>)';
-            colors.black = 'rgb(var(--c-ink-max) / <alpha-value>)';
-            colors.surface = colors.white;
-            colors['ink-max'] = colors.black;
-
-            // El chrome (barra y sidebar) tiene rol propio: es donde la marca
-            // se planta, mientras el contenido queda claro.
-            var PLANOS = ['rail', 'rail-ink', 'rail-ink-soft', 'rail-hover', 'topbar', 'marca',
-                          'rail-crit', 'rail-crit-wash',
-                          'lote', 'lote-borde'];
-
-            // Superficies del modo oscuro. Escala corta y al reves: 900 es el
-            // mas oscuro. Estaban escritas a mano como bg-noche-700 en ~340
-            // lugares, fuera del alcance de cualquier tema.
-            colors.noche = {};
-            [400, 500, 600, 700, 800, 900].forEach(function (n) {
-                colors.noche[n] = 'rgb(var(--c-noche-' + n + ') / <alpha-value>)';
-            });
-            for (var p = 0; p < PLANOS.length; p++) {
-                colors[PLANOS[p]] = 'rgb(var(--c-' + PLANOS[p] + ') / <alpha-value>)';
-            }
-
-            // ── Las letras, aparte del papel ──────────────────────
-            // En Tailwind, bg-gray-100 y text-gray-700 salen de la MISMA
-            // escala, asi que pedir "las letras en otro color" arrastraba
-            // el fondo detras. textColor tiene su propia entrada en la
-            // config: se le da la escala ink y las clases de TEXTO pasan a
-            // leer --c-ink-*, mientras bg-gray-* y border-gray-* siguen en
-            // neutral. Cero cambios en los .razor.
-            //
-            // Solo gray: son 12.443 usos, el esqueleto de la app. slate y
-            // zinc (96 y pocos mas) se quedan en su neutro — no justifican
-            // otra escala de tokens.
-            //
-            // Los tokens de ink arrancan identicos a los de neutral, asi
-            // que esto no cambia nada hasta que una empresa elija color.
-            var textColor = { gray: escala('ink'), ink: escala('ink') };
-
-            tailwind.config = {
-                darkMode: 'class',
-                theme: { extend: { colors: colors, textColor: textColor } }
-            };
-        })();
-    </script>
+    <link rel="stylesheet" href="css/tailwind.build.css" />
     <!-- El tema de la empresa se pinta acá, antes de que arranque Blazor: con
          lo último que se cacheó de esta empresa y sin tocar la red. Si se
          esperara al framework, el usuario ve medio segundo de azul SIMON y
