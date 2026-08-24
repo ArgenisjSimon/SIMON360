@@ -25,7 +25,7 @@
       "url": "_framework\/icudt.dat"
     },
     {
-      "hash": "sha256-vLZ9jT+I0xmv1OeGylLXAngpL2FfmSS9bISrjnAEA3s=",
+      "hash": "sha256-By0jCzbL961bo\/pvKeGwewQHWSEEddmSM6Ht0VArwLU=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -113,7 +113,7 @@
       "url": "_framework\/Microsoft.JSInterop.WebAssembly.wasm"
     },
     {
-      "hash": "sha256-dj89+yrkDgcWu5AZjEfCrIc0+5i1b71hKIyw90NlmC0=",
+      "hash": "sha256-wDwTorvjEUx\/RAWSlYKUtveyuglpj3bBBEVgoLrrwRs=",
       "url": "_framework\/SIMON_WEB_360.wasm"
     },
     {
@@ -185,7 +185,7 @@
       "url": "_framework\/System.ObjectModel.wasm"
     },
     {
-      "hash": "sha256-ZiPkiIKZZi7esEOOXFx0sGgdyuhUr8FIXkDGmnGQbek=",
+      "hash": "sha256-4xis\/ku0AdTmcXHfYgaStWfalhKJHjKydrBr6HkRvRg=",
       "url": "_framework\/System.Private.CoreLib.wasm"
     },
     {
@@ -201,7 +201,7 @@
       "url": "_framework\/System.Runtime.Serialization.Primitives.wasm"
     },
     {
-      "hash": "sha256-uXx+JUZ+I4PoHH9aIstKmTw2KSxMCjUAEDNQKdYlSZo=",
+      "hash": "sha256-s+Ez8BbcQ5jMgVu1EPoDiKWHj0fjsLHIJp1sFrZ2J08=",
       "url": "_framework\/System.Runtime.wasm"
     },
     {
@@ -229,7 +229,11 @@
       "url": "_framework\/System.wasm"
     },
     {
-      "hash": "sha256-Iggpjl4iUkrxipQ9lCxnzyFSBJDag4wydeb+lCOLEkE=",
+      "hash": "sha256-kPy\/0UGcGVci+Vn0XqSoGRAKFIo1SjF+BCQm8VIZGKg=",
+      "url": "appsettings.Development.json"
+    },
+    {
+      "hash": "sha256-o71t6I56mv+8rWxtl0Q6AUl25Toi0\/9k1DsA95PNLok=",
       "url": "appsettings.json"
     },
     {
@@ -245,7 +249,7 @@
       "url": "css\/app.css"
     },
     {
-      "hash": "sha256-tsqL4PYIqA6e5rXlyDdnTwCm\/1n7eYmp3rVCOs847Ps=",
+      "hash": "sha256-0xbfO5OoJyBdVu3ZVs0olHLZIwJAwn7w9pgeeEWO82c=",
       "url": "css\/tailwind.build.css"
     },
     {
@@ -305,7 +309,7 @@
       "url": "Imagenes\/simon.png"
     },
     {
-      "hash": "sha256-yJHPy\/9WKwKchewjcp3QQHOG\/jzvMsl8Y4LkHB36hb8=",
+      "hash": "sha256-ZYHfoIt58jpZ4XxKs0aDJtneC4wLzW9hZQK2nDorREI=",
       "url": "index.html"
     },
     {
@@ -353,6 +357,10 @@
       "url": "js\/lotesMap.js"
     },
     {
+      "hash": "sha256-T66SfeR+iN2vdgr15myWJC9m6558a6Ael1ZK8DkGsrQ=",
+      "url": "js\/mttoTablero.js"
+    },
+    {
       "hash": "sha256-txVVxvTbawdmf252q3rU1HVJtv0DXAZCDrzsWWEFLek=",
       "url": "js\/network.js"
     },
@@ -397,5 +405,5 @@
       "url": "videos\/Splash_modoClaro.mp4"
     }
   ],
-  "version": "wyHWRjfQ"
+  "version": "oTzD00eO"
 };
