@@ -25,7 +25,7 @@
       "url": "_framework\/icudt.dat"
     },
     {
-      "hash": "sha256-By0jCzbL961bo\/pvKeGwewQHWSEEddmSM6Ht0VArwLU=",
+      "hash": "sha256-iVpDJg\/4QtivhPG\/vADMZN8OA8w+8xfduLiCgoHuybs=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -113,7 +113,7 @@
       "url": "_framework\/Microsoft.JSInterop.WebAssembly.wasm"
     },
     {
-      "hash": "sha256-wDwTorvjEUx\/RAWSlYKUtveyuglpj3bBBEVgoLrrwRs=",
+      "hash": "sha256-Pah851H2INLd8DuMj+WLW3aAHF2eRzTdrKlKOGF3QLo=",
       "url": "_framework\/SIMON_WEB_360.wasm"
     },
     {
@@ -249,7 +249,7 @@
       "url": "css\/app.css"
     },
     {
-      "hash": "sha256-0xbfO5OoJyBdVu3ZVs0olHLZIwJAwn7w9pgeeEWO82c=",
+      "hash": "sha256-LsCtQSIsm\/EpCjeCMXOf7XiM7mepVW\/7vyJmbCPId3c=",
       "url": "css\/tailwind.build.css"
     },
     {
@@ -405,5 +405,5 @@
       "url": "videos\/Splash_modoClaro.mp4"
     }
   ],
-  "version": "oTzD00eO"
+  "version": "cU9InJGZ"
 };
