@@ -1,4 +1,4 @@
-window.simonPrint = window.simonPrint || {};
+﻿window.simonPrint = window.simonPrint || {};
 
 // Abre el contenido del elemento en una ventana nueva e imprime.
 // Usa inline styles del div #reporte-pago-print para evitar dependencias de CSS.
@@ -287,3 +287,302 @@ window.simonPrint.printAndClose = function (delayMs) {
         });
     }, initialDelay);
 };
+
+// ============================================================================
+//  WHATSAPP CON EL RESUMEN DE LA ORDEN EN PDF
+//
+//  Del modulo de Cobranza se toma el CAMINO: Web Share API para pasarle el
+//  archivo al panel del sistema en el telefono, y wa.me como respaldo en
+//  escritorio. Lo que NO se toma es la tecnica de armar el archivo.
+//
+//  🚨 EL PDF SE DIBUJA, NO SE FOTOGRAFIA.
+//     Cobranza captura el comprobante con html2canvas y mete esa imagen en el
+//     archivo. Sirve para un comprobante de media pagina, pero para el resumen
+//     de una orden es un mal negocio:
+//       · pesa 10 veces mas, y esto viaja por WhatsApp con datos moviles;
+//       · no se puede seleccionar, copiar ni buscar dentro;
+//       · al hacer zoom se pixela, y el proveedor lo abre en un telefono;
+//       · lo que se ve depende del tema y del ancho de la pantalla desde la
+//         que se genero.
+//     Dibujado con las primitivas de jsPDF el texto es texto: pesa unos pocos
+//     KB, se copia, se busca y se imprime nitido.
+//
+//  ⚠️ La fuente base de jsPDF maneja Latin-1: las tildes y la ñ salen bien,
+//     pero la raya larga y las comillas tipograficas no. Por eso _ascii()
+//     las cambia antes de escribir; sin eso aparecen caracteres raros.
+// ============================================================================
+
+// Carga una libreria por CDN una sola vez.
+window.simonPrint._cargarScript = function (url) {
+    return new Promise(function (resolve, reject) {
+        var s = document.createElement('script');
+        s.src = url;
+        s.onload = resolve;
+        s.onerror = reject;
+        document.head.appendChild(s);
+    });
+};
+
+// Arma la URL de WhatsApp. Sin telefono abre el selector de contactos, que es
+// lo que hace Cobranza: el usuario elige a quien mandarselo.
+window.simonPrint.urlWhatsApp = function (telefono, texto) {
+    return 'https://wa.me/' + (telefono || '') + '?text=' + encodeURIComponent(texto || '');
+};
+
+// Abre WhatsApp (app o web) con el texto ya escrito.
+window.simonPrint.abrirWhatsApp = function (telefono, texto) {
+    window.open(window.simonPrint.urlWhatsApp(telefono, texto), '_blank');
+    return true;
+};
+
+// Lo que la fuente base de jsPDF no sabe escribir.
+window.simonPrint._ascii = function (t) {
+    if (t === null || t === undefined) return '';
+    return String(t)
+        .replace(/[\u2014\u2013]/g, '-')      // rayas larga y media
+        .replace(/[\u2018\u2019]/g, "'")      // comillas simples curvas
+        .replace(/[\u201C\u201D]/g, '"')      // comillas dobles curvas
+        .replace(/\u2026/g, '...')
+        .replace(/[\u2022\u25B6\u25BA]/g, '>')
+        .replace(/\u00A0/g, ' ');
+};
+
+// Dibuja el PDF a partir de los DATOS, no del HTML. Devuelve el Blob.
+//
+// Forma de `datos` (todo opcional salvo titulo):
+//   { titulo, subtitulo, emitido,
+//     campos:    [{ etiqueta, valor }],
+//     mensaje:   "texto libre",
+//     secciones: [{ titulo, columnas: [{ t, w, a }], filas: [[..]], resaltada }],
+//     pie }
+//   w = ancho en mm · a = 'l' | 'r' · resaltada = indice de fila a marcar
+window.simonPrint.pdfResumen = async function (datos) {
+    if (!datos) return null;
+
+    try {
+        if (typeof window.jspdf === 'undefined') {
+            await window.simonPrint._cargarScript(
+                'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js');
+        }
+
+        var A   = window.simonPrint._ascii;
+        var doc = new window.jspdf.jsPDF('p', 'mm', 'a4');
+
+        var anchoPag = doc.internal.pageSize.getWidth();
+        var altoPag  = doc.internal.pageSize.getHeight();
+        var margen   = 14;
+        var util     = anchoPag - margen * 2;
+        var y        = margen;
+
+        function salto(alto) {
+            if (y + alto <= altoPag - margen) return false;
+            doc.addPage();
+            y = margen;
+            return true;
+        }
+
+        function linea(color) {
+            doc.setDrawColor(color[0], color[1], color[2]);
+            doc.line(margen, y, anchoPag - margen, y);
+        }
+
+        // ── Cabecera ────────────────────────────────────────────────────
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(8);
+        doc.setTextColor(120, 120, 120);
+        doc.text(A(datos.subtitulo || 'SIMON 360'), margen, y);
+        if (datos.emitido) {
+            doc.text(A(datos.emitido), anchoPag - margen, y, { align: 'right' });
+        }
+        y += 6;
+
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(16);
+        doc.setTextColor(30, 58, 138);
+        doc.text(A(datos.titulo || ''), margen, y);
+        y += 3;
+
+        doc.setLineWidth(0.6);
+        linea([29, 78, 216]);
+        doc.setLineWidth(0.2);
+        y += 6;
+
+        // ── Campos ──────────────────────────────────────────────────────
+        doc.setFontSize(10);
+        (datos.campos || []).forEach(function (c) {
+            if (!c || !c.valor) return;
+
+            var valor = doc.splitTextToSize(A(c.valor), util - 32);
+            salto(valor.length * 5 + 2);
+
+            doc.setFont('helvetica', 'normal');
+            doc.setTextColor(110, 110, 110);
+            doc.text(A(c.etiqueta), margen, y);
+
+            doc.setFont('helvetica', c.fuerte ? 'bold' : 'normal');
+            doc.setTextColor(20, 20, 20);
+            doc.text(valor, margen + 32, y);
+
+            y += valor.length * 5;
+        });
+
+        // ── Mensaje ─────────────────────────────────────────────────────
+        if (datos.mensaje) {
+            y += 3;
+            var msg = doc.splitTextToSize(A(datos.mensaje), util - 8);
+            var altoCaja = msg.length * 5 + 6;
+            salto(altoCaja + 4);
+
+            doc.setFillColor(239, 246, 255);
+            doc.rect(margen, y - 1, util, altoCaja, 'F');
+            doc.setFillColor(29, 78, 216);
+            doc.rect(margen, y - 1, 1.2, altoCaja, 'F');
+
+            doc.setFont('helvetica', 'normal');
+            doc.setTextColor(20, 20, 20);
+            doc.text(msg, margen + 4, y + 4);
+            y += altoCaja + 4;
+        }
+
+        // ── Secciones con tabla ─────────────────────────────────────────
+        (datos.secciones || []).forEach(function (sec) {
+            if (!sec || !sec.filas || sec.filas.length === 0) return;
+
+            var cols = sec.columnas || [];
+
+            function cabecera() {
+                doc.setFont('helvetica', 'bold');
+                doc.setFontSize(8);
+                doc.setTextColor(90, 90, 90);
+                doc.text(A(sec.titulo || '').toUpperCase(), margen, y);
+                y += 3;
+
+                doc.setFillColor(243, 244, 246);
+                doc.rect(margen, y, util, 6, 'F');
+
+                doc.setFontSize(9);
+                doc.setTextColor(55, 65, 81);
+                var x = margen;
+                cols.forEach(function (c) {
+                    var xx = c.a === 'r' ? x + c.w - 2 : x + 2;
+                    doc.text(A(c.t), xx, y + 4, { align: c.a === 'r' ? 'right' : 'left' });
+                    x += c.w;
+                });
+                y += 6;
+            }
+
+            y += 4;
+            salto(24);
+            cabecera();
+
+            doc.setFont('helvetica', 'normal');
+            doc.setFontSize(9);
+
+            sec.filas.forEach(function (fila, idx) {
+                // Cuanto ocupa la fila: la celda que mas renglones necesite.
+                var celdas = fila.map(function (v, i) {
+                    return doc.splitTextToSize(A(v), (cols[i] ? cols[i].w : 40) - 4);
+                });
+                var renglones = Math.max.apply(null, celdas.map(function (c) { return c.length; }));
+                var alto = renglones * 4.4 + 2.5;
+
+                if (salto(alto)) cabecera();
+
+                if (idx === sec.resaltada) {
+                    doc.setFillColor(254, 249, 195);
+                    doc.rect(margen, y, util, alto, 'F');
+                }
+
+                var x = margen;
+                celdas.forEach(function (c, i) {
+                    var col = cols[i] || { w: 40, a: 'l' };
+                    var xx  = col.a === 'r' ? x + col.w - 2 : x + 2;
+                    doc.setTextColor(20, 20, 20);
+                    doc.text(c, xx, y + 4, { align: col.a === 'r' ? 'right' : 'left' });
+                    x += col.w;
+                });
+
+                y += alto;
+                doc.setDrawColor(229, 231, 235);
+                doc.line(margen, y, anchoPag - margen, y);
+            });
+        });
+
+        // ── Pie, en todas las paginas ───────────────────────────────────
+        var paginas = doc.internal.getNumberOfPages();
+        for (var i = 1; i <= paginas; i++) {
+            doc.setPage(i);
+            doc.setFont('helvetica', 'normal');
+            doc.setFontSize(7.5);
+            doc.setTextColor(150, 150, 150);
+            doc.text(A(datos.pie || ''), margen, altoPag - 8);
+            doc.text(i + ' / ' + paginas, anchoPag - margen, altoPag - 8, { align: 'right' });
+        }
+
+        return doc.output('blob');
+    } catch (e) {
+        console.warn('[simonPrint] No se pudo armar el PDF del resumen:', e);
+        return null;
+    }
+};
+
+window.simonPrint._descargarBlob = function (blob, nombre) {
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = nombre;
+    a.click();
+    setTimeout(function () { URL.revokeObjectURL(url); }, 5000);
+};
+
+// Descarga el PDF, sin abrir WhatsApp.
+window.simonPrint.descargarPdfResumen = async function (datos, nombreArchivo) {
+    var blob = await window.simonPrint.pdfResumen(datos);
+    if (!blob) return 'No se pudo armar el PDF.';
+
+    window.simonPrint._descargarBlob(blob, (nombreArchivo || 'resumen') + '.pdf');
+    return 'PDF descargado.';
+};
+
+// Arma el PDF y lo comparte por WhatsApp.
+//
+// Devuelve una frase de lo que REALMENTE paso, para que quede en la bitacora:
+// no es lo mismo "se compartio por el panel del sistema" que "se descargo el
+// PDF y se abrio la conversacion". La evidencia tiene que distinguirlo.
+window.simonPrint.compartirPdfWhatsApp = async function (datos, nombreArchivo, texto, telefono) {
+    var blob = await window.simonPrint.pdfResumen(datos);
+
+    // Telefono: el panel del sistema, con el PDF adjunto.
+    if (blob && typeof navigator.share === 'function') {
+        try {
+            var file = new File([blob], (nombreArchivo || 'resumen') + '.pdf',
+                                { type: 'application/pdf' });
+            if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                await navigator.share({
+                    files: [file],
+                    title: nombreArchivo || 'SIMON 360',
+                    text: texto
+                });
+                return 'Compartido con el panel del sistema, con el PDF adjunto.';
+            }
+        } catch (e) {
+            // El usuario cerro el panel: no es un error y no hay que insistir
+            // abriendo WhatsApp por su cuenta.
+            if (e.name === 'AbortError') return 'El usuario cancelo el envio.';
+            console.warn('[simonPrint] Web Share fallo, se usa el respaldo:', e);
+        }
+    }
+
+    // Escritorio: se descarga el PDF y se abre la conversacion con el texto.
+    var mensaje;
+    if (blob) {
+        window.simonPrint._descargarBlob(blob, (nombreArchivo || 'resumen') + '.pdf');
+        mensaje = 'PDF descargado y WhatsApp abierto: falta adjuntarlo en la conversacion.';
+    } else {
+        mensaje = 'WhatsApp abierto con el mensaje. No se pudo armar el PDF.';
+    }
+
+    window.open(window.simonPrint.urlWhatsApp(telefono, texto), '_blank');
+    return mensaje;
+};
+

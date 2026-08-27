@@ -247,6 +247,10 @@ window.tema = (function () {
         var hoja = document.getElementById(ID_HOJA);
         if (hoja) hoja.remove();
 
+        // Y el modo por defecto de la empresa: si queda, el próximo que entre
+        // en esa máquina arranca en oscuro porque la empresa ANTERIOR lo pedía.
+        _modoEmpresa = null;
+
         // Quedan estilos inline de versiones anteriores de este módulo o de
         // pruebas hechas a mano en la consola: si no se barren, sobreviven a
         // la hoja y siguen pintando.
@@ -284,6 +288,27 @@ window.tema = (function () {
     // del usuario y es suya: si un módulo oscuro la pisara, saldría del
     // módulo y se encontraría la app entera cambiada sin haber tocado nada.
 
+    // El modo por defecto de la EMPRESA ('dark' | 'light' | null). Es lo que
+    // manda cuando el usuario nunca eligió, y por eso tiene que vivir acá y no
+    // solo del lado de C#.
+    //
+    // El motivo es modo(null), que significa "volvé a lo que el usuario tenía"
+    // y lo dispara cada módulo al salir. Ese camino leía SOLO localStorage
+    // 'theme' — y esa clave está BORRADA a propósito para el usuario sin
+    // preferencia propia (ver TemaUsuarioService: si queda, en una PC
+    // compartida el segundo hereda el modo del primero). Sin preferencia y sin
+    // default acá, la ausencia de clave se leía como 'light': la empresa
+    // arrancaba en oscuro y perdía el oscuro apenas se entraba a un módulo.
+    var _modoEmpresa = null;
+
+    /// Le dice a este módulo cuál es el default de la empresa. Lo llama
+    /// BrandingService cada vez que aplica un tema, y aplicarDesdeCache en el
+    /// arranque. Pasar null = la empresa no fija modo (queda el claro).
+    function modoDefault(valor) {
+        if (arguments.length) _modoEmpresa = (valor === 'dark' || valor === 'light') ? valor : null;
+        return _modoEmpresa;
+    }
+
     /// modo('dark' | 'light') fuerza; modo(null) devuelve la preferencia.
     function modo(forzado) {
         var raiz = document.documentElement;
@@ -292,7 +317,12 @@ window.tema = (function () {
         if (forzado === 'dark' || forzado === 'light') {
             oscuro = forzado === 'dark';
         } else {
-            try { oscuro = localStorage.getItem('theme') === 'dark'; }
+            try {
+                var guardado = localStorage.getItem('theme');
+                // Sin clave NO es "claro": es "no eligió", y ahí manda la
+                // empresa. Distinguir los dos casos es todo el arreglo.
+                oscuro = guardado ? guardado === 'dark' : _modoEmpresa === 'dark';
+            }
             catch (e) { oscuro = raiz.classList.contains('dark'); }
         }
 
@@ -373,6 +403,11 @@ window.tema = (function () {
             if (!tema) return null;
 
             aplicar(tema.paleta, tema.paletaOscura);
+
+            // Antes de pintar el modo: modo(null) lo necesita puesto, y a
+            // partir de acá cualquier módulo puede pedirlo.
+            modoDefault(tema.modoDefault);
+
             if (tema.modoDefault && !localStorage.getItem('theme')) {
                 if (tema.modoDefault === 'dark') document.documentElement.classList.add('dark');
             }
@@ -391,6 +426,7 @@ window.tema = (function () {
         aplicarDesdeCache: aplicarDesdeCache,
         limpiar: limpiar,
         modo: modo,
+        modoDefault: modoDefault,
         esOscuro: esOscuro,
         color: color,
         splashUrl: splashUrl,
