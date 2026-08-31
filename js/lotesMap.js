@@ -161,6 +161,10 @@ window.lotesMap = (function () {
             p.lote.estadoLabor = c.estadoLabor || null;
             p.lote.pasadas     = Number(c.pasadas) || 0;
             p.lote.actividad   = c.actividad || null;
+            // Los insumos son de la labor elegida: sin refrescarlos, el
+            // globo se quedaria mostrando los de la labor anterior.
+            p.lote.insumos            = Number(c.insumos) || 0;
+            p.lote.insumosSinEntregar = Number(c.insumosSinEntregar) || 0;
 
             p.capa.setStyle(_estilo(s, p.lote, String(p.lote.id) === String(s.resaltado)));
 
@@ -214,12 +218,25 @@ window.lotesMap = (function () {
             ? [lote.actividad || 'Labor', `${veces} veces`]
             : null;
 
+        // Insumos de la labor elegida: solo el conteo, y la advertencia
+        // de lo que falta por entregar. La lista producto por producto
+        // no entra en un globo sin tapar el terreno que se esta mirando;
+        // vive en el panel de la labor, a un click de aca.
+        const items = Number(lote.insumos) || 0;
+        const faltan = Number(lote.insumosSinEntregar) || 0;
+        const filaInsumos = items > 0
+            ? ['Insumos', faltan > 0
+                ? `${items} ítem${items === 1 ? '' : 's'} · ${faltan} sin entregar`
+                : `${items} ítem${items === 1 ? '' : 's'}`]
+            : null;
+
         const filas = [
             ['Variedad', lote.variedad],
             ['Clase',    lote.clase],
             ['F. corte', lote.fCorte],
             ['Edad',     lote.edad],
-            filaPasadas
+            filaPasadas,
+            filaInsumos
         ].filter(f => f && f[1]);
 
         const cca = filas.length
@@ -254,6 +271,9 @@ window.lotesMap = (function () {
     // pasadas = veces que se EJECUTO la actividad principal de la labor
     // elegida en ese lote. Se dibuja sobre el poligono solo si pasa de 1.
     // actividad = su nombre (RIEGO), para rotular el dato en el globo.
+    // insumos = cuantos renglones de OEI tiene esa labor en ese lote;
+    // insumosSinEntregar = cuantos de esos no se despacharon completos.
+    // Los dos llegan en 0 cuando no hay filtro por labor.
     function init(mapId, lotes, dotnetRef) {
         destroy(mapId);
 

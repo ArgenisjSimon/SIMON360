@@ -25,7 +25,7 @@
       "url": "_framework\/icudt.dat"
     },
     {
-      "hash": "sha256-Pj9eEW2mRgLh7IVy0\/xV4I7EFUKN9Z\/UdfC99rvnTis=",
+      "hash": "sha256-SUlxZOxzyV8gJQ\/1tvvNSDKHy2p8L\/f1DMRX4CO+BLo=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -37,7 +37,7 @@
       "url": "_framework\/Microsoft.AspNetCore.Components.wasm"
     },
     {
-      "hash": "sha256-UKFatc1O9IS3FjGFrmwbSjNGvSarlD4\/vG9lcRvbwiQ=",
+      "hash": "sha256-q6Hq7whCQuzA1\/sQ5rnJ0Dke7fJbG6lD+mal4VIemJ4=",
       "url": "_framework\/Microsoft.AspNetCore.Components.Web.wasm"
     },
     {
@@ -113,7 +113,7 @@
       "url": "_framework\/Microsoft.JSInterop.WebAssembly.wasm"
     },
     {
-      "hash": "sha256-\/9+aAFC4H2xughbSuJAqq2GWkRNZI9m36Q6vYg3uiZM=",
+      "hash": "sha256-10EbpAsxd04wxPaX87d6gAQMsP\/BrdM+2oI6crqbmGk=",
       "url": "_framework\/SIMON_WEB_360.wasm"
     },
     {
@@ -185,7 +185,7 @@
       "url": "_framework\/System.ObjectModel.wasm"
     },
     {
-      "hash": "sha256-aYIx\/CPmaRaUCy3Z2t34eUQBgcfrSkTivegXLbJj7pk=",
+      "hash": "sha256-Gl+HS+xEC3riXwB5LeQB9SKeDeczvrcwmAwMJGjhgyA=",
       "url": "_framework\/System.Private.CoreLib.wasm"
     },
     {
@@ -201,7 +201,7 @@
       "url": "_framework\/System.Runtime.Serialization.Primitives.wasm"
     },
     {
-      "hash": "sha256-GyQFpL7H0z8InEQVLjiNwKRSEXludWhneOCmCcF5Cwo=",
+      "hash": "sha256-G5s6hXsz6n19aCDcB2ZaVL3bfZAocnBJ6dzMd2EyTbg=",
       "url": "_framework\/System.Runtime.wasm"
     },
     {
@@ -233,7 +233,7 @@
       "url": "appsettings.Development.json"
     },
     {
-      "hash": "sha256-ThlfvnuZZoxiYL\/sSLkTHv3C4QvBQTq858EijuUO5ls=",
+      "hash": "sha256-bWjC6+2x3\/YP6PNWoXBJygqOPrlFSgppH8lfGwuH4io=",
       "url": "appsettings.json"
     },
     {
@@ -249,7 +249,7 @@
       "url": "css\/app.css"
     },
     {
-      "hash": "sha256-fqZQlwyGe+y2jkAfClH7zsXHKgbp5oPuSHNiXctInKA=",
+      "hash": "sha256-2CjKhyweWEG1byF1LhSTHHHYVWos0h8nuXeW50ERMiQ=",
       "url": "css\/tailwind.build.css"
     },
     {
@@ -309,7 +309,7 @@
       "url": "Imagenes\/simon.png"
     },
     {
-      "hash": "sha256-ZYHfoIt58jpZ4XxKs0aDJtneC4wLzW9hZQK2nDorREI=",
+      "hash": "sha256-JTrLy7uLtTdqyfxonJlr6vtfxwjJpB9kzsYzzizvEuc=",
       "url": "index.html"
     },
     {
@@ -341,6 +341,10 @@
       "url": "js\/dictado.js"
     },
     {
+      "hash": "sha256-XyzR3GmbHHEuqLtxOYcn6+bVDELzCmbMnjLU\/56jUNY=",
+      "url": "js\/fitnessDictado.js"
+    },
+    {
       "hash": "sha256-h6W\/0qwwz3FwCvSJTm9TeEL41miaLI+Fi8VvQCKTCYI=",
       "url": "js\/front.js"
     },
@@ -353,7 +357,7 @@
       "url": "js\/leafletMap.js"
     },
     {
-      "hash": "sha256-lPNWVMzI1oE2l4lP5KNRZHgrbk0AgwKFv7AGvkGu65s=",
+      "hash": "sha256-ldzxs33lZO2cAY0KmJbT4WmMgnpcYsgJlARJyJVDDj4=",
       "url": "js\/lotesMap.js"
     },
     {
@@ -405,5 +409,5 @@
       "url": "videos\/Splash_modoClaro.mp4"
     }
   ],
-  "version": "Lh7nTll9"
+  "version": "bLivHXQ6"
 };
