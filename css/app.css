@@ -299,3 +299,59 @@ code {
         box-shadow: 0 0 0 4px rgba(99, 102, 241, .55);
     }
 }
+
+/* ── Barra de pestañas ───────────────────────────────────────────────
+   La tira scrollea en horizontal cuando hay muchas pantallas abiertas,
+   pero su barra de scroll no aporta nada: son 4 px de alto pegados a
+   las pestañas, y en Windows se dibuja siempre, no solo al pasar el
+   mouse. Se oculta la barra, no el scroll — la rueda y el gesto táctil
+   siguen funcionando igual.
+
+   Va acá y no en un .razor.css porque el CSS aislado está desactivado
+   en index.html (la línea de Simon_Web.styles.css está comentada). */
+.pestanas-tira {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.pestanas-tira::-webkit-scrollbar {
+    display: none;
+}
+
+/* ── Lo que la barra de pestañas desplaza ────────────────────────────
+   El riel superior es fijo y mide 64px. Con la tira de pestañas pasa a
+   112px, así que las dos cosas que viven debajo de él tienen que bajar:
+   el menú lateral y el contenido.
+
+   POR QUÉ ACÁ Y NO EN EL RAZOR. Los dos elementos los manipula el JS del
+   riel: al menú le pone y le saca "hidden2" para abrirlo y cerrarlo, y al
+   contenido "lg:ml-60" para correrlo. Si Blazor pone una expresión en esos
+   class, reescribe el atributo entero en cada render y borra lo que el JS
+   había puesto — el menú queda abierto solo y el contenido no se corre.
+   Desde CSS el ajuste no le disputa el atributo a nadie.
+
+   Los 112px y los 88px están MEDIDOS contra el riel renderizado, no
+   estimados. Si cambia la barra, se vuelven a medir. Y si parecen
+   equivocados, recargar sin caché ANTES de tocarlos: este archivo lo
+   cachea el navegador y la hoja de Tailwind se genera en el build, así que
+   es fácil estar mirando estilos que no son los del código. */
+.con-pestanas #drawer-navigations {
+    padding-top: 112px;
+}
+
+.con-pestanas #content > div {
+    margin-top: 88px;
+}
+
+/* ── El envoltorio de cada pantalla abierta ──────────────────────────
+   Las pantallas abiertas quedan todas en el DOM y se muestra una (ver
+   Layout/VistaConPestanas.cs). Cada una va dentro de un div, y ese div
+   NO tiene que existir para el maquetado: con display:contents sus hijos
+   se acomodan contra el padre de siempre, así que ninguna de las 78
+   pantallas se entera de que hay un elemento nuevo en el medio.
+
+   Esconder no pasa por acá: lo hace el JS poniendo display:none sobre el
+   elemento. Al mostrar, borra el estilo y vuelve a este contents. */
+.pantalla-viva {
+    display: contents;
+}

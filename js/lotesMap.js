@@ -66,6 +66,12 @@ window.lotesMap = (function () {
         if (estado === 'ejecutada') return _color('ok-600', '#16a34a');
         if (estado === 'vencida') return _color('crit-600', '#dc2626');
         if (estado === 'pendiente') return _color('warn-600', '#d97706');
+        // Pizarra: la labor estaba planificada y se decidio que no hacia
+        // falta. Vecina del gris de "sin esa labor" a proposito — las dos
+        // dicen que ahi no hay nada que hacer — pero mas fria y mas oscura
+        // para que se distingan en el mismo mapa. Verde no puede ser: ese
+        // color dice "se trabajo aca".
+        if (estado === 'noaplica') return _color('neutral-cool-500', '#64748b');
         return null;
     }
     // El tablon que no tiene esa labor. Gris, no invisible: sigue siendo
@@ -144,7 +150,8 @@ window.lotesMap = (function () {
     }
 
     // ── Filtros: repinta sin rehacer el mapa ─────────────────────
-    // cambios: [{ id, atenuado, estadoLabor, pasadas, actividad }]
+    // cambios: [{ id, atenuado, estadoLabor, pasadas, actividad, labor,
+    //             rotuloFecha, fecha }]
     //
     // Existe para no llamar a init en cada cambio de filtro: init destruye
     // el mapa y vuelve a encuadrar, asi que el usuario perderia el zoom y
@@ -161,8 +168,11 @@ window.lotesMap = (function () {
             p.lote.estadoLabor = c.estadoLabor || null;
             p.lote.pasadas     = Number(c.pasadas) || 0;
             p.lote.actividad   = c.actividad || null;
-            // Los insumos son de la labor elegida: sin refrescarlos, el
-            // globo se quedaria mostrando los de la labor anterior.
+            // Todo esto es de la labor elegida: sin refrescarlo, el globo se
+            // quedaria mostrando lo de la labor anterior.
+            p.lote.labor              = c.labor || null;
+            p.lote.rotuloFecha        = c.rotuloFecha || null;
+            p.lote.fecha              = c.fecha || null;
             p.lote.insumos            = Number(c.insumos) || 0;
             p.lote.insumosSinEntregar = Number(c.insumosSinEntregar) || 0;
 
@@ -218,6 +228,11 @@ window.lotesMap = (function () {
             ? [lote.actividad || 'Labor', `${veces} veces`]
             : null;
 
+        // Cuando se hizo la labor elegida en ESE tablon.
+        const filaFecha = lote.fecha
+            ? [lote.rotuloFecha || 'Fecha', lote.fecha]
+            : null;
+
         // Insumos de la labor elegida: solo el conteo, y la advertencia
         // de lo que falta por entregar. La lista producto por producto
         // no entra en un globo sin tapar el terreno que se esta mirando;
@@ -230,17 +245,31 @@ window.lotesMap = (function () {
                 : `${items} ítem${items === 1 ? '' : 's'}`]
             : null;
 
+        // Primero la ficha del CCA, que no cambia al mover el filtro, y
+        // despues las tres que si dependen de la labor elegida: cuando se
+        // hizo, cuantas veces y con que insumos.
         const filas = [
             ['Variedad', lote.variedad],
             ['Clase',    lote.clase],
             ['F. corte', lote.fCorte],
             ['Edad',     lote.edad],
+            filaFecha,
             filaPasadas,
             filaInsumos
         ].filter(f => f && f[1]);
 
+        // Con labor elegida se rotula el bloque con su nombre: sin eso, un
+        // "Se hizo el 02/12/2025" suelto no dice de que labor habla.
+        const tituloLabor = (lote.labor && lote.fecha)
+            ? `<div style="font-size:10px;font-weight:700;letter-spacing:.03em;
+                        color:${_color('neutral-500','#6b7280')};margin-bottom:3px">
+                   ${_escapar(lote.labor)}
+               </div>`
+            : '';
+
         const cca = filas.length
             ? `<div style="margin-top:6px;padding-top:6px;border-top:1px solid ${_color('neutral-200','#e5e7eb')};font-size:11px;color:${_color('neutral-700','#374151')}">
+                   ${tituloLabor}
                    ${filas.map(([k, v]) =>
                        `<div style="display:flex;gap:8px;justify-content:space-between">
                             <span style="color:${_color('neutral-500','#6b7280')}">${k}</span>
@@ -266,7 +295,8 @@ window.lotesMap = (function () {
     // edad = edad del cultivo YA en texto ("8 meses"), calculada en C# desde
     // fCorte. Llega resuelta y no como fecha porque el globo es HTML plano.
     // atenuado = no pasa el filtro de ciclo o rubro.
-    // estadoLabor = 'ejecutada' | 'vencida' | 'pendiente' | 'sin', o null
+    // estadoLabor = 'ejecutada' | 'vencida' | 'pendiente' | 'noaplica' |
+    //               'sin', o null
     // cuando no hay filtro por labor.
     // pasadas = veces que se EJECUTO la actividad principal de la labor
     // elegida en ese lote. Se dibuja sobre el poligono solo si pasa de 1.

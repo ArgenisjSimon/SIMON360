@@ -25,7 +25,7 @@
       "url": "_framework\/icudt.dat"
     },
     {
-      "hash": "sha256-uBHbSy+cMBEFAnDDNT1GGzBnhV5dcQXF5BDRZOPXal0=",
+      "hash": "sha256-\/V3Wkq3xBjFMW8TgdsFUwt4\/f17kwd+L\/Z0ovm8xKww=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -33,7 +33,7 @@
       "url": "_framework\/Microsoft.AspNetCore.Components.Forms.wasm"
     },
     {
-      "hash": "sha256-hIW\/\/V4IqYlZQyK47cR5H07fp8n7wjyDnFNhHFSjRQw=",
+      "hash": "sha256-ACSmgiwHjWIHYj7N1A9fkbYVUPDAcGDtdTdNtUB+jrM=",
       "url": "_framework\/Microsoft.AspNetCore.Components.wasm"
     },
     {
@@ -113,7 +113,7 @@
       "url": "_framework\/Microsoft.JSInterop.WebAssembly.wasm"
     },
     {
-      "hash": "sha256-GOhXapTvyI11NwMaS3DyHOsA+7g2V8UMZNmwQojMi4k=",
+      "hash": "sha256-twjHxyjIu3kw2Wqeuxe2T4gI1r9Mf+J+eMVVzFxbzP8=",
       "url": "_framework\/SIMON_WEB_360.wasm"
     },
     {
@@ -161,7 +161,7 @@
       "url": "_framework\/System.Linq.Expressions.wasm"
     },
     {
-      "hash": "sha256-cQ+RaloBV\/zb0j2nguPYbpiFrrsJvhaiKk+Lmvicp6U=",
+      "hash": "sha256-0mM6eMYul85OAeUR5peVn66M6QT1AkJBxjUoikc3fek=",
       "url": "_framework\/System.Linq.wasm"
     },
     {
@@ -185,7 +185,7 @@
       "url": "_framework\/System.ObjectModel.wasm"
     },
     {
-      "hash": "sha256-Dk1lYmL\/De9QEodqKvj6\/fTOPPRWLiALps+sq4S\/C7I=",
+      "hash": "sha256-Vf5rK7bT+9saBLpSIAd90f8rWTV3cejHVyrQhZz1JF4=",
       "url": "_framework\/System.Private.CoreLib.wasm"
     },
     {
@@ -201,7 +201,7 @@
       "url": "_framework\/System.Runtime.Serialization.Primitives.wasm"
     },
     {
-      "hash": "sha256-nZ1GhT1UktJMF9sdjnYBjRsYIshNHp9Phelwv3\/s8CY=",
+      "hash": "sha256-G85JzSUjGmx03HcsUw6Z5r8+tvkrZ59NiZxl77FG7ak=",
       "url": "_framework\/System.Runtime.wasm"
     },
     {
@@ -233,7 +233,7 @@
       "url": "appsettings.Development.json"
     },
     {
-      "hash": "sha256-bWjC6+2x3\/YP6PNWoXBJygqOPrlFSgppH8lfGwuH4io=",
+      "hash": "sha256-2vnOOhcghdGs5k5pUQMhXsf4L2Coxi\/4ra9WrgMcRks=",
       "url": "appsettings.json"
     },
     {
@@ -245,11 +245,11 @@
       "url": "ayuda.json"
     },
     {
-      "hash": "sha256-QJbwmVtqtkcqBL8h1IkpPzeZ9ukzs2+aUa0xEsa6Fy0=",
+      "hash": "sha256-M589JR4PFyOjovhFWghChRJ7tiegXnk3l5m4sUix0VI=",
       "url": "css\/app.css"
     },
     {
-      "hash": "sha256-2CjKhyweWEG1byF1LhSTHHHYVWos0h8nuXeW50ERMiQ=",
+      "hash": "sha256-GXeVJi9C\/oFZtHjX03vCBTscmji4vTAAowBKWYCaiDA=",
       "url": "css\/tailwind.build.css"
     },
     {
@@ -309,7 +309,7 @@
       "url": "Imagenes\/simon.png"
     },
     {
-      "hash": "sha256-JTrLy7uLtTdqyfxonJlr6vtfxwjJpB9kzsYzzizvEuc=",
+      "hash": "sha256-xfkWZKyu5qxTsOZDx04V9WnpGBZUfNYh271oqOBI\/ic=",
       "url": "index.html"
     },
     {
@@ -345,7 +345,7 @@
       "url": "js\/fitnessDictado.js"
     },
     {
-      "hash": "sha256-h6W\/0qwwz3FwCvSJTm9TeEL41miaLI+Fi8VvQCKTCYI=",
+      "hash": "sha256-4N3sQjRERqEhm7Qjkb\/bH\/Krgz9XIpELosNAKZIRVfo=",
       "url": "js\/front.js"
     },
     {
@@ -357,7 +357,7 @@
       "url": "js\/leafletMap.js"
     },
     {
-      "hash": "sha256-ldzxs33lZO2cAY0KmJbT4WmMgnpcYsgJlARJyJVDDj4=",
+      "hash": "sha256-V\/W0E+AywomLf0gQ+h2oVEJ2oUGUxpPJT1Rm3nUMnPY=",
       "url": "js\/lotesMap.js"
     },
     {
@@ -385,6 +385,10 @@
       "url": "js\/print.js"
     },
     {
+      "hash": "sha256-KiYqK15GWOmgVtX0DmapKgLm6Un4Gs5TcsptyaoXsU0=",
+      "url": "js\/ruedaFecha.js"
+    },
+    {
       "hash": "sha256-GMHZyMeNwwEVLcnhJ9mU6\/PsnZsn1lHcz3RFMIwwgcM=",
       "url": "js\/tema.js"
     },
@@ -409,5 +413,5 @@
       "url": "videos\/Splash_modoClaro.mp4"
     }
   ],
-  "version": "kaAjlHlq"
+  "version": "HaZlJz41"
 };
