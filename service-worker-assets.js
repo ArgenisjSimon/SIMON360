@@ -309,7 +309,7 @@
       "url": "Imagenes\/simon.png"
     },
     {
-      "hash": "sha256-xfkWZKyu5qxTsOZDx04V9WnpGBZUfNYh271oqOBI\/ic=",
+      "hash": "sha256-hKbkKYfZhRqqogKRx40nATr63KuQ1GofcccxwxY88CQ=",
       "url": "index.html"
     },
     {
