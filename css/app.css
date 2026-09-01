@@ -355,3 +355,25 @@ code {
 .pantalla-viva {
     display: contents;
 }
+
+/* ── SweetAlert2 por encima de las ventanas flotantes ────────────────
+   SweetAlert2 se planta en z-index 1060, y las ventanas flotantes viven
+   en 10005 y para arriba (Z_BASE en ventanaFlotante.js). Resultado: al
+   confirmar algo con una ventana flotante abierta —aprobar un pedido
+   desde el formulario de OEI, por ejemplo— el cartel salia DEBAJO de la
+   ventana, medio tapado, y el boton de confirmar podia quedar fuera de
+   alcance.
+
+   Va en 20000 y no en 10006 para dejar aire: las ventanas se renumeran
+   solas segun cuantas haya abiertas, asi que el techo real depende del
+   uso y no conviene quedar pegado.
+
+   Un modal de confirmacion tiene que estar arriba de todo por
+   definicion: no se puede seguir trabajando hasta contestarlo.
+
+   La regla de SweetAlert2 es 'div:where(.swal2-container)' y :where()
+   no aporta especificidad, asi que un selector de clase suelto le gana
+   sin necesidad de !important. */
+.swal2-container {
+    z-index: 20000;
+}

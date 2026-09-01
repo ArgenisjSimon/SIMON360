@@ -233,7 +233,7 @@
       "url": "appsettings.Development.json"
     },
     {
-      "hash": "sha256-2vnOOhcghdGs5k5pUQMhXsf4L2Coxi\/4ra9WrgMcRks=",
+      "hash": "sha256-hUbVnnLyeHZ59wdsF4iOM9+T6qTlAa6UKnMJeIz40E8=",
       "url": "appsettings.json"
     },
     {
@@ -245,7 +245,7 @@
       "url": "ayuda.json"
     },
     {
-      "hash": "sha256-M589JR4PFyOjovhFWghChRJ7tiegXnk3l5m4sUix0VI=",
+      "hash": "sha256-d6ZkwpnIlWDph6jqPcLU9EUHEEWZmCYEx9m+J7OfG8A=",
       "url": "css\/app.css"
     },
     {
