@@ -1754,7 +1754,7 @@
     }
   },
   "17": {
-    "nombre": "CHEPELCA 17",
+    "nombre": "Sumindustria",
     "formularios": {
       "productores": {
         "cedula_label": "Cédula / RIF",
@@ -1981,7 +1981,7 @@
         "numero_pedido_label": "N° Pedido"
       },
       "vendedores": {
-        "titulo_listado": "Vendedores CHEPELCA",
+        "titulo_listado": "Vendedores",
         "titulo_nuevo": "Nuevo Vendedor",
         "titulo_editar": "Editar Vendedor",
         "tipo_vendedor_fuerza": "Fuerza de Ventas",

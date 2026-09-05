@@ -9,9 +9,22 @@ self.addEventListener('fetch', event => event.respondWith(onFetch(event)));
 const cacheNamePrefix = 'offline-cache-';
 const cacheName = `${cacheNamePrefix}${self.assetsManifest.version}`;
 const offlineAssetsInclude = [/\.dll$/, /\.pdb$/, /\.wasm$/, /\.html$/, /\.js$/, /\.json$/, /\.css$/, /\.woff2?$/, /\.png$/, /\.jpe?g$/, /\.gif$/, /\.ico$/, /\.blat$/, /\.dat$/];
-// appsettings se excluye del precache: se edita en el servidor por ambiente y
-// cachearlo rompería la verificación de integridad (y congelaría la config).
+// appsettings se excluye del PRECACHE: se edita en el servidor por ambiente y
+// precachearlo rompería la verificación de integridad (y congelaría la config).
+//
+// Pero tampoco puede quedar sin ninguna copia: Program.cs lo pide ANTES de
+// Build() y sin él no hay BaseUrl ni PermisosPaginas. Sin red, ese fetch
+// lanzaba y la app moría con pantalla en blanco — o sea que todo el modo
+// offline era inalcanzable justo en el escenario para el que existe.
+//
+// La salida no es precachearlo sino guardarlo al vuelo: cache aparte, y
+// estrategia NETWORK-FIRST (ver onFetch). Con red manda el servidor, así que un
+// cambio de configuración se aplica igual que siempre; sin red se sirve la
+// última copia buena.
 const offlineAssetsExclude = [/^service-worker\.js$/, /appsettings.*\.json$/];
+
+const cacheConfig = 'config-cache';
+const esConfig = url => /appsettings.*\.json$/.test(new URL(url, self.origin).pathname);
 
 // Base dinámica: la app NO está publicada en la raíz del servidor,
 // así que la base se deriva de la ubicación real del service worker.
@@ -33,7 +46,11 @@ async function onInstall(event) {
 async function onActivate(event) {
     console.info('Service worker: Activate');
 
-    // Eliminar caches de versiones anteriores
+    // Eliminar caches de versiones anteriores.
+    // ⚠️ El filtro mira el prefijo a proposito: cacheConfig NO lo lleva, asi que
+    // sobrevive a los despliegues. Si se borrara en cada version, la primera
+    // apertura despues de publicar —que puede ser en el campo, sin señal— se
+    // quedaria otra vez sin configuracion.
     const cacheKeys = await caches.keys();
     await Promise.all(cacheKeys
         .filter(key => key.startsWith(cacheNamePrefix) && key !== cacheName)
@@ -41,6 +58,48 @@ async function onActivate(event) {
 }
 
 async function onFetch(event) {
+    // ── Configuracion: network-first ────────────────────────────────────
+    // Con red gana el servidor (la config se edita alla y tiene que aplicarse).
+    // Sin red se sirve la ultima copia buena, que es lo que permite que la app
+    // arranque en el campo.
+    if (event.request.method === 'GET' && esConfig(event.request.url)) {
+        try {
+            const respuesta = await fetch(event.request);
+            if (respuesta && respuesta.ok) {
+                const cache = await caches.open(cacheConfig);
+                // clone(): el body se consume una sola vez, y uno va al cache
+                // y el otro a la app.
+                cache.put(event.request, respuesta.clone());
+            }
+            return respuesta;
+        } catch {
+            const cache = await caches.open(cacheConfig);
+            const guardada = await cache.match(event.request);
+            if (guardada) {
+                console.info('Service worker: sin red, se usa la configuracion guardada.');
+                return guardada;
+            }
+            // Nunca hubo una copia. Y hay que devolver 200 igual, aunque
+            // suene raro:
+            //
+            // el runtime de .NET descarga appsettings.json COMO PARTE DEL
+            // ARRANQUE, antes de que corra una linea de Program.cs. Con un 404
+            // —o un 503— muere con "Failed to start platform" y la pantalla
+            // queda en blanco; el try/catch del C# ni se entera.
+            //
+            // Devolviendo un JSON vacio con 200, la plataforma arranca, y el
+            // header le dice a Program.cs que esto NO es configuracion de
+            // verdad para que muestre la pantalla que lo explica.
+            return new Response('{}', {
+                status: 200,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Simon-Config': 'ausente'
+                }
+            });
+        }
+    }
+
     let cachedResponse = null;
     if (event.request.method === 'GET') {
         // Para las navegaciones servir index.html desde cache,
@@ -118,4 +177,4 @@ self.addEventListener('notificationclick', event => {
         })
     );
 });
-/* Manifest version: HaZlJz41 */
+/* Manifest version: Gf2BtS4R */
