@@ -276,6 +276,12 @@
     <script src="js/lotesMap.js"></script>
     <script src="js/dictado.js"></script>
     <script src="js/ventanaFlotante.js"></script>
+    <!-- jsQR va local y no por CDN: en el galpon puede no haber internet,
+         y cada script de CDN de este proyecto lleva su hash SRI. Es el
+         respaldo de BarcodeDetector, que no existe en Chrome de Windows. -->
+    <script src="js/jsQR.min.js"></script>
+    <script src="js/qrScanner.js"></script>
+    <script src="js/visorPdf.js"></script>
     <script src="js/botonBurbuja.js"></script>
     <script src="js/mttoTablero.js"></script>
     <script src="js/ruedaFecha.js"></script>
