@@ -25,7 +25,7 @@ self.assetsManifest = {
       "url": "_framework\/icudt.dat"
     },
     {
-      "hash": "sha256-nWF6EVT0Nix8E42m4w2WGurMLXz0+KiLbFE\/nISCvO0=",
+      "hash": "sha256-L6HolM53ijWnSzpVsVHYoNk\/d8ZZKFW\/LfW9SlhGkrI=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -113,7 +113,7 @@ self.assetsManifest = {
       "url": "_framework\/Microsoft.JSInterop.WebAssembly.wasm"
     },
     {
-      "hash": "sha256-rGRKXyUfd+buqDf9hr3Nkq64vBSCYJ+oDKEG8J+wkek=",
+      "hash": "sha256-r9Va+U8VACsDkPAS4zF\/HekiuwoQny4tSt50FTILfNs=",
       "url": "_framework\/SIMON_WEB_360.wasm"
     },
     {
@@ -249,7 +249,7 @@ self.assetsManifest = {
       "url": "css\/app.css"
     },
     {
-      "hash": "sha256-D\/MglNfIJ48RaFaHq0MFJSCkFajkSm3h9niQ0JEJ5T0=",
+      "hash": "sha256-Xxb7BASx6jtU7QYl0VPzupAIoL2isBmL6qj1sR8dMMg=",
       "url": "css\/tailwind.build.css"
     },
     {
@@ -277,24 +277,12 @@ self.assetsManifest = {
       "url": "Imagenes\/Imagen1.png"
     },
     {
-      "hash": "sha256-mga\/NjRvEoqZ2pMvjrgl65RAlDa+POCN5NmRwJKyBE0=",
-      "url": "Imagenes\/LogoCreceArroz.png"
-    },
-    {
       "hash": "sha256-Hgq72CjDrCko1pLitBjYjYpRpqwaEDyTWdDAtfSVzSQ=",
       "url": "Imagenes\/Logo-FLAR.png"
     },
     {
       "hash": "sha256-IwagogU9n327GMlpr6xLIUqdQUSfid85FuJJZKxbth4=",
       "url": "Imagenes\/logo-full.png"
-    },
-    {
-      "hash": "sha256-fscSu8+Tc8Uy9eSqshz5DHfe6sMdBVouxUZFFcNv44s=",
-      "url": "Imagenes\/LogoSimon(1).png"
-    },
-    {
-      "hash": "sha256-H1Kho7Qa0NH7+UuT7g7XqugU1yMu5ZYD2GNCGDg6IhE=",
-      "url": "Imagenes\/logosimon.png"
     },
     {
       "hash": "sha256-JNIBeIG+g\/9UNr1bRCEpZoO7r0d7ae6zl2Ro7+5VgEw=",
@@ -305,11 +293,23 @@ self.assetsManifest = {
       "url": "Imagenes\/logo-sm2.png"
     },
     {
+      "hash": "sha256-mga\/NjRvEoqZ2pMvjrgl65RAlDa+POCN5NmRwJKyBE0=",
+      "url": "Imagenes\/LogoCreceArroz.png"
+    },
+    {
+      "hash": "sha256-H1Kho7Qa0NH7+UuT7g7XqugU1yMu5ZYD2GNCGDg6IhE=",
+      "url": "Imagenes\/logosimon.png"
+    },
+    {
+      "hash": "sha256-fscSu8+Tc8Uy9eSqshz5DHfe6sMdBVouxUZFFcNv44s=",
+      "url": "Imagenes\/LogoSimon(1).png"
+    },
+    {
       "hash": "sha256-IwagogU9n327GMlpr6xLIUqdQUSfid85FuJJZKxbth4=",
       "url": "Imagenes\/simon.png"
     },
     {
-      "hash": "sha256-T5KgBz1R\/4wmo2i2uaSRN61HxWp3BpXLOkdtlyV7imM=",
+      "hash": "sha256-5dB5l7EpmlTA+9+8Ad1X2iizSX4EVmxxJiwHgKWSQBc=",
       "url": "index.html"
     },
     {
@@ -413,5 +413,5 @@ self.assetsManifest = {
       "url": "videos\/Splash_modoClaro.mp4"
     }
   ],
-  "version": "bSksPiN0"
+  "version": "NPVCeeC7"
 };

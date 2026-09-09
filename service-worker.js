@@ -55,7 +55,26 @@ async function onActivate(event) {
     await Promise.all(cacheKeys
         .filter(key => key.startsWith(cacheNamePrefix) && key !== cacheName)
         .map(key => caches.delete(key)));
+
+    // Tomar el control de las pestañas que ya estaban abiertas. Sin esto, un
+    // service worker recien activado solo controla las pestañas que se abran
+    // DESPUES, y la que el usuario tiene delante sigue con la version vieja.
+    await self.clients.claim();
 }
+
+// ── Actualizacion: el usuario decide cuando ─────────────────────────
+// Un service worker nuevo se instala enseguida pero queda EN ESPERA: no
+// reemplaza al viejo hasta que se cierran todas las pestañas de la app. En una
+// PWA instalada eso puede no pasar en dias, y por eso "publique y no ven los
+// cambios". F5 tampoco alcanza: recargar no deja a la pestaña sin controlador.
+//
+// skipWaiting() saltea esa espera. NO se llama en el install a proposito: esta
+// app captura documentos sin señal, y activar de golpe implica recargar la
+// pestaña y perder lo que la persona estaba tipeando. Se dispara desde
+// index.html cuando el usuario toca "Actualizar".
+self.addEventListener('message', event => {
+    if (event.data === 'SKIP_WAITING') self.skipWaiting();
+});
 
 async function onFetch(event) {
     // ── Configuracion: network-first ────────────────────────────────────
@@ -177,4 +196,4 @@ self.addEventListener('notificationclick', event => {
         })
     );
 });
-/* Manifest version: bSksPiN0 */
+/* Manifest version: NPVCeeC7 */

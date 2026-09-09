@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es" translate="no">
 
 <head>
@@ -286,11 +286,104 @@
     <script src="js/mttoTablero.js"></script>
     <script src="js/ruedaFecha.js"></script>
 
-    <!-- PWA: service worker (ruta relativa porque la app no está en la raíz del servidor) -->
+    <!-- ============================================================
+         PWA: service worker y deteccion de version nueva
+         ============================================================
+         Ruta relativa porque la app no esta en la raiz del servidor.
+
+         El registro pelado -register('service-worker.js') y nada mas- es lo que
+         hacia que una publicacion no llegara a los usuarios. Dos motivos:
+
+         1. Un service worker nuevo se instala pero queda EN ESPERA hasta que se
+            cierran TODAS las pestañas de la app. Recargar con F5 no sirve: la
+            pestaña nunca se queda sin controlador. En una PWA instalada, que la
+            gente no cierra, la version vieja podia seguir viva por dias.
+
+         2. updateViaCache: por defecto el navegador puede servir los
+            importScripts del worker -service-worker-assets.js, que es el que
+            lleva la VERSION- desde su propio cache HTTP. Con la lista vieja en
+            la mano, el worker concluye que no hay nada nuevo. 'none' lo obliga
+            a preguntarle al servidor.
+
+         Aca no se muestra ningun cartel: esto solo DETECTA y deja el estado a
+         mano en window.simonSW. Quien lo muestra es el modal de Configuracion
+         (ModalConfiguracion.razor), que pone un signo de exclamacion en su
+         menu lateral. Es a proposito que no interrumpa: la actualizacion
+         recarga la pagina, y esta app se usa llenando formularios largos en el
+         campo -a veces sin señal-, asi que el momento lo elige la persona.
+         ============================================================ -->
     <script>
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('service-worker.js');
-        }
+        window.simonSW = (function () {
+            let enEspera = null;   // el worker instalado esperando su turno
+            let pedido   = false;  // solo recargar si lo pidio el usuario
+            let recargando = false;
+
+            const api = {
+                // Lo consulta ModalConfiguracion al abrirse.
+                hayVersionNueva: function () { return enEspera !== null; },
+
+                // Lo llama el boton "Actualizar ahora".
+                aplicar: function () {
+                    if (!enEspera) return false;
+                    pedido = true;
+                    enEspera.postMessage('SKIP_WAITING');
+
+                    // Red de seguridad: si en 3 segundos el worker nuevo no tomo
+                    // el control, se recarga igual. Sin esto la pantalla se queda
+                    // en "Actualizando..." para siempre -pasa, por ejemplo, contra
+                    // un service worker viejo publicado antes de que existiera el
+                    // handler de SKIP_WAITING-.
+                    setTimeout(function () { recargar(); }, 3000);
+                    return true;
+                }
+            };
+
+            function recargar() {
+                if (recargando) return;
+                recargando = true;
+                window.location.reload();
+            }
+
+            if (!('serviceWorker' in navigator)) return api;
+
+            // Cada cuanto se le pregunta al servidor si hay version nueva. Sin
+            // esto, el navegador solo chequea al navegar, y una PWA abierta toda
+            // la jornada no navega nunca.
+            const CADA = 15 * 60 * 1000;
+
+            navigator.serviceWorker.addEventListener('controllerchange', function () {
+                if (pedido) recargar();
+            });
+
+            navigator.serviceWorker.register('service-worker.js', { updateViaCache: 'none' })
+                .then(function (reg) {
+                    // Quedo uno esperando de una visita anterior.
+                    if (reg.waiting && navigator.serviceWorker.controller) enEspera = reg.waiting;
+
+                    reg.addEventListener('updatefound', function () {
+                        const nuevo = reg.installing;
+                        if (!nuevo) return;
+                        nuevo.addEventListener('statechange', function () {
+                            // Sin controller es la PRIMERA instalacion: no hay
+                            // version vieja que reemplazar, no hay nada que avisar.
+                            if (nuevo.state === 'installed' && navigator.serviceWorker.controller) {
+                                enEspera = nuevo;
+                            }
+                        });
+                    });
+
+                    setInterval(function () { reg.update(); }, CADA);
+
+                    // Volver a la app despues de un rato es el momento mas
+                    // probable de que haya salido una version nueva.
+                    document.addEventListener('visibilitychange', function () {
+                        if (document.visibilityState === 'visible') reg.update();
+                    });
+                })
+                .catch(function (e) { console.warn('Service worker: no se pudo registrar.', e); });
+
+            return api;
+        })();
     </script>
 
 </body>
