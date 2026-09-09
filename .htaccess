@@ -1,11 +1,47 @@
-RewriteEngine On
-
-# Base correcta para tu ruta completa
-RewriteBase /Apps/Simon360/
-
-# Si el archivo o carpeta existe, lo sirve
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-
-# Si NO existe → Blazor maneja la ruta
-RewriteRule ^ index.html [L]
+RewriteEngine On
+RewriteBase /Apps/Simon360/
+
+# Si el archivo o carpeta existe fisicamente, servirlo directamente
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Si no existe -> Blazor maneja la ruta (SPA routing)
+RewriteRule ^ index.html [L]
+
+# =============================================================================
+# CACHE
+# =============================================================================
+# Sin estas reglas Apache no manda Cache-Control y el navegador aplica su
+# heuristica: guarda el archivo un rato proporcional a lo viejo que sea. Eso
+# alcanza para que index.html o service-worker-assets.js -los dos archivos que
+# DESCUBREN que hay version nueva- se sirvan de la copia local y la publicacion
+# no llegue nunca al usuario.
+#
+# El cacheo de verdad lo hace el service worker. Aca solo se decide que puede
+# quedar congelado en el navegador y que no.
+<IfModule mod_headers.c>
+
+    # --- Nunca cachear: son los que anuncian la version nueva ---
+    <FilesMatch "^(index\.html|service-worker\.js|service-worker-assets\.js|blazor\.boot\.json|appsettings.*\.json|labels\.json|ayuda\.json)$">
+        Header set Cache-Control "no-cache, no-store, must-revalidate"
+        Header set Pragma "no-cache"
+        Header set Expires "0"
+    </FilesMatch>
+
+    # --- Revalidar siempre, pero reusar si no cambio ---
+    # Los .dll y el CSS compilado NO llevan hash en el nombre: mismo nombre con
+    # contenido distinto en cada publicacion, asi que no se pueden congelar.
+    # "no-cache" no es "no guardes", es "pregunta antes de usar": si no cambio,
+    # Apache responde 304 y no baja nada.
+    # El (?!service-worker) importa: cuando dos FilesMatch agarran el mismo
+    # archivo gana el ULTIMO, y sin el los dos workers caian aca por ser .js.
+    <FilesMatch "^(?!service-worker).*\.(dll|wasm|blat|dat|pdb|js|css)$">
+        Header set Cache-Control "no-cache, must-revalidate"
+    </FilesMatch>
+
+    # --- Congelar: estatico que cambia de nombre cuando cambia ---
+    <FilesMatch "\.(png|jpe?g|gif|svg|ico|webp|woff2?|mp4|webm|pdf)$">
+        Header set Cache-Control "public, max-age=2592000"
+    </FilesMatch>
+
+</IfModule>
