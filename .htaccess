@@ -8,6 +8,10 @@ RewriteCond %{REQUEST_FILENAME} !-d
 # Si no existe -> Blazor maneja la ruta (SPA routing)
 RewriteRule ^ index.html [L]
 
+# El manifest salia como application/octet-stream. Chrome lo tolera, pero la app
+# Android (TWA) y PWABuilder lo leen de aca: se declara el tipo correcto.
+AddType application/manifest+json .webmanifest
+
 # =============================================================================
 # CACHE
 # =============================================================================
@@ -22,7 +26,7 @@ RewriteRule ^ index.html [L]
 <IfModule mod_headers.c>
 
     # --- Nunca cachear: son los que anuncian la version nueva ---
-    <FilesMatch "^(index\.html|service-worker\.js|service-worker-assets\.js|blazor\.boot\.json|appsettings.*\.json|labels\.json|ayuda\.json)$">
+    <FilesMatch "^(index\.html|service-worker\.js|service-worker-assets\.js|blazor\.boot\.json|appsettings.*\.json|labels\.json|ayuda\.json|manifest\.webmanifest)$">
         Header set Cache-Control "no-cache, no-store, must-revalidate"
         Header set Pragma "no-cache"
         Header set Expires "0"

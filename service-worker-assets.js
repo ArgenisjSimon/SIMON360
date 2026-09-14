@@ -405,7 +405,7 @@ self.assetsManifest = {
       "url": "labels.json"
     },
     {
-      "hash": "sha256-xBmLgswMKCQ8rX2lq5kekFsy1XICYdQ7A3OXpAZXTmc=",
+      "hash": "sha256-wGh\/cF3QEhY03wIcYSFKMEw6oeaCdsK8sqasms1REk4=",
       "url": "manifest.webmanifest"
     },
     {
@@ -413,5 +413,5 @@ self.assetsManifest = {
       "url": "videos\/Splash_modoClaro.mp4"
     }
   ],
-  "version": "VG0jE+ut"
+  "version": "T+rjAJ6X"
 };

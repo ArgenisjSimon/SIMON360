@@ -3,9 +3,12 @@
   "short_name": "SIMON",
   "description": "SIMON WEB 360 — Sistema ERP",
   "lang": "es",
+  "id": "./",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
+  "orientation": "any",
+  "categories": ["business", "productivity"],
   "background_color": "#ffffff",
   "theme_color": "#ffffff",
   "icons": [
