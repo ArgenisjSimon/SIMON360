@@ -41,6 +41,23 @@ async function onInstall(event) {
         .filter(asset => !offlineAssetsExclude.some(pattern => pattern.test(asset.url)))
         .map(asset => new Request(asset.url, { integrity: asset.hash, cache: 'no-cache' }));
     await caches.open(cacheName).then(cache => cache.addAll(assetsRequests));
+
+    // Activarse sin esperar a que se cierren todas las pestañas.
+    //
+    // Por defecto un service worker recien instalado queda EN ESPERA hasta que
+    // no queda ningun cliente del viejo. En una PWA que la gente no cierra eso
+    // puede tardar dias, y fue lo que dejo a los usuarios varados en una version
+    // anterior: la nueva estaba instalada y no entraba nunca.
+    //
+    // Va DESPUES del addAll a proposito: si el precache falla -un hash que no
+    // coincide, por ejemplo- esta linea no se ejecuta y el worker viejo sigue
+    // sirviendo una version completa en vez de una a medias.
+    //
+    // No recarga la pantalla: la pestaña abierta sigue mostrando el codigo que
+    // ya tiene cargado en memoria hasta que la persona recargue. Es a proposito
+    // -esta app se usa llenando formularios largos en el campo-, y la diferencia
+    // es que ahora un F5 comun alcanza, cuando antes habia que cerrar todo.
+    self.skipWaiting();
 }
 
 async function onActivate(event) {
@@ -68,10 +85,11 @@ async function onActivate(event) {
 // PWA instalada eso puede no pasar en dias, y por eso "publique y no ven los
 // cambios". F5 tampoco alcanza: recargar no deja a la pestaña sin controlador.
 //
-// skipWaiting() saltea esa espera. NO se llama en el install a proposito: esta
-// app captura documentos sin señal, y activar de golpe implica recargar la
-// pestaña y perder lo que la persona estaba tipeando. Se dispara desde
-// index.html cuando el usuario toca "Actualizar".
+// Desde que onInstall llama a skipWaiting(), lo normal es que no quede ninguno
+// esperando y este handler no haga falta. Se conserva como respaldo para el
+// caso en que si quede uno en espera -por ejemplo si el navegador difiere la
+// activacion-, y porque es el camino que usa el boton "Actualizar ahora" de
+// ModalConfiguracion cuando encuentra un worker en ese estado.
 self.addEventListener('message', event => {
     if (event.data === 'SKIP_WAITING') self.skipWaiting();
 });
@@ -196,4 +214,4 @@ self.addEventListener('notificationclick', event => {
         })
     );
 });
-/* Manifest version: NPVCeeC7 */
+/* Manifest version: VG0jE+ut */

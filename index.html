@@ -314,17 +314,36 @@
          ============================================================ -->
     <script>
         window.simonSW = (function () {
-            let enEspera = null;   // el worker instalado esperando su turno
+            let enEspera = null;   // un worker instalado esperando su turno
+            let yaActivo = false;  // un worker nuevo que YA tomo el control
             let pedido   = false;  // solo recargar si lo pidio el usuario
             let recargando = false;
 
             const api = {
                 // Lo consulta ModalConfiguracion al abrirse.
-                hayVersionNueva: function () { return enEspera !== null; },
+                //
+                // Son dos situaciones distintas y las dos significan "hay una
+                // version nueva que esta pantalla todavia no esta usando":
+                //
+                //   enEspera → el worker nuevo se instalo y espera su turno.
+                //   yaActivo → el worker nuevo YA tomo el control (porque
+                //              onInstall llama a skipWaiting), pero esta pestaña
+                //              sigue corriendo el codigo que cargo al abrirse.
+                //
+                // Sin el segundo caso el aviso no aparecia nunca: desde que el
+                // worker se activa solo, casi nadie queda en el primero.
+                hayVersionNueva: function () { return enEspera !== null || yaActivo; },
 
                 // Lo llama el boton "Actualizar ahora".
                 aplicar: function () {
-                    if (!enEspera) return false;
+                    // Ya controla el worker nuevo: alcanza con recargar para que
+                    // la pagina pida los archivos nuevos.
+                    if (!enEspera) {
+                        if (!yaActivo) return false;
+                        recargar();
+                        return true;
+                    }
+
                     pedido = true;
                     enEspera.postMessage('SKIP_WAITING');
 
@@ -352,7 +371,14 @@
             const CADA = 15 * 60 * 1000;
 
             navigator.serviceWorker.addEventListener('controllerchange', function () {
-                if (pedido) recargar();
+                // Lo pidio la persona desde Configuracion: se recarga.
+                if (pedido) { recargar(); return; }
+
+                // Cambio solo: el worker nuevo se activo por su cuenta. NO se
+                // recarga -seria tirarle la pantalla encima a alguien que quizas
+                // esta a mitad de un formulario-, solo se deja anotado para que
+                // el aviso de Configuracion lo muestre.
+                yaActivo = true;
             });
 
             navigator.serviceWorker.register('service-worker.js', { updateViaCache: 'none' })

@@ -136,6 +136,40 @@
         return true;
     };
 
+    // Baja a un bloque de la pantalla y, si se pide, deja el cursor en su
+    // primer campo. Es el "no perder el foco" de las pantallas de planta: el
+    // operador busca o escanea arriba y lo que tiene que hacer queda abajo.
+    //
+    // Distinto de scrollAVisible a proposito:
+    //   - block "start" y no "center": a un formulario se lo quiere ver desde
+    //     el titulo, no cortado por la mitad. El destino puede llevar la clase
+    //     scroll-mt-* para que la barra fija no le tape el encabezado.
+    //   - sin destello: aca la pantalla SI se mueve, que ya es la senal.
+    //
+    // Recibe VARIOS selectores y usa el primero que este visible: en
+    // Laboratorio el destino es el formulario si todavia se puede cargar, y
+    // la ficha de la planilla si ya se decidio y el formulario no existe.
+    //
+    // preventScroll en el focus: sin eso el navegador salta de golpe al campo
+    // y corta el scroll suave a mitad de camino.
+    window.irAlBloque = (selectores, enfocar) => {
+        for (const selector of selectores) {
+            const el = Array.from(document.querySelectorAll(selector))
+                            .find(e => e.offsetParent !== null);
+            if (!el) continue;
+
+            el.scrollIntoView({ behavior: "smooth", block: "start" });
+
+            if (enfocar) {
+                const campo = el.querySelector(
+                    "input:not([disabled]):not([type=hidden]), select:not([disabled]), textarea:not([disabled])");
+                if (campo) campo.focus({ preventScroll: true });
+            }
+            return true;
+        }
+        return false;
+    };
+
     window.getScreenWidth = () => window.innerWidth;
 
     document.addEventListener("DOMContentLoaded", () => {
