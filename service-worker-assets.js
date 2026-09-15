@@ -25,7 +25,7 @@ self.assetsManifest = {
       "url": "_framework\/icudt.dat"
     },
     {
-      "hash": "sha256-8focvVWIhY6ZW0k+gvARt\/AZEKY950nnnaxgvnX32Oo=",
+      "hash": "sha256-+34X4WTfBOILCwo11RtWSzIkcuVpn3m+mi1Urway58c=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -37,7 +37,7 @@ self.assetsManifest = {
       "url": "_framework\/Microsoft.AspNetCore.Components.wasm"
     },
     {
-      "hash": "sha256-q6Hq7whCQuzA1\/sQ5rnJ0Dke7fJbG6lD+mal4VIemJ4=",
+      "hash": "sha256-wLLqKXd4JdLMR9lgtWzs6k17DtVwfrANjqAzaqdc0Fo=",
       "url": "_framework\/Microsoft.AspNetCore.Components.Web.wasm"
     },
     {
@@ -113,7 +113,7 @@ self.assetsManifest = {
       "url": "_framework\/Microsoft.JSInterop.WebAssembly.wasm"
     },
     {
-      "hash": "sha256-CSIZt9MIriruzEDLWe63ZjNM43wmbsDtwFk4gO5c5bQ=",
+      "hash": "sha256-ikoXyVw7WIdzfZCOE8roJnn+mcg\/maOEGlaPq1EqhaI=",
       "url": "_framework\/SIMON_WEB_360.wasm"
     },
     {
@@ -249,7 +249,7 @@ self.assetsManifest = {
       "url": "css\/app.css"
     },
     {
-      "hash": "sha256-14ZOKtSMxTXUGnNIho7vvTH6lxhsY7o+t\/AJv\/5uQiI=",
+      "hash": "sha256-Ia7KO2jOz+wXCbv6fMev61YidpVjwIAFEmom4n5YgCA=",
       "url": "css\/tailwind.build.css"
     },
     {
@@ -305,6 +305,10 @@ self.assetsManifest = {
       "url": "Imagenes\/LogoSimon(1).png"
     },
     {
+      "hash": "sha256-VhHKUPf4XxkjClA95dsQzaxu\/F5pT90ggbjeNT3AfOc=",
+      "url": "Imagenes\/simon-icono.png"
+    },
+    {
       "hash": "sha256-IwagogU9n327GMlpr6xLIUqdQUSfid85FuJJZKxbth4=",
       "url": "Imagenes\/simon.png"
     },
@@ -355,6 +359,10 @@ self.assetsManifest = {
     {
       "hash": "sha256-Z9lAi\/TVNqpl7aa9s0YjvfdcQg1TkRXWlkUIrhLo3Zk=",
       "url": "js\/leafletMap.js"
+    },
+    {
+      "hash": "sha256-0v9Y3eUwW5a\/EmfBjV4Tb1K9YPD9mM\/WsRtRrMEpfeY=",
+      "url": "js\/loginFondo.js"
     },
     {
       "hash": "sha256-V\/W0E+AywomLf0gQ+h2oVEJ2oUGUxpPJT1Rm3nUMnPY=",
@@ -413,5 +421,5 @@ self.assetsManifest = {
       "url": "videos\/Splash_modoClaro.mp4"
     }
   ],
-  "version": "T+rjAJ6X"
+  "version": "0ABtvrbl"
 };
