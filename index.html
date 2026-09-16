@@ -87,9 +87,18 @@
 </head>
 
 <style>
+    /* 100vw y NO "inset: 0". Mientras corre el video, Blazor ya pinta la app
+       por debajo; si esa página es más alta que la pantalla aparece la barra
+       de scroll de Windows (15 px), y con inset:0 el splash se angostaba esos
+       15 px: el video, centrado, saltaba 7,5 px a la izquierda justo antes de
+       cerrarse. 100vw incluye la barra, así que el ancho ya no cambia. Los
+       elementos fixed no generan scroll, así que no aparece barra horizontal. */
     .splash-video-wrapper {
         position: fixed;
-        inset: 0;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
         background: #fff;
         display: flex;
         align-items: center;
@@ -113,6 +122,17 @@
             max-width: none;
         }
     }
+    /* El video de SIMON trae el logo 25 px a la derecha del centro de su
+       cuadro de 1920 (va de x=798 a x=1172: centro en 985, no en 960). En
+       escritorio no se nota, pero en el celular el video se agranda para
+       llenar la pantalla y el logo quedaba con 106 px de aire a la izquierda
+       y 79 a la derecha en un iPhone. Se corrige moviendo el video 1,3% de su
+       propio ancho (25/1920), que vale igual en cualquier pantalla.
+       Sólo para ESTE video: el splash propio que cargue una empresa no tiene
+       por qué venir corrido, y el script de abajo le saca la clase. */
+    .splash-video-wrapper video.splash-simon {
+        transform: translateX(-1.3%);
+    }
 
     /* Fundido al cambiar de tema con la sesión ya abierta. La clase la pone y
        la quita tema.js, y dura 400 ms: dejarla fija convertiría cada hover del
@@ -130,7 +150,7 @@
 
     <!-- Splash FUERA de #app — Blazor no lo toca al cargar -->
     <div id="splash-screen" class="splash-video-wrapper">
-        <video id="splash-video" autoplay muted playsinline preload="auto">
+        <video id="splash-video" class="splash-simon" autoplay muted playsinline preload="auto">
             <source src="videos/Splash_modoClaro.mp4" type="video/mp4" />
         </video>
     </div>
@@ -148,6 +168,8 @@
                 if (propio) {
                     var fuente = video.querySelector('source');
                     fuente.src = propio;
+                    // La corrección de centrado es para el video de SIMON.
+                    video.classList.remove('splash-simon');
                     // El evento de error va en el <source> y no en el <video>:
                     // cuando falla una fuente, el que se entera es el source.
                     // Sin esto, un video mal cargado deja la pantalla en blanco
