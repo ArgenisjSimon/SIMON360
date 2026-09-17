@@ -28,6 +28,21 @@
         URL.revokeObjectURL(objectUrl);
     };
 
+    // Descarga de un texto generado en el navegador (CSV del resumen de nomina).
+    // Lleva BOM a proposito: sin el, Excel en espanol abre el CSV en ANSI y las
+    // tildes y la enye salen rotas.
+    window.descargarTexto = (fileName, contenido) => {
+        const blob = new Blob(["﻿" + contenido], { type: 'text/csv;charset=utf-8;' });
+        const objectUrl = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = objectUrl;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(objectUrl);
+    };
+
     // Descarga autenticada de archivos
     window.downloadFileWithToken = async (url, fileName, token) => {
         const response = await fetch(url, {

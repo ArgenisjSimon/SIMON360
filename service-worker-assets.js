@@ -25,7 +25,7 @@ self.assetsManifest = {
       "url": "_framework\/icudt.dat"
     },
     {
-      "hash": "sha256-+u3RDGEEWZpiPLZ0pbzrvh5IxsTA4jWa6ADKCqigzoE=",
+      "hash": "sha256-MLqVV5tmtN568nR5fQHwl5DNPhKK0MlBoxs9fhR8XgI=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -113,7 +113,7 @@ self.assetsManifest = {
       "url": "_framework\/Microsoft.JSInterop.WebAssembly.wasm"
     },
     {
-      "hash": "sha256-dyyJ5WHdyV7HO70aAHEEVmiZr1ssC0F5Jgbtln2vXZ4=",
+      "hash": "sha256-JoddvTo8s6GgLU5qxyvQT8a9ujSD3QI6iFCgYhIXklM=",
       "url": "_framework\/SIMON_WEB_360.wasm"
     },
     {
@@ -161,7 +161,7 @@ self.assetsManifest = {
       "url": "_framework\/System.Linq.Expressions.wasm"
     },
     {
-      "hash": "sha256-3jLSmHLaZS6R9s50uB4gGm73\/\/QFTcKllthLJwad5Oo=",
+      "hash": "sha256-e1MeAGnzotL2anrXBZDfnPYxbG6zIibxntsYTcvoLhI=",
       "url": "_framework\/System.Linq.wasm"
     },
     {
@@ -201,7 +201,7 @@ self.assetsManifest = {
       "url": "_framework\/System.Runtime.Serialization.Primitives.wasm"
     },
     {
-      "hash": "sha256-\/cBGFQVkPClhJDAeDaY8A0TXo2RAMeR7UaLf4q6lpcg=",
+      "hash": "sha256-GBYpCJXwhJhkwM0vYtSmTMoLRhmCGxHPEDO\/GQGHaDw=",
       "url": "_framework\/System.Runtime.wasm"
     },
     {
@@ -217,7 +217,7 @@ self.assetsManifest = {
       "url": "_framework\/System.Text.Json.wasm"
     },
     {
-      "hash": "sha256-3k\/y1d3+IowypKmfEFThEORU6Q7IxQndUlUQoXQVfN4=",
+      "hash": "sha256-XA6us\/5WKXJtrJ1Cg9qWGxjuAIvp3HOwZO6tz9em7AI=",
       "url": "_framework\/System.Text.RegularExpressions.wasm"
     },
     {
@@ -233,7 +233,7 @@ self.assetsManifest = {
       "url": "appsettings.Development.json"
     },
     {
-      "hash": "sha256-a0MA2ALxADMvxDDqSFfdiH8Ow2yhfwYyxoSMytBBzAw=",
+      "hash": "sha256-6MroPnQ3AR0o01hNMRqHjPaeciKtYyV+PE\/oqK3Ez7o=",
       "url": "appsettings.json"
     },
     {
@@ -249,7 +249,7 @@ self.assetsManifest = {
       "url": "css\/app.css"
     },
     {
-      "hash": "sha256-Ia7KO2jOz+wXCbv6fMev61YidpVjwIAFEmom4n5YgCA=",
+      "hash": "sha256-VSEQ50daN9rf4s9dl1ljLnfy+cfZSOCMtr4uXTXDHOU=",
       "url": "css\/tailwind.build.css"
     },
     {
@@ -345,7 +345,7 @@ self.assetsManifest = {
       "url": "js\/fitnessDictado.js"
     },
     {
-      "hash": "sha256-w4p+YEBGHJTTzRtV4wLcwf+KrxuZTP\/fqo\/OWOan2us=",
+      "hash": "sha256-q0+507KjLhTFvqHAhxXm6fa9eqz1bFmZ7CcjInLiYKI=",
       "url": "js\/front.js"
     },
     {
@@ -421,5 +421,5 @@ self.assetsManifest = {
       "url": "videos\/Splash_modoClaro.mp4"
     }
   ],
-  "version": "32F6zq17"
+  "version": "pHqYhPqE"
 };
