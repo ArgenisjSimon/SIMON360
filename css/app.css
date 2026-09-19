@@ -377,3 +377,37 @@ code {
 .swal2-container {
     z-index: 20000;
 }
+
+/* ── El banner de la pantalla de llamado (monitor de silos) ──────────
+   Pedido de Julio (17SEP2026): los televisores del plantel son cuadrados y
+   el tercio de abajo se usaba para una lista que nadie leia. Ahora es una
+   franja negra con el aviso corriendo: >>>ATENDIENDO<<< y >>>ATENTO<<<.
+
+   La animacion va ACA y no en un VistaLlamado.razor.css: el CSS por
+   componente esta comentado en index.html, asi que un archivo .razor.css
+   no se carga y la franja quedaria quieta sin que nada avise.
+
+   La pista lleva el contenido DOS VECES y se desplaza medio ancho: al
+   terminar vuelve a 0 con la segunda copia justo donde estaba la primera,
+   y el salto no se ve. Animar 'left' o 'margin' en su lugar repinta en
+   cada cuadro; transform lo resuelve la placa de video, que es lo que
+   permite dejarlo corriendo dias en un televisor sin que se entrecorte. */
+.llamado-franja {
+    height: clamp(5.5rem, 20vh, 15rem);
+}
+
+.llamado-pista {
+    width: max-content;
+    animation: llamado-correr 24s linear infinite;
+}
+
+@keyframes llamado-correr {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+}
+
+/* Si el equipo pide menos movimiento, la franja se queda quieta: sigue
+   siendo legible, que es lo que importa. */
+@media (prefers-reduced-motion: reduce) {
+    .llamado-pista { animation: none; }
+}
