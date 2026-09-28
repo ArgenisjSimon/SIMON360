@@ -164,6 +164,11 @@ window.lotesMap = (function () {
             const p = s.poligonos[c.id];
             if (!p) return;
 
+            // El color llega resuelto desde C#: puede ser el del lote o el
+            // de su variedad, segun el modo. Sin esto, prender el coloreado
+            // por variedad no repintaba nada -- el mapa no se rehace al
+            // tocar un filtro, justamente para no perder el zoom.
+            p.lote.color       = c.color || null;
             p.lote.atenuado    = !!c.atenuado;
             p.lote.estadoLabor = c.estadoLabor || null;
             p.lote.pasadas     = Number(c.pasadas) || 0;
@@ -287,6 +292,9 @@ window.lotesMap = (function () {
     }
 
     // ── init ─────────────────────────────────────────────────────
+    // color = con que pintarlo, YA resuelto en C#: el color propio del lote
+    // o el de su variedad cuando el plano se colorea por variedad. Aca no se
+    // decide cual: llega uno solo.
     // lotes: [{ id, nombre, descripcion, geometria, color, esSembrable,
     //           areaLote, areaSql, tipo, variedad, clase, fCorte, edad,
     //           atenuado, estadoLabor, pasadas, actividad }]
