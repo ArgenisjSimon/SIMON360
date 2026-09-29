@@ -25,7 +25,7 @@ self.assetsManifest = {
       "url": "_framework\/icudt.dat"
     },
     {
-      "hash": "sha256-qfkSN4sTPpr18KmPffvXBLy7Xy1ekEyfeaEiwyGVg5c=",
+      "hash": "sha256-xG4aDCwjlQrWlU0y88kKbKdzDvmE23L5c3tFXym5Jto=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -113,7 +113,7 @@ self.assetsManifest = {
       "url": "_framework\/Microsoft.JSInterop.WebAssembly.wasm"
     },
     {
-      "hash": "sha256-7g+8zfWf\/u4fDHDxDPZIRtFtBqXF8XSrq\/gWIkDEFt8=",
+      "hash": "sha256-8yUOfbF8DmHaW1216GJuUi\/tHLtaAlISrHahYCJJbrk=",
       "url": "_framework\/SIMON_WEB_360.wasm"
     },
     {
@@ -421,5 +421,5 @@ self.assetsManifest = {
       "url": "videos\/Splash_modoClaro.mp4"
     }
   ],
-  "version": "FHbp3ynp"
+  "version": "dOVnCRxD"
 };
