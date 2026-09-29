@@ -284,7 +284,7 @@ window.lotesMap = (function () {
             : '';
 
         return `<div style="font-family:system-ui,sans-serif;min-width:170px;max-width:240px">
-                    <b style="font-size:13px">Lote ${_escapar(lote.nombre || '')}</b><br>
+                    <b style="font-size:13px">Tablón ${_escapar(lote.nombre || '')}</b><br>
                     ${badge}<br>
                     <span style="font-size:12px">${_escapar(lote.tipo || '')}</span><br>
                     <b>${ha} ha</b>${sql}${desc}${cca}
