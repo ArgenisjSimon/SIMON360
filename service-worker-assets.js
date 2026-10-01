@@ -25,7 +25,7 @@ self.assetsManifest = {
       "url": "_framework\/icudt.dat"
     },
     {
-      "hash": "sha256-xG4aDCwjlQrWlU0y88kKbKdzDvmE23L5c3tFXym5Jto=",
+      "hash": "sha256-7mPfYw4brfiaADbe2tyv4jy6VGU0XbdTINahggqf7Zo=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -37,7 +37,7 @@ self.assetsManifest = {
       "url": "_framework\/Microsoft.AspNetCore.Components.wasm"
     },
     {
-      "hash": "sha256-wLLqKXd4JdLMR9lgtWzs6k17DtVwfrANjqAzaqdc0Fo=",
+      "hash": "sha256-JLx73ka+EDUvL6wUhWhoTu2LNrAPPZixdBqlhaVW6F0=",
       "url": "_framework\/Microsoft.AspNetCore.Components.Web.wasm"
     },
     {
@@ -113,7 +113,7 @@ self.assetsManifest = {
       "url": "_framework\/Microsoft.JSInterop.WebAssembly.wasm"
     },
     {
-      "hash": "sha256-8yUOfbF8DmHaW1216GJuUi\/tHLtaAlISrHahYCJJbrk=",
+      "hash": "sha256-eQD2c50gdj14eSlFQxfbv3cVCy5SPSCv4w5HCP8JJ0U=",
       "url": "_framework\/SIMON_WEB_360.wasm"
     },
     {
@@ -161,7 +161,7 @@ self.assetsManifest = {
       "url": "_framework\/System.Linq.Expressions.wasm"
     },
     {
-      "hash": "sha256-EPOqzx7gsLwTBgUHexMkKis+LSZdgIO3\/dmJFwXY7XM=",
+      "hash": "sha256-ZEYIgty+ipLErR7izpos14RGzSJSdpb\/29q\/JT2BKEs=",
       "url": "_framework\/System.Linq.wasm"
     },
     {
@@ -233,7 +233,7 @@ self.assetsManifest = {
       "url": "appsettings.Development.json"
     },
     {
-      "hash": "sha256-m1EEtbNtZ5tl+U35DKe+pYMSwnjMikjCfCsD4jlqBro=",
+      "hash": "sha256-Otsxp7n2kmmy1MG2PaGEdolkyZe8uEsSxA9mDF4HH3I=",
       "url": "appsettings.json"
     },
     {
@@ -249,7 +249,7 @@ self.assetsManifest = {
       "url": "css\/app.css"
     },
     {
-      "hash": "sha256-SCoE++p0xU1rcdlo1baOIH3QjX+3xGWJS9VkvMRJ9QE=",
+      "hash": "sha256-jYcv0ukwijNnrVNVMT\/7d1wExJeL4tIxHCfgUF93vUc=",
       "url": "css\/tailwind.build.css"
     },
     {
@@ -365,7 +365,7 @@ self.assetsManifest = {
       "url": "js\/loginFondo.js"
     },
     {
-      "hash": "sha256-CL9h\/AadVJStjx1+aBKzEUfUMcrn21LtLd5CWpbdCJY=",
+      "hash": "sha256-yTezP3+QGVW8XX0FYLKUL0Bp4xq3WxHfooiiIFOmub0=",
       "url": "js\/lotesMap.js"
     },
     {
@@ -421,5 +421,5 @@ self.assetsManifest = {
       "url": "videos\/Splash_modoClaro.mp4"
     }
   ],
-  "version": "dOVnCRxD"
+  "version": "6iqwPwbz"
 };
