@@ -180,6 +180,9 @@ window.lotesMap = (function () {
             p.lote.fecha              = c.fecha || null;
             p.lote.insumos            = Number(c.insumos) || 0;
             p.lote.insumosSinEntregar = Number(c.insumosSinEntregar) || 0;
+            // El arrime depende del ciclo elegido (la zafra que lo cierra o
+            // la que lo abrio): sin esto el globo se quedaba en el anterior.
+            p.lote.arrime             = c.arrime || null;
 
             p.capa.setStyle(_estilo(s, p.lote, String(p.lote.id) === String(s.resaltado)));
 
@@ -283,11 +286,33 @@ window.lotesMap = (function () {
                </div>`
             : '';
 
+        // Resultado de la ultima zafra cosechada (modulo Arrimes). Va con la
+        // zafra en el titulo: no es del CCA de arriba, que es la caña que esta
+        // creciendo, sino del corte anterior. Llega ya formateado desde C#.
+        const a = lote.arrime;
+        const arrime = a
+            ? `<div style="margin-top:6px;padding-top:6px;border-top:1px solid ${_color('neutral-200','#e5e7eb')};font-size:11px;color:${_color('neutral-700','#374151')}">
+                   <div style="font-size:10px;font-weight:700;letter-spacing:.03em;color:${_color('neutral-500','#6b7280')};margin-bottom:3px">
+                       ARRIME ZAFRA ${_escapar(a.zafra || '')}
+                   </div>
+                   ${a.rotulo
+                       ? `<div style="font-size:10px;color:${_color('warn-700','#b45309')};margin-bottom:3px">${_escapar(a.rotulo)}</div>`
+                       : ''}
+                   ${[['TC', a.tc], ['TA', a.ta], ['TCH', a.tch], ['TAH', a.tah], ['Rto sonda', a.rto], ['Grado', a.grado]]
+                       .filter(f => f[1])
+                       .map(([k, v]) =>
+                       `<div style="display:flex;gap:8px;justify-content:space-between">
+                            <span style="color:${_color('neutral-500','#6b7280')}">${k}</span>
+                            <b>${_escapar(String(v))}</b>
+                        </div>`).join('')}
+               </div>`
+            : '';
+
         return `<div style="font-family:system-ui,sans-serif;min-width:170px;max-width:240px">
                     <b style="font-size:13px">Tablón ${_escapar(lote.nombre || '')}</b><br>
                     ${badge}<br>
                     <span style="font-size:12px">${_escapar(lote.tipo || '')}</span><br>
-                    <b>${ha} ha</b>${sql}${desc}${cca}
+                    <b>${ha} ha</b>${sql}${desc}${cca}${arrime}
                 </div>`;
     }
 
@@ -297,7 +322,11 @@ window.lotesMap = (function () {
     // decide cual: llega uno solo.
     // lotes: [{ id, nombre, descripcion, geometria, color, esSembrable,
     //           areaLote, areaSql, tipo, variedad, clase, fCorte, edad,
-    //           atenuado, estadoLabor, pasadas, actividad }]
+    //           atenuado, estadoLabor, pasadas, actividad, arrime }]
+    // arrime = { zafra, rotulo, tc, ta, tch, tah, rto, grado } ya en texto, o
+    // null si el tablon no tiene resultado de zafra cargado (modulo Arrimes).
+    // rotulo: aviso cuando el resultado no es el de la zafra que se mira.
+    // Llega en init y en setFiltros: cambia con el ciclo elegido.
     // variedad/clase/fCorte vienen del CCA vigente y pueden faltar: el lote
     // sin CCA no tiene variedad ni corte todavia.
     // edad = edad del cultivo YA en texto ("8 meses"), calculada en C# desde
