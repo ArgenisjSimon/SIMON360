@@ -25,7 +25,7 @@ self.assetsManifest = {
       "url": "_framework\/icudt.dat"
     },
     {
-      "hash": "sha256-duD6LsEtYt0es3Kb7wgdaumpCiHTY1z8uPswDG\/GXAA=",
+      "hash": "sha256-dM5+rcZu56MhAzY80KIah3GmEuBLbcRRtKOaCbDi0YE=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -113,7 +113,7 @@ self.assetsManifest = {
       "url": "_framework\/Microsoft.JSInterop.WebAssembly.wasm"
     },
     {
-      "hash": "sha256-K7f+xmgK+Va8gxdn50XCMuKqiFEJLfxCDcLvaf3Y8z4=",
+      "hash": "sha256-CmvTZFh5lzSXrXqwcuxP9JtTbcXagq2CU4Qc5sE7uwM=",
       "url": "_framework\/SIMON_WEB_360.wasm"
     },
     {
@@ -217,7 +217,7 @@ self.assetsManifest = {
       "url": "_framework\/System.Text.Json.wasm"
     },
     {
-      "hash": "sha256-aNAn37mkkptSyGUpY7OoaztaMG1smSa4KH9uOVGNHgg=",
+      "hash": "sha256-VAx9Xqbe66CrNsii0W02oJOxMTBQQFcWosT1rH+cwwU=",
       "url": "_framework\/System.Text.RegularExpressions.wasm"
     },
     {
@@ -421,5 +421,5 @@ self.assetsManifest = {
       "url": "videos\/Splash_modoClaro.mp4"
     }
   ],
-  "version": "TDOFCJAE"
+  "version": "LBx6ZmGq"
 };
