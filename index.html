@@ -205,6 +205,53 @@
     <!--  Scripts principales -->
     <script src="_framework/blazor.webassembly.js"></script>
 
+    <!-- Errores no manejados: la franja "An unhandled error has occurred" no
+         se muestra NUNCA. Los errores de una pantalla ya los encierra
+         BarreraError; lo que se escapa (async void, timers, el layout) cae acá.
+         Cuando Blazor intenta mostrar la franja se la esconde y se pregunta si
+         el runtime sigue vivo:
+           · contesta  → la app sigue andando, no se hace nada más.
+           · no contesta → la app quedó muerta: se recarga sola. Una sola vez
+             por minuto, para no entrar en un bucle si falla al arrancar. -->
+    <script>
+        (function () {
+            var franja = document.getElementById('blazor-error-ui');
+            if (!franja) return;
+            var revisando = false;
+
+            function vivo() {
+                return new Promise(function (ok) {
+                    var listo = false;
+                    setTimeout(function () { if (!listo) ok(false); }, 4000);
+                    try {
+                        DotNet.invokeMethodAsync('SIMON_WEB_360', 'RuntimeVivo')
+                            .then(function () { listo = true; ok(true); },
+                                  function () { listo = true; ok(false); });
+                    } catch (e) { listo = true; ok(false); }
+                });
+            }
+
+            function recargar() {
+                var ultima = 0;
+                try { ultima = +sessionStorage.getItem('simonRecargaPorError') || 0; } catch (e) { }
+                if (Date.now() - ultima < 60000) return;   // ya se recargó hace poco: no insistir
+                try { sessionStorage.setItem('simonRecargaPorError', String(Date.now())); } catch (e) { }
+                location.reload();
+            }
+
+            new MutationObserver(function () {
+                if (franja.style.display === 'none' || !franja.style.display) return;
+                franja.style.display = 'none';
+                if (revisando) return;
+                revisando = true;
+                vivo().then(function (ok) {
+                    revisando = false;
+                    if (!ok) recargar();
+                });
+            }).observe(franja, { attributes: true, attributeFilter: ['style'] });
+        })();
+    </script>
+
     <!--  Scripts locales -->
     <script src="js/auth.js"></script>
     <script src="js/tokenHelper.js"></script>
