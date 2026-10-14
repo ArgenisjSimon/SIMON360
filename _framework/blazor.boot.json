@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "SIMON_WEB_360",
   "resources": {
-    "hash": "sha256-jUGiOlgsMZ48fepFwcbD98+X5n4l7LGsRChI6q+j6hc=",
+    "hash": "sha256-ypNbqojucRY3vrUAAtY/xOt8uxRP2LBaAeL1WeTtHmQ=",
     "jsModuleNative": {
       "dotnet.native.8.0.31.brsx7iihx6.js": "sha256-9NoXeVUo4WNrEqrjAp/y3Yc8NmDcymQkzMGOIbIpGio="
     },
@@ -36,7 +36,7 @@
       "Microsoft.Extensions.Primitives.wasm": "sha256-06S5VedjumzYQh0a2LXtxGJMF+unjR3HnNt11RZBIFs=",
       "Microsoft.JSInterop.wasm": "sha256-208nrsE3AsKRolZTfCbA20nMQEaC0Hs82WlA749FfrE=",
       "Microsoft.JSInterop.WebAssembly.wasm": "sha256-1RU3QxK6cl9SuFE8eHdLid3P8O0LfOJRvWRfXJFBsG0=",
-      "SIMON_WEB_360.wasm": "sha256-oRY0vVRW5XRfVXk0sv6s/x5CJ56Z9FzU9NW3mUd2vBY=",
+      "SIMON_WEB_360.wasm": "sha256-Og6EQahrPZDJ/ATmVlQCNoqCMC/N45XI3FhjX9iekvA=",
       "System.Collections.Concurrent.wasm": "sha256-s7Cqg52K3ug0oVbxmuAgtdpvkzjEmypSvNML+L7+8DQ=",
       "System.Collections.NonGeneric.wasm": "sha256-INrXy4gTIoagNmCudvCZqSSQR9sKQZA9U3RSE5GYCWE=",
       "System.Collections.Specialized.wasm": "sha256-0Du9+hqVVCt1YugDxXS3dx1Xn2A7NUbZ0jcT0/xdGSU=",
