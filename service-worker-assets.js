@@ -25,7 +25,7 @@ self.assetsManifest = {
       "url": "_framework\/icudt.dat"
     },
     {
-      "hash": "sha256-pzpO+9QwV54TeWp4lKcIOz0An6guHYIrqAQ9Wv7HGoo=",
+      "hash": "sha256-GPx0Tx5Zpd6zcw9EAoewIyAY0vdYDFmfNmpzhnn6lKQ=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -113,7 +113,7 @@ self.assetsManifest = {
       "url": "_framework\/Microsoft.JSInterop.WebAssembly.wasm"
     },
     {
-      "hash": "sha256-pGnCSR8jY5wTML0VCQRTPq5FI9WyNMcBcvAYXc3orqw=",
+      "hash": "sha256-nCRXMhkJnzwVebSK\/DI0A8GRi6Vj\/YhDdE4ILj\/YtrQ=",
       "url": "_framework\/SIMON_WEB_360.wasm"
     },
     {
@@ -237,7 +237,7 @@ self.assetsManifest = {
       "url": "appsettings.Development.json"
     },
     {
-      "hash": "sha256-OPLnE8c9+wsKkO9A4L2\/8pkb06fndeTaZXBawbWGkPU=",
+      "hash": "sha256-dsXMFGO6YjKTD3Xe0vig+8mbWkq9ajw83x8c481RwMk=",
       "url": "appsettings.json"
     },
     {
@@ -253,7 +253,7 @@ self.assetsManifest = {
       "url": "css\/app.css"
     },
     {
-      "hash": "sha256-8ZKP7zP24pHx8T4R\/mLZXAsOEW19el0X0ixKFjl1Tto=",
+      "hash": "sha256-tc+wAC0alTx+akWKzk2tkWDUld0EOF41ZJPzU3rytxg=",
       "url": "css\/tailwind.build.css"
     },
     {
@@ -425,5 +425,5 @@ self.assetsManifest = {
       "url": "videos\/Splash_modoClaro.mp4"
     }
   ],
-  "version": "7gko5hQM"
+  "version": "ImdjihEj"
 };
