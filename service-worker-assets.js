@@ -237,7 +237,7 @@ self.assetsManifest = {
       "url": "appsettings.Development.json"
     },
     {
-      "hash": "sha256-C0x6c+a1CdjbNYBLSnSGvlGhQk5T72bRiZ+/6w4TXvg=",
+      "hash": "sha256-kK/rbO5coVEAjXKuOENDPKw3p+wvNxw6m8+as4CARjE=",
       "url": "appsettings.json"
     },
     {
@@ -425,5 +425,5 @@ self.assetsManifest = {
       "url": "videos\/Splash_modoClaro.mp4"
     }
   ],
-  "version": "ImdjihE2"
+  "version": "ImdjihE3"
 };
