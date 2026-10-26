@@ -25,7 +25,7 @@ self.assetsManifest = {
       "url": "_framework\/icudt.dat"
     },
     {
-      "hash": "sha256-XGs\/Ic8CICeGP68CojrJYP2HqyZ0C2vnm5MtqJK0vaE=",
+      "hash": "sha256-bZmMzMKFPX8b0CHEgGa0cGIrLpRjdh4VH4Kwtn8StoE=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -113,7 +113,7 @@ self.assetsManifest = {
       "url": "_framework\/Microsoft.JSInterop.WebAssembly.wasm"
     },
     {
-      "hash": "sha256-LuXeDb0KkdrlDkMrBmGZDuQt1mX4W\/rByhCM6BASFUU=",
+      "hash": "sha256-X99QJJpL59fJw244QhyEliif1KxuE0bEA1sMHFnM8A0=",
       "url": "_framework\/SIMON_WEB_360.wasm"
     },
     {
@@ -129,7 +129,7 @@ self.assetsManifest = {
       "url": "_framework\/System.Collections.Specialized.wasm"
     },
     {
-      "hash": "sha256-0EkNQyD9\/6XlnxSPQEwUOSb5yS6okBrJBIkb3\/X39R0=",
+      "hash": "sha256-cAyGTORE0COXoyhZFV2syw4mjsj\/ePFqhvp7AEZArwM=",
       "url": "_framework\/System.Collections.wasm"
     },
     {
@@ -161,7 +161,7 @@ self.assetsManifest = {
       "url": "_framework\/System.Linq.Expressions.wasm"
     },
     {
-      "hash": "sha256-zbSCDVLgVOM7MyLJcN7IltPLpwXVMxCPBht7CT1BrMI=",
+      "hash": "sha256-XQ4JbhE1hN8M6K+fqH\/Go4l8lygMJ\/n0FcaWNUdrypo=",
       "url": "_framework\/System.Linq.wasm"
     },
     {
@@ -185,7 +185,7 @@ self.assetsManifest = {
       "url": "_framework\/System.ObjectModel.wasm"
     },
     {
-      "hash": "sha256-ZLOSFdtHr7nFT35zR3tdAkJsJBXHhiovncy4e7aCBbQ=",
+      "hash": "sha256-Y9KKDrqlnMAW63orKgPQTtO6DPd36oNZTr50KXfx9To=",
       "url": "_framework\/System.Private.CoreLib.wasm"
     },
     {
@@ -201,7 +201,7 @@ self.assetsManifest = {
       "url": "_framework\/System.Runtime.Serialization.Primitives.wasm"
     },
     {
-      "hash": "sha256-+4H1g1z4ybvbv3+TbG1qZTBRbiFp88nljyznuf0\/Mc0=",
+      "hash": "sha256-M6SWxurKYwTmXt2giLTFJpQVkmNw1OytRLF8CJoczhc=",
       "url": "_framework\/System.Runtime.wasm"
     },
     {
@@ -237,7 +237,7 @@ self.assetsManifest = {
       "url": "appsettings.Development.json"
     },
     {
-      "hash": "sha256-jFv+dO8x1ceAJwbUhwMfGi8\/q1rTFust7gaGL2nqc+k=",
+      "hash": "sha256-PCp3059zChJshXFplZmTJjsBxUhZhefpQv3fodycqCs=",
       "url": "appsettings.json"
     },
     {
@@ -253,7 +253,7 @@ self.assetsManifest = {
       "url": "css\/app.css"
     },
     {
-      "hash": "sha256-GqKXXZPCDMDdJiZHfOy24MCVNf72KMwHnMRCzsoacE8=",
+      "hash": "sha256-5bxwN+bdTnvDPLXIYH6jBXbdng++I+nIF+ZcsbfROpQ=",
       "url": "css\/tailwind.build.css"
     },
     {
@@ -433,5 +433,5 @@ self.assetsManifest = {
       "url": "videos\/Splash_modoClaro.mp4"
     }
   ],
-  "version": "NAIzcg5v"
+  "version": "qN\/i6vJB"
 };
