@@ -10,6 +10,23 @@
     <link rel="icon" type="image/png" href="Imagenes/favicon.ico" />
     <!-- PWA -->
     <link rel="manifest" href="manifest.webmanifest" />
+    <!-- Fitness · Fase 3 (25OCT2026). El cliente de un entrenador que instala
+         la app desde SU pantalla tiene que abrir SU entreno, no el login del
+         ERP. Con el manifest de siempre (start_url "./") el ícono abría la
+         raíz, y el cliente terminaba escribiendo su correo en "Usuario".
+         Va aquí, en línea y antes de que cargue nada: el navegador lee el
+         manifest al instalar, y tiene que encontrar ya el bueno. Otro "id"
+         hace que se instale como una app aparte de la del ERP. -->
+    <script>
+        (function () {
+            var p = location.pathname.toLowerCase();
+            if (p.indexOf('/fitness/mientreno') >= 0 || p.indexOf('/fitness/entrar') >= 0 ||
+                p.indexOf('/fitness/invitacion') >= 0) {
+                var l = document.querySelector('link[rel="manifest"]');
+                if (l) l.setAttribute('href', 'manifest-fitness.webmanifest');
+            }
+        })();
+    </script>
     <link rel="apple-touch-icon" sizes="192x192" href="icon-192.png" />
     <!-- La franja del sistema en Android. Este valor es solo el arranque: la
          app es marca blanca y el color real sale de --c-topbar, que lo escribe
@@ -342,6 +359,7 @@
     <script src="js/print.js"></script>
     <script src="js/avatarCrop.js"></script>
     <script src="js/leafletMap.js"></script>
+    <script src="js/rutaSeguraMapa.js"></script>
     <script src="js/lotesMap.js"></script>
     <script src="js/dictado.js"></script>
     <script src="js/ventanaFlotante.js"></script>

@@ -1,0 +1,32 @@
+{
+  "name": "Mi entreno",
+  "short_name": "Mi entreno",
+  "description": "Tu entreno, tu comida y tu progreso con tu entrenador.",
+  "lang": "es",
+  "id": "./Fitness/MiEntreno",
+  "start_url": "./Fitness/MiEntreno",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "categories": ["health", "fitness"],
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    },
+    {
+      "src": "icon-maskable-512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "maskable"
+    }
+  ]
+}
