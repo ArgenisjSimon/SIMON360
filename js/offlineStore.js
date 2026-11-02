@@ -226,7 +226,7 @@ window.offlineStore = (function () {
         const base = exigirDb();
         if (!base.objectStoreNames.contains(store)) {
             throw new Error(`El store '${store}' no existe en esta sesion. ` +
-                'Revisá que la entidad esté habilitada para la empresa.');
+                'Revise que la entidad esté habilitada para la empresa.');
         }
         return base.transaction(store, modo).objectStore(store);
     }

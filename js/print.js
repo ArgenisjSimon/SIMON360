@@ -6,35 +6,59 @@
 // `orientacion` es opcional y vale 'landscape' para las tablas anchas (el
 // detalle de comisiones no entra en vertical). Omitirlo deja el comportamiento
 // de siempre: vertical, que es lo que esperan los comprobantes de cobranza.
+//
+// Si el navegador bloquea la ventana emergente (window.open devuelve null: el
+// bloqueador de popups, o el navegador integrado de la app de escritorio), se
+// imprime desde un iframe oculto en la misma pagina, con el mismo HTML. Antes
+// la funcion terminaba en silencio y el boton parecia no hacer nada (27OCT2026,
+// comprobante de retencion de IVA de Compras). Si tampoco asi se puede, avisa.
 window.simonPrint.printReporte = function (elementId, titulo, orientacion) {
     var el = document.getElementById(elementId);
     if (!el) return;
-    var win = window.open('', '_blank', 'width=900,height=700,scrollbars=yes');
-    if (!win) return;
     var tituloDoc = (titulo && String(titulo).trim()) || 'Comprobante de Pago - SIMON 360';
     var horizontal = String(orientacion || '').toLowerCase() === 'landscape';
-    win.document.write('<!DOCTYPE html><html><head>');
-    win.document.write('<meta charset="utf-8">');
-    win.document.write('<title>' + tituloDoc + '</title>');
-    win.document.write('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous">');
-    win.document.write('<style>');
-    win.document.write(horizontal ? '@page{size:landscape;margin:8mm 10mm}' : '@page{margin:10mm 15mm}');
-    win.document.write('body{font-family:Arial,sans-serif;margin:0;padding:0;}');
-    win.document.write('img{max-width:100%;height:auto;}');
-    // Todo el comprobante debe caber en UNA pagina: no partir filas ni bloques
-    // (imagen, documentos aplicados, pie) entre paginas.
-    win.document.write('tr{page-break-inside:avoid}');
-    // Los reportes de varias hojas repiten el encabezado de la tabla en cada
-    // una; sin esto la segunda pagina del detalle son numeros sin titulo.
-    win.document.write('thead{display:table-header-group}');
-    win.document.write('.salto-pagina{page-break-before:always}');
-    win.document.write('@media print{body{-webkit-print-color-adjust:exact;print-color-adjust:exact;}}');
-    win.document.write('</style>');
-    win.document.write('</head><body>');
-    win.document.write(el.innerHTML);
-    win.document.write('</body></html>');
+    var html = '<!DOCTYPE html><html><head>'
+        + '<meta charset="utf-8">'
+        + '<title>' + tituloDoc + '</title>'
+        + '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous">'
+        + '<style>'
+        + (horizontal ? '@page{size:landscape;margin:8mm 10mm}' : '@page{margin:10mm 15mm}')
+        + 'body{font-family:Arial,sans-serif;margin:0;padding:0;}'
+        + 'img{max-width:100%;height:auto;}'
+        // Todo el comprobante debe caber en UNA pagina: no partir filas ni bloques
+        // (imagen, documentos aplicados, pie) entre paginas.
+        + 'tr{page-break-inside:avoid}'
+        // Los reportes de varias hojas repiten el encabezado de la tabla en cada
+        // una; sin esto la segunda pagina del detalle son numeros sin titulo.
+        + 'thead{display:table-header-group}'
+        + '.salto-pagina{page-break-before:always}'
+        + '@media print{body{-webkit-print-color-adjust:exact;print-color-adjust:exact;}}'
+        + '</style>'
+        + '</head><body>'
+        + el.innerHTML
+        + '</body></html>';
+
+    var win = window.open('', '_blank', 'width=900,height=700,scrollbars=yes');
+    var marco = null;
+    if (!win) {
+        try {
+            marco = document.createElement('iframe');
+            marco.setAttribute('aria-hidden', 'true');
+            marco.style.cssText = 'position:fixed;right:0;bottom:0;width:0;height:0;border:0;visibility:hidden;';
+            document.body.appendChild(marco);
+            win = marco.contentWindow;
+        } catch (e) {
+            win = null;
+        }
+        if (!win) {
+            alert('No se pudo abrir la impresión. Permita las ventanas emergentes para este sitio e intente de nuevo.');
+            return;
+        }
+    }
+    win.document.open();
+    win.document.write(html);
     win.document.close();
-    win.focus();
+    if (!marco) win.focus();
 
     // Esperar a que las imagenes del comprobante terminen de cargar antes de
     // imprimir (una URL externa puede tardar mas que un delay fijo); tope 6s.
@@ -43,7 +67,15 @@ window.simonPrint.printReporte = function (elementId, titulo, orientacion) {
     function doPrint() {
         if (printed) return;
         printed = true;
-        win.print();
+        try {
+            win.focus();
+            win.print();
+        } catch (e) {
+            alert('No se pudo imprimir: ' + (e && e.message ? e.message : e));
+        }
+        // El iframe se retira despues: print() bloquea hasta cerrar el dialogo,
+        // pero algunos navegadores vuelven antes; un minuto alcanza.
+        if (marco) setTimeout(function () { if (marco.parentNode) marco.parentNode.removeChild(marco); }, 60000);
     }
     if (imgs.length === 0) {
         setTimeout(doPrint, 400);

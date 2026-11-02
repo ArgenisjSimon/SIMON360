@@ -165,7 +165,7 @@ self.addEventListener('push', event => {
     // Sin datos igual hay que mostrar ALGO: en varios navegadores, un push
     // recibido que no muestra notificacion cuenta como incumplimiento y
     // terminan revocando el permiso al sitio.
-    let datos = { titulo: 'SIMON 360', cuerpo: 'Tenés una novedad.' };
+    let datos = { titulo: 'SIMON 360', cuerpo: 'Tiene una novedad.' };
 
     try {
         if (event.data) datos = { ...datos, ...event.data.json() };
@@ -214,4 +214,4 @@ self.addEventListener('notificationclick', event => {
         })
     );
 });
-/* Manifest version: D5K4xlb7 */
+/* Manifest version: 8XioTmKP */
