@@ -29,15 +29,46 @@ window.qrScanner = {
     _detector: null,
     _timer: null,
     _dotnet: null,
-    _motor: null,      // "nativo" | "jsqr"
+    _motor: null,      // "nativo" | "zxing" | "jsqr"
+    _formatos: ["qr_code"],
+    _zxing: null,
 
-    /// Se puede leer QR con la cámara en este navegador.
-    soportado() {
-        return typeof window.BarcodeDetector !== "undefined"
-            || typeof window.jsQR === "function";
+    // Códigos de barras lineales (16OCT2026, conteo de inventario): los productos traen su
+    // código de barras (EAN, UPC, Code 128...), no un QR. El detector nativo los lee en
+    // Chrome y Edge de Android; en iPhone y en la PC los lee ZXing (wwwroot/js/zxing.min.js,
+    // local como jsQR). Pedir solo QR deja todo como siempre.
+    //
+    // ZXing NO está en index.html (21OCT2026): son 336 KB que bajaba todo SIMON al abrir,
+    // aunque nunca entrara al conteo. Se carga aquí la primera vez que alguien pide códigos
+    // lineales y el navegador no los lee solo. Ruta relativa: la app no está en la raíz.
+    // El service worker lo guarda con el resto de los .js, así que también carga sin señal.
+    _LINEALES: ["ean_13", "ean_8", "upc_a", "upc_e", "code_128", "code_39", "itf"],
+    _quiereLineales(formatos) { return (formatos || []).some(f => this._LINEALES.includes(f)); },
+    _cargandoZxing: null,
+
+    /// Carga ZXing una sola vez. true si quedó disponible; si falla, el próximo pedido reintenta.
+    _cargarZxing() {
+        if (typeof window.ZXing !== "undefined") return Promise.resolve(true);
+        if (!this._cargandoZxing) {
+            this._cargandoZxing = new Promise(ok => {
+                const s = document.createElement("script");
+                s.src = "js/zxing.min.js";
+                s.onload = () => ok(typeof window.ZXing !== "undefined");
+                s.onerror = () => { s.remove(); this._cargandoZxing = null; ok(false); };
+                document.head.appendChild(s);
+            });
+        }
+        return this._cargandoZxing;
     },
 
-    /// Cuál de los dos motores se va a usar. Sirve para poder decirlo en
+    /// Se puede leer con la cámara en este navegador (formatos opcional: sin él, QR).
+    soportado(formatos) {
+        const qr = typeof window.BarcodeDetector !== "undefined" || typeof window.jsQR === "function";
+        if (this._quiereLineales(formatos)) return qr ? true : this._cargarZxing();
+        return qr;
+    },
+
+    /// Cuál de los motores se va a usar. Sirve para poder decirlo en
     /// pantalla cuando alguien reporte que "escanea lento".
     motor() {
         if (typeof window.BarcodeDetector !== "undefined") return "nativo";
@@ -45,13 +76,33 @@ window.qrScanner = {
         return null;
     },
 
+    /// Si con estos formatos se leerán también los códigos de barras lineales, o solo QR.
+    async leeLineales(formatos) {
+        if (!this._quiereLineales(formatos)) return false;
+        if (await this._nativoLeeLineales()) return true;
+        return await this._cargarZxing();
+    },
+    async _nativoLeeLineales() {
+        if (typeof window.BarcodeDetector === "undefined") return false;
+        try { const f = await BarcodeDetector.getSupportedFormats(); return this._LINEALES.some(x => f.includes(x)); }
+        catch (e) { return false; }
+    },
+    async _elegirMotor() {
+        if (!this._quiereLineales(this._formatos)) return this.motor();     // solo QR: lo de siempre
+        if (await this._nativoLeeLineales()) return "nativo";
+        if (await this._cargarZxing()) return "zxing";
+        return this.motor();                                                 // sin lineales: al menos el QR
+    },
+
     /// Enciende la cámara y empieza a buscar. Cada lectura se avisa a .NET
     /// llamando al método `QrLeido` del objeto que se pasa.
     ///
     /// idVideo   : el <video> donde se ve la cámara
     /// dotnetRef : DotNetObjectReference del componente
-    async iniciar(idVideo, dotnetRef) {
-        this._motor = this.motor();
+    /// formatos  : opcional, los nombres de BarcodeDetector. Sin él, solo QR (lo de siempre).
+    async iniciar(idVideo, dotnetRef, formatos) {
+        this._formatos = Array.isArray(formatos) && formatos.length ? formatos : ["qr_code"];
+        this._motor = await this._elegirMotor();
         if (!this._motor) {
             throw new Error("Este navegador no puede leer códigos QR con la cámara. Use el lector o teclee el número.");
         }
@@ -82,9 +133,17 @@ window.qrScanner = {
         await this._video.play();
 
         if (this._motor === "nativo") {
-            this._detector = new BarcodeDetector({ formats: ["qr_code"] });
+            // solo los formatos que este navegador conoce: pedir uno que no conoce es un error
+            let pedir = this._formatos;
+            try {
+                const sabe = await BarcodeDetector.getSupportedFormats();
+                const comunes = pedir.filter(f => sabe.includes(f));
+                pedir = comunes.length ? comunes : ["qr_code"];
+            } catch (e) { pedir = ["qr_code"]; }
+            this._detector = new BarcodeDetector({ formats: pedir });
         } else {
             this._lienzo = document.createElement("canvas");
+            if (this._motor === "zxing") this._zxing = this._crearZxing();
         }
 
         let ultimo = null;
@@ -94,7 +153,7 @@ window.qrScanner = {
         // jsQR analiza en el hilo de la interfaz y tarda bastante más que el
         // detector nativo, así que se le da más aire entre pasadas. Si no, la
         // pantalla se traba y el video se ve a tirones.
-        const cada = this._motor === "nativo" ? 250 : 400;
+        const cada = this._motor === "nativo" ? 250 : this._motor === "zxing" ? 350 : 400;
 
         this._timer = setInterval(async () => {
             if (ocupado) return;                            // la anterior no termino
@@ -104,7 +163,7 @@ window.qrScanner = {
             try {
                 const valor = this._motor === "nativo"
                     ? await this._leerNativo()
-                    : this._leerJsQr();
+                    : this._motor === "zxing" ? this._leerZxing() : this._leerJsQr();
 
                 if (!valor) return;
 
@@ -130,6 +189,35 @@ window.qrScanner = {
     async _leerNativo() {
         const codigos = await this._detector.detect(this._video);
         return codigos.length ? (codigos[0].rawValue || "").trim() : null;
+    },
+
+    // ZXing (librería UMD @zxing/library, global window.ZXing): QR y códigos lineales en
+    // cualquier navegador. Se le pasan solo los formatos pedidos para que no pierda tiempo.
+    _crearZxing() {
+        const Z = window.ZXing, B = Z.BarcodeFormat;
+        const mapa = { qr_code: B.QR_CODE, ean_13: B.EAN_13, ean_8: B.EAN_8, upc_a: B.UPC_A, upc_e: B.UPC_E,
+                       code_128: B.CODE_128, code_39: B.CODE_39, itf: B.ITF };
+        const pistas = new Map();
+        pistas.set(Z.DecodeHintType.POSSIBLE_FORMATS, this._formatos.map(f => mapa[f]).filter(x => x !== undefined));
+        pistas.set(Z.DecodeHintType.TRY_HARDER, true);
+        const lector = new Z.MultiFormatReader();
+        lector.setHints(pistas);
+        return lector;
+    },
+
+    _leerZxing() {
+        const v = this._video, w = v.videoWidth, h = v.videoHeight;
+        if (!w || !h) return null;
+        const c = this._lienzo;
+        c.width = w; c.height = h;                       // los lineales necesitan la resolución completa
+        c.getContext("2d", { willReadFrequently: true }).drawImage(v, 0, 0, w, h);
+        const Z = window.ZXing;
+        try {
+            const bmp = new Z.BinaryBitmap(new Z.HybridBinarizer(new Z.HTMLCanvasElementLuminanceSource(c)));
+            const r = this._zxing.decode(bmp);
+            return r ? String(r.getText()).trim() : null;
+        } catch (e) { return null; }                     // NotFoundException en cada cuadro sin código
+        finally { try { this._zxing.reset(); } catch (e) { } }
     },
 
     _leerJsQr() {
@@ -173,6 +261,7 @@ window.qrScanner = {
 
         this._detector = null;
         this._lienzo = null;
+        this._zxing = null;
         this._dotnet = null;
         this._motor = null;
     }

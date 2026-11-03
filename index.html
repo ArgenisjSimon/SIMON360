@@ -367,6 +367,9 @@
          y cada script de CDN de este proyecto lleva su hash SRI. Es el
          respaldo de BarcodeDetector, que no existe en Chrome de Windows. -->
     <script src="js/jsQR.min.js"></script>
+    <!-- ZXing (js/zxing.min.js, @zxing/library 0.21.3) NO se carga aquí: lo trae qrScanner.js
+         la primera vez que se piden códigos de barras de productos (conteo de inventario). -->
+
     <script src="js/qrScanner.js"></script>
     <script src="js/visorPdf.js"></script>
     <script src="js/botonBurbuja.js"></script>

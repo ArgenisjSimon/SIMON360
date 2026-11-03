@@ -1,0 +1,106 @@
+/* =============================================================================
+   MANUAL DEL CONTEO DE INVENTARIO (MCI) · estilos de la página Razor ManualConteoInventario
+   P-064 (Claudio, 16OCT2026): el manual dejó de ser una página .html servida por el API; es una
+   página de SIMON 360. Estos son los estilos del manual de siempre, con dos cambios:
+     · todo va bajo .mci-manual, para no tocar nada del resto de SIMON 360;
+     · el tema oscuro sigue al de SIMON 360 (clase "dark" en <html>), no al del sistema.
+   Las fuentes van en recursos/ (locales: el manual se ve igual sin internet).
+   ============================================================================= */
+@font-face{font-family:"Barlow Semi Condensed";font-style:normal;font-weight:500;font-display:swap;src:url("fuentes/barlow-semi-condensed-latin-500-normal.woff2") format("woff2")}
+@font-face{font-family:"Barlow Semi Condensed";font-style:normal;font-weight:600;font-display:swap;src:url("fuentes/barlow-semi-condensed-latin-600-normal.woff2") format("woff2")}
+@font-face{font-family:"Barlow Semi Condensed";font-style:normal;font-weight:700;font-display:swap;src:url("fuentes/barlow-semi-condensed-latin-700-normal.woff2") format("woff2")}
+@font-face{font-family:"Source Sans 3";font-style:normal;font-weight:400;font-display:swap;src:url("fuentes/source-sans-3-latin-400-normal.woff2") format("woff2")}
+@font-face{font-family:"Source Sans 3";font-style:italic;font-weight:400;font-display:swap;src:url("fuentes/source-sans-3-latin-400-italic.woff2") format("woff2")}
+@font-face{font-family:"Source Sans 3";font-style:normal;font-weight:600;font-display:swap;src:url("fuentes/source-sans-3-latin-600-normal.woff2") format("woff2")}
+@font-face{font-family:"Source Sans 3";font-style:normal;font-weight:700;font-display:swap;src:url("fuentes/source-sans-3-latin-700-normal.woff2") format("woff2")}
+@font-face{font-family:"JetBrains Mono";font-style:normal;font-weight:400;font-display:swap;src:url("fuentes/jetbrains-mono-latin-400-normal.woff2") format("woff2")}
+@font-face{font-family:"JetBrains Mono";font-style:normal;font-weight:500;font-display:swap;src:url("fuentes/jetbrains-mono-latin-500-normal.woff2") format("woff2")}
+
+.mci-manual{
+  --bg:#f4f5f2; --paper:#ffffff; --ink:#1d2329; --ink-2:#55606b; --line:#d8dcd6;
+  --accent:#d9850b; --accent-ink:#8a5200; --accent-soft:#fdf0d9; --barra:#1d2329;
+  --ok:#2e7d4f; --ok-soft:#e2f2e8; --info:#2f5f8f; --info-soft:#e4edf6; --crit:#b23a2b; --crit-soft:#f8e3df;
+  --f-display:"Barlow Semi Condensed","Arial Narrow",Arial,sans-serif;
+  --f-body:"Source Sans 3","Segoe UI",Arial,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+}
+html.dark .mci-manual{
+  --bg:#14181b; --paper:#1b2125; --ink:#e7eaec; --ink-2:#a3adb6; --line:#2f373d;
+  --accent:#f0a83a; --accent-ink:#f6c77a; --accent-soft:#2f2614; --barra:#facc15;
+  --ok:#72c495; --ok-soft:#173022; --info:#8cb3dc; --info-soft:#1b2a39; --crit:#ec8b7b; --crit-soft:#3a1f1a; color-scheme:dark}
+.mci-manual, .mci-manual *{box-sizing:border-box}
+.mci-manual{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16.5px;line-height:1.6;padding-inline:16px;padding-block:28px 64px;margin:0;min-height:100%}
+.mci-manual .layout{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:240px minmax(0,1fr);gap:40px;align-items:start}
+@media (max-width:900px){.mci-manual .layout{grid-template-columns:1fr;gap:24px}}
+.mci-manual nav.toc{position:sticky;top:16px;font-size:14px;display:grid;gap:2px}
+@media (max-width:900px){.mci-manual nav.toc{position:static;background:var(--paper);border:1px solid var(--line);padding:14px 16px}}
+.mci-manual nav.toc details{display:block}
+.mci-manual nav.toc details>div{display:grid;gap:2px}
+.mci-manual nav.toc summary{list-style:none;cursor:default;font-family:var(--f-display);font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);margin-bottom:6px}
+.mci-manual nav.toc summary::-webkit-details-marker{display:none}
+@media (max-width:900px){.mci-manual nav.toc summary{cursor:pointer;margin:0;padding:4px 0}.mci-manual nav.toc summary::after{content:" ▾";color:var(--accent)}.mci-manual nav.toc details[open] summary::after{content:" ▴"}.mci-manual nav.toc details[open] summary{margin-bottom:6px}}
+.mci-manual nav.toc a{color:var(--ink);text-decoration:none;padding:3px 0 3px 10px;border-left:2px solid var(--line)}
+.mci-manual nav.toc a:hover,.mci-manual nav.toc a:focus-visible{border-left-color:var(--accent);color:var(--accent-ink);outline:none}
+.mci-manual main{display:grid;gap:48px;min-width:0}
+.mci-manual h1,.mci-manual h2,.mci-manual h3{font-family:var(--f-display);line-height:1.15;margin:0;text-wrap:balance;color:var(--ink)}
+.mci-manual h1{font-size:clamp(32px,5vw,46px);font-weight:700}
+.mci-manual h2{font-size:28px;font-weight:700;padding-bottom:8px;border-bottom:2px solid var(--ink)}
+.mci-manual h3{font-size:20px;font-weight:600;margin-top:8px}
+.mci-manual p{margin:0;max-width:68ch}
+.mci-manual section{display:grid;gap:14px;scroll-margin-top:16px}
+.mci-manual header.top{display:grid;gap:14px}
+.mci-manual .meta{font-family:var(--f-mono);font-size:12.5px;color:var(--ink-2);display:flex;flex-wrap:wrap;gap:4px 18px}
+.mci-manual .barras{display:inline-grid;gap:3px;justify-items:start;color:var(--barra)}
+.mci-manual .barras svg{display:block;max-width:100%;height:auto}
+.mci-manual .barras > span{font-family:var(--f-mono);font-size:11px;letter-spacing:.2em;color:var(--barra)}
+.mci-manual .tag{display:inline-flex;gap:8px;align-items:center;font-family:var(--f-mono);font-size:13px;border:1.5px dashed var(--accent);background:var(--accent-soft);color:var(--accent-ink);padding:3px 10px;border-radius:3px;width:fit-content;max-width:100%;overflow-wrap:anywhere}
+.mci-manual .lead{font-size:19px;max-width:62ch}
+.mci-manual ul,.mci-manual ol{margin:0;padding-left:22px;max-width:68ch;list-style:revert}
+.mci-manual li+li{margin-top:4px}
+.mci-manual .tbl{overflow-x:auto;border:1px solid var(--line);background:var(--paper)}
+.mci-manual table{border-collapse:collapse;width:100%;min-width:560px;font-size:15px}
+.mci-manual th,.mci-manual td{text-align:left;vertical-align:top;padding:9px 12px;border-bottom:1px solid var(--line)}
+.mci-manual th{font-family:var(--f-display);font-weight:600;font-size:13.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-2);background:var(--bg)}
+.mci-manual tr:last-child td{border-bottom:0}
+.mci-manual td.c,.mci-manual th.c{text-align:center}
+.mci-manual .si{color:var(--ok);font-weight:700}.mci-manual .no{color:var(--ink-2)}
+.mci-manual .note{border:1px solid var(--line);border-left:5px solid var(--info);background:var(--paper);padding:12px 16px;display:grid;gap:6px;max-width:72ch}
+.mci-manual .note.warn{border-left-color:var(--accent)}
+.mci-manual .note.crit{border-left-color:var(--crit)}
+.mci-manual .note b.t{font-family:var(--f-display);font-size:15px;letter-spacing:.03em;text-transform:uppercase}
+.mci-manual .steps{list-style:none;padding:0;margin:0;display:grid;gap:10px;counter-reset:s;max-width:none}
+.mci-manual .steps li{display:grid;grid-template-columns:44px minmax(0,1fr);gap:12px;background:var(--paper);border:1px solid var(--line);padding:12px 14px;counter-increment:s;margin:0}
+.mci-manual .steps li::before{content:counter(s);font-family:var(--f-display);font-weight:700;font-size:24px;color:var(--accent-ink);line-height:1}
+.mci-manual .steps li b{display:block}
+.mci-manual .steps.flow li{border-left:4px solid var(--accent)}
+.mci-manual kbd,.mci-manual .btn{font-family:var(--f-body);font-size:.88em;font-weight:600;border:1px solid var(--line);border-bottom-width:2px;background:var(--paper);padding:1px 7px;border-radius:4px;white-space:nowrap}
+.mci-manual code,.mci-manual .mono{font-family:var(--f-mono);font-size:.86em}
+.mci-manual .res{font-family:var(--f-mono);font-weight:500;font-size:12.5px;padding:2px 7px;border-radius:3px;white-space:nowrap}
+.mci-manual .r-ct{background:var(--ok-soft);color:var(--ok)}.mci-manual .r-ap{background:var(--info-soft);color:var(--info)}.mci-manual .r-ru{background:var(--accent-soft);color:var(--accent-ink)}.mci-manual .r-dif{background:var(--crit-soft);color:var(--crit)}
+.mci-manual .grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+@media (max-width:640px){.mci-manual .grid2{grid-template-columns:1fr}}
+.mci-manual .card{background:var(--paper);border:1px solid var(--line);padding:14px 16px;display:grid;gap:6px;min-width:0}
+.mci-manual .card h3{margin:0}
+.mci-manual footer{font-size:14px;color:var(--ink-2);border-top:1px solid var(--line);padding-top:16px;display:grid;gap:6px}
+.mci-manual a{color:var(--info)}
+.mci-manual .demo{display:inline-flex;align-items:center;gap:10px;width:fit-content;max-width:100%;text-decoration:none;color:var(--ink);background:var(--accent-soft);border:1.5px solid var(--accent);border-radius:8px;padding:8px 14px;font-weight:600}
+.mci-manual .demo:hover,.mci-manual .demo:focus-visible{background:var(--paper);outline:none}
+.mci-manual .demo small{font-weight:400;color:var(--ink-2)}
+.mci-manual .demo .tutor{width:52px;height:52px;flex:none;background:#fff;border-radius:10px;border:1px solid var(--line)}
+.mci-manual .demo > span{display:grid;gap:1px;min-width:0}
+.mci-manual .demo .marca{font-family:var(--f-display);font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-ink)}
+.mci-manual .tutor-cab{display:flex;align-items:center;gap:14px}
+.mci-manual .tutor-cab img{width:72px;height:72px;flex:none;background:#fff;border-radius:12px;border:1px solid var(--line)}
+.mci-manual #recorridos td .demo{width:100%;padding:6px 10px}
+.mci-manual #recorridos td .demo .tutor{width:40px;height:40px}
+.mci-manual #recorridos td{vertical-align:middle}
+.mci-manual .demos{display:flex;flex-wrap:wrap;gap:10px;align-items:stretch}
+.mci-manual .demos > .demo{flex:1 1 260px;width:auto;min-width:0}
+.mci-manual .demo.hazlo{border-color:#15803d;background:#f0fdf4}
+.mci-manual .demo.hazlo .marca{color:#166534}
+.mci-manual .demo.hazlo .icono{width:52px;height:52px;flex:none;display:grid;place-items:center;border-radius:10px;background:#fff;border:1px solid var(--line);color:#15803d}
+.mci-manual #recorridos td .demo.hazlo .icono{width:40px;height:40px}
+.mci-manual .demo.off{opacity:.55;filter:grayscale(.6);cursor:not-allowed}
+html.dark .mci-manual .demo.hazlo{background:#052e16}
+html.dark .mci-manual .demo.hazlo .marca{color:#86efac}
+@media (prefers-reduced-motion:no-preference){.mci-manual nav.toc a{transition:border-color .15s,color .15s}}
