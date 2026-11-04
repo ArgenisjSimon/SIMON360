@@ -1,5 +1,4 @@
-/* Manifest version: N+SmwoBo */
-// ¡Precaución! Entender las implicaciones antes de publicar con soporte offline:
+﻿// ¡Precaución! Entender las implicaciones antes de publicar con soporte offline:
 // https://aka.ms/blazor-offline-considerations
 
 self.importScripts('./service-worker-assets.js');
@@ -215,3 +214,4 @@ self.addEventListener('notificationclick', event => {
         })
     );
 });
+/* Manifest version: /+tJjYsA */
