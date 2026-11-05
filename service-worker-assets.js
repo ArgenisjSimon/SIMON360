@@ -25,7 +25,7 @@ self.assetsManifest = {
       "url": "_framework\/icudt.dat"
     },
     {
-      "hash": "sha256-6J0uBaCsLrkp3ebCKQ8Tc1ujU1mELir4cImcuHINngg=",
+      "hash": "sha256-QSKiUZ9pycIdcsyE8DfyKueeO9xoe3TXnuLp06hhemo=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -113,7 +113,7 @@ self.assetsManifest = {
       "url": "_framework\/Microsoft.JSInterop.WebAssembly.wasm"
     },
     {
-      "hash": "sha256-8dfTGX2iXmxLy+qghuroA1SPD5Migz8pOMk2qpkdmFk=",
+      "hash": "sha256-5Zp3DaazM5+uqXj0fFHV4d0OjeSHScPv49ha74ypwuY=",
       "url": "_framework\/SIMON_WEB_360.wasm"
     },
     {
@@ -161,7 +161,7 @@ self.assetsManifest = {
       "url": "_framework\/System.Linq.Expressions.wasm"
     },
     {
-      "hash": "sha256-O+0abvZXsys+2FLMA5\/hMC+vu+h1F\/fPCLcaefcqlEQ=",
+      "hash": "sha256-yjVN\/j4yOy\/bJh2zM1wlT2\/tEsA5iTSEy4g2fVxCYMM=",
       "url": "_framework\/System.Linq.wasm"
     },
     {
@@ -237,7 +237,7 @@ self.assetsManifest = {
       "url": "appsettings.Development.json"
     },
     {
-      "hash": "sha256-d6Fd8vsEkgMEdobDPIJYMUK6d8A43l5GCag2jnlmYbk=",
+      "hash": "sha256-tlI0vPQP20FYVCOmGmcugEAKSpVMYQG4YsubLXC2AMM=",
       "url": "appsettings.json"
     },
     {
@@ -293,7 +293,7 @@ self.assetsManifest = {
       "url": "css\/mci-manual.css"
     },
     {
-      "hash": "sha256-oXCXOBHHjUEJla9UA\/AByTLltGG\/LzWlbYSV7p\/ufvg=",
+      "hash": "sha256-774XqE2WCWGhCYH2hdSF9pftEi7vmLKM1B\/ACK4Y2RM=",
       "url": "css\/tailwind.build.css"
     },
     {
@@ -387,6 +387,10 @@ self.assetsManifest = {
     {
       "hash": "sha256-STxJxQurNUkwoZD\/yBmA5fE+472Or2iLBssnOcQpPKk=",
       "url": "js\/dictado.js"
+    },
+    {
+      "hash": "sha256-qSpkD7O2gst6b3W3TUH34qUSBuyQTW5DNbWzjRqTTo8=",
+      "url": "js\/excelExport.js"
     },
     {
       "hash": "sha256-XyzR3GmbHHEuqLtxOYcn6+bVDELzCmbMnjLU\/56jUNY=",
@@ -517,5 +521,5 @@ self.assetsManifest = {
       "url": "videos\/Splash_modoClaro.mp4"
     }
   ],
-  "version": "\/+tJjYsA"
+  "version": "tpwUzZ7U"
 };
