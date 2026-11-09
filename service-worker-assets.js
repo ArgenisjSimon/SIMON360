@@ -25,7 +25,7 @@ self.assetsManifest = {
       "url": "_framework\/icudt.dat"
     },
     {
-      "hash": "sha256-jX3OomSqqQnsCUDyViye3yfhcH4vf0GIDk4PpMF1Etg=",
+      "hash": "sha256-LUut9hNYKrnRxji3XuKpjZrGWSVo2JyVeGo5wIZlvaA=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -113,7 +113,7 @@ self.assetsManifest = {
       "url": "_framework\/Microsoft.JSInterop.WebAssembly.wasm"
     },
     {
-      "hash": "sha256-3WJ5X1tB4IRdBg3Djk8t86oP3FtkyR67Vv3WJruTQ6A=",
+      "hash": "sha256-t\/H9NGcQSJhLfIBCOAupjpDf61vEN2VjcxLDSrG9eiA=",
       "url": "_framework\/SIMON_WEB_360.wasm"
     },
     {
@@ -161,7 +161,7 @@ self.assetsManifest = {
       "url": "_framework\/System.Linq.Expressions.wasm"
     },
     {
-      "hash": "sha256-TTpraBKNT2+gU\/SY5IVJ8NybUeLS7x1oOwF1SPptaxk=",
+      "hash": "sha256-7cWKhcp3ZxqY2nmuXukWrsOewthk08CEJRt4JCSKd2U=",
       "url": "_framework\/System.Linq.wasm"
     },
     {
@@ -237,7 +237,7 @@ self.assetsManifest = {
       "url": "appsettings.Development.json"
     },
     {
-      "hash": "sha256-PyC8\/z6CGCOSAiot40qUUl+h2WIlnagnj0vButEcctU=",
+      "hash": "sha256-yninmaMTOBv4ue37Uio9P0N+rAnqSpTxlKaMs4cF38I=",
       "url": "appsettings.json"
     },
     {
@@ -293,7 +293,7 @@ self.assetsManifest = {
       "url": "css\/mci-manual.css"
     },
     {
-      "hash": "sha256-j2iU9mAY4B6evlDHVzWwNA2NdBMRFE6k4fWktWAb9Mc=",
+      "hash": "sha256-pqiBtHN\/fG0GqrfGQc62p5m\/yxSykEFfTUslsXgxevM=",
       "url": "css\/tailwind.build.css"
     },
     {
@@ -361,7 +361,7 @@ self.assetsManifest = {
       "url": "Imagenes\/simon-tutor.gif"
     },
     {
-      "hash": "sha256-FsVki63YC7rIM\/JLCiGyiiaUioMktHrC2KKCKzmJjvY=",
+      "hash": "sha256-xsm4qmXlMHEE05SHM3g0yHGelKqA3iHuZ\/r1cyRanZg=",
       "url": "index.html"
     },
     {
@@ -417,7 +417,7 @@ self.assetsManifest = {
       "url": "js\/loginFondo.js"
     },
     {
-      "hash": "sha256-jvrHNKZ5tHzoQ\/3NFCNiSv1tQiHjPYbbPZD\/rnyQUOY=",
+      "hash": "sha256-9ob1GdVcEBGb\/XN6QmxI2QWJ+3whALSbCNQJDqhvyQ8=",
       "url": "js\/lotesMap.js"
     },
     {
@@ -489,6 +489,10 @@ self.assetsManifest = {
       "url": "js\/tokenHelper.js"
     },
     {
+      "hash": "sha256-TA\/Ux0tJ3xr1YF5kJhm8Wkg0bG8TcaLhQL9i5M9xEXY=",
+      "url": "js\/trnMapa.js"
+    },
+    {
       "hash": "sha256-LZwR\/jqFFOAKSHtON0xlLYtSkRe2e9bFoBhfrOc\/3Pc=",
       "url": "js\/ventanaFlotante.js"
     },
@@ -521,5 +525,5 @@ self.assetsManifest = {
       "url": "videos\/Splash_modoClaro.mp4"
     }
   ],
-  "version": "dqb9Yv9\/"
+  "version": "3tabj6h3"
 };

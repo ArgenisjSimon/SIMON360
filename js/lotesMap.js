@@ -290,21 +290,48 @@ window.lotesMap = (function () {
         // zafra en el titulo: no es del CCA de arriba, que es la caña que esta
         // creciendo, sino del corte anterior. Llega ya formateado desde C#.
         const a = lote.arrime;
+        // Estimado vs real: solo TC y TCH tienen estimado. Si el tablon no
+        // tiene ninguno, el bloque queda como antes (dos columnas) en vez de
+        // llenar la columna Est. de guiones.
+        const hayEst = !!(a && (a.tcEst || a.tchEst));
+        const gris = _color('neutral-500', '#6b7280');
+        // Sin columna de variacion (pedido del usuario 09NOV2026): el
+        // estimado al lado del real ya dice cuanto falto. varTc / varTch
+        // siguen llegando desde C#, por si se quiere volver a mostrar.
+        const columnas = hayEst
+            ? 'grid-template-columns:auto 1fr 1fr'
+            : 'grid-template-columns:auto 1fr';
+        const filaArrime = ([k, real, est]) => hayEst
+            ? `<span style="color:${gris}">${k}</span>
+               <span style="text-align:right;color:${gris}">${est ? _escapar(String(est)) : ''}</span>
+               <b style="text-align:right">${_escapar(String(real))}</b>`
+            : `<span style="color:${gris}">${k}</span>
+               <b style="text-align:right">${_escapar(String(real))}</b>`;
+        const cabeceraArrime = hayEst
+            ? `<span></span>
+               <span style="text-align:right;font-size:9px;color:${gris}">Est.</span>
+               <span style="text-align:right;font-size:9px;color:${gris}">Real</span>`
+            : '';
         const arrime = a
             ? `<div style="margin-top:6px;padding-top:6px;border-top:1px solid ${_color('neutral-200','#e5e7eb')};font-size:11px;color:${_color('neutral-700','#374151')}">
-                   <div style="font-size:10px;font-weight:700;letter-spacing:.03em;color:${_color('neutral-500','#6b7280')};margin-bottom:3px">
+                   <div style="font-size:10px;font-weight:700;letter-spacing:.03em;color:${gris};margin-bottom:3px">
                        ARRIME ZAFRA ${_escapar(a.zafra || '')}
                    </div>
                    ${a.rotulo
                        ? `<div style="font-size:10px;color:${_color('warn-700','#b45309')};margin-bottom:3px">${_escapar(a.rotulo)}</div>`
                        : ''}
-                   ${[['TC', a.tc], ['TA', a.ta], ['TCH', a.tch], ['TAH', a.tah], ['Rto sonda', a.rto], ['Grado', a.grado]]
-                       .filter(f => f[1])
-                       .map(([k, v]) =>
-                       `<div style="display:flex;gap:8px;justify-content:space-between">
-                            <span style="color:${_color('neutral-500','#6b7280')}">${k}</span>
-                            <b>${_escapar(String(v))}</b>
-                        </div>`).join('')}
+                   <div style="display:grid;${columnas};column-gap:8px;row-gap:1px;font-variant-numeric:tabular-nums">
+                       ${cabeceraArrime}
+                       ${[['TC', a.tc, a.tcEst, a.varTc], ['TA', a.ta], ['TCH', a.tch, a.tchEst, a.varTch],
+                          ['TAH', a.tah], ['Rto sonda', a.rto], ['Grado', a.grado]]
+                           .filter(f => f[1])
+                           .map(filaArrime).join('')}
+                   </div>
+                   ${hayEst
+                       ? ''
+                       : `<div style="margin-top:3px;font-size:10px;font-style:italic;color:${gris}">
+                              Sin estimado cargado para esta zafra
+                          </div>`}
                </div>`
             : '';
 
@@ -323,7 +350,8 @@ window.lotesMap = (function () {
     // lotes: [{ id, nombre, descripcion, geometria, color, esSembrable,
     //           areaLote, areaSql, tipo, variedad, clase, fCorte, edad,
     //           atenuado, estadoLabor, pasadas, actividad, arrime }]
-    // arrime = { zafra, rotulo, tc, ta, tch, tah, rto, grado } ya en texto, o
+    // arrime = { zafra, rotulo, tc, ta, tch, tah, rto, grado, tcEst, tchEst }
+    // ya en texto, y varTc / varTch como numero (% con signo), o
     // null si el tablon no tiene resultado de zafra cargado (modulo Arrimes).
     // rotulo: aviso cuando el resultado no es el de la zafra que se mira.
     // Llega en init y en setFiltros: cambia con el ciclo elegido.
