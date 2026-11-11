@@ -42,5 +42,31 @@ window.visorPdf = {
         document.body.appendChild(a);
         a.click();
         a.remove();
+    },
+
+    /// Arma un blob: URL con los bytes del PDF (Facturación: la factura en su
+    /// forma pre-impresa). Con blob: y no data: porque un iframe con data: es
+    /// de otro origen y desde la página no se lo puede mandar a imprimir.
+    /// Si se pasa la URL anterior, se libera.
+    urlDesdeBytes(bytes, anterior) {
+        if (anterior) { try { URL.revokeObjectURL(anterior); } catch (e) { } }
+        const blob = new Blob([new Uint8Array(bytes)], { type: "application/pdf" });
+        return URL.createObjectURL(blob);
+    },
+
+    /// Imprime el PDF que está en el iframe. Si el navegador no deja imprimir
+    /// el iframe, abre el PDF en otra pestaña para imprimirlo desde ahí.
+    /// Devuelve false en ese caso, para poder avisarlo.
+    imprimir(id) {
+        const el = document.getElementById(id);
+        if (!el) return false;
+        try {
+            el.contentWindow.focus();
+            el.contentWindow.print();
+            return true;
+        } catch (e) {
+            window.open(el.src, "_blank");
+            return false;
+        }
     }
 };
