@@ -1,4 +1,4 @@
-self.assetsManifest = {
+﻿self.assetsManifest = {
   "assets": [
     {
       "hash": "sha256-gvHfnndfEu1tRf0rFb5988rWq7ITIotOaE8+AMbKYbc=",
@@ -25,7 +25,7 @@ self.assetsManifest = {
       "url": "_framework\/icudt.dat"
     },
     {
-      "hash": "sha256-fGs23FYlttw0icQFHncL\/bm2am9tJRuunk0K1k8pSu4=",
+      "hash": "sha256-YT\/xCrISezOOwiwaI+GXocPO5Pj6QRBjhfOVbvU7sdE=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -113,7 +113,7 @@ self.assetsManifest = {
       "url": "_framework\/Microsoft.JSInterop.WebAssembly.wasm"
     },
     {
-      "hash": "sha256-Ef8Zxeha3itVVIyXcHJSXUdFzFiaHcyd6Zeqiw9nzPQ=",
+      "hash": "sha256-+DPbTe8tAKuDyPRqPA68V7sjTi934S5L+OTjO+QIE64=",
       "url": "_framework\/SIMON_WEB_360.wasm"
     },
     {
@@ -293,7 +293,7 @@ self.assetsManifest = {
       "url": "css\/mci-manual.css"
     },
     {
-      "hash": "sha256-LJDTYGe0II0Qc1imZejqtMSwfz70hdJGZzdazUEhb40=",
+      "hash": "sha256-0R7JYqF7h0WZyxJl+jdWvRPPmHGKa9xNESpGxdn1mik=",
       "url": "css\/tailwind.build.css"
     },
     {
@@ -361,7 +361,7 @@ self.assetsManifest = {
       "url": "Imagenes\/simon.png"
     },
     {
-      "hash": "sha256-xsm4qmXlMHEE05SHM3g0yHGelKqA3iHuZ\/r1cyRanZg=",
+      "hash": "sha256-ElpmkthdLPCA8YE2kHToz5qmk\/CkX3EYj4RGF1AUhyY=",
       "url": "index.html"
     },
     {
@@ -529,5 +529,5 @@ self.assetsManifest = {
       "url": "videos\/Splash_modoClaro.mp4"
     }
   ],
-  "version": "LY8Uq0EM"
+  "version": "KEo1ZpAM"
 };
