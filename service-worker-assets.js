@@ -361,7 +361,7 @@ self.assetsManifest = {
       "url": "Imagenes\/simon.png"
     },
     {
-      "hash": "sha256-xsm4qmXlMHEE05SHM3g0yHGelKqA3iHuZ\/r1cyRanZg=",
+      "hash": "sha256-Kl+8B2lJuiR0ot9EBbeBAtr8NDCIf8fhDyet88ZB\/4Q=",
       "url": "index.html"
     },
     {
