@@ -1,4 +1,4 @@
-﻿self.assetsManifest = {
+self.assetsManifest = {
   "assets": [
     {
       "hash": "sha256-gvHfnndfEu1tRf0rFb5988rWq7ITIotOaE8+AMbKYbc=",
@@ -25,7 +25,7 @@
       "url": "_framework\/icudt.dat"
     },
     {
-      "hash": "sha256-YT\/xCrISezOOwiwaI+GXocPO5Pj6QRBjhfOVbvU7sdE=",
+      "hash": "sha256-wt8JXHoE8q5jeu61CEuOm4W3aiP1mTfofjROJAEYp6c=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -41,7 +41,7 @@
       "url": "_framework\/Microsoft.AspNetCore.Components.Web.wasm"
     },
     {
-      "hash": "sha256-mlFTCiOMhfqEVgOF\/QotFzHXUFydr6o1PwbCE0Dk1ks=",
+      "hash": "sha256-ZdoxIAbXf7kRRaQtApcOTJ2\/LR1WYkhI9rovK6ciA2w=",
       "url": "_framework\/Microsoft.AspNetCore.Components.WebAssembly.wasm"
     },
     {
@@ -49,7 +49,7 @@
       "url": "_framework\/Microsoft.AspNetCore.WebUtilities.wasm"
     },
     {
-      "hash": "sha256-k550LglqQpFVyh6WIdDi5nFaASwHi3JaryUTNQu1wkg=",
+      "hash": "sha256-znkrXyND3W2m\/R4tw76FaWGLS1Nmj6wZCc0DqzFk7bA=",
       "url": "_framework\/Microsoft.Extensions.Configuration.Abstractions.wasm"
     },
     {
@@ -61,7 +61,7 @@
       "url": "_framework\/Microsoft.Extensions.Configuration.Json.wasm"
     },
     {
-      "hash": "sha256-pVv2xMMxsOkrRPaQAeWcaFNj5lnAACoZbJL3zvMMD5c=",
+      "hash": "sha256-FSvFKSprabshRQzJ5PM4k0Ot6YZ9Cb61iuJRObxAB\/s=",
       "url": "_framework\/Microsoft.Extensions.Configuration.wasm"
     },
     {
@@ -113,7 +113,7 @@
       "url": "_framework\/Microsoft.JSInterop.WebAssembly.wasm"
     },
     {
-      "hash": "sha256-+DPbTe8tAKuDyPRqPA68V7sjTi934S5L+OTjO+QIE64=",
+      "hash": "sha256-bsakhG9fE8B1PwsPlGdc6WK+uvd5GOHI\/xYKJZW329g=",
       "url": "_framework\/SIMON_WEB_360.wasm"
     },
     {
@@ -237,7 +237,7 @@
       "url": "appsettings.Development.json"
     },
     {
-      "hash": "sha256-yninmaMTOBv4ue37Uio9P0N+rAnqSpTxlKaMs4cF38I=",
+      "hash": "sha256-Xnafw\/dxOz7ZtiejhrSqmNKN0J8Xtk21\/oYfqmwF2ac=",
       "url": "appsettings.json"
     },
     {
@@ -293,7 +293,7 @@
       "url": "css\/mci-manual.css"
     },
     {
-      "hash": "sha256-0R7JYqF7h0WZyxJl+jdWvRPPmHGKa9xNESpGxdn1mik=",
+      "hash": "sha256-sAzpMQgWqsta2bai7yPBK\/\/0CaR6HK34Qr\/7XmUYzgI=",
       "url": "css\/tailwind.build.css"
     },
     {
@@ -361,7 +361,7 @@
       "url": "Imagenes\/simon.png"
     },
     {
-      "hash": "sha256-ElpmkthdLPCA8YE2kHToz5qmk\/CkX3EYj4RGF1AUhyY=",
+      "hash": "sha256-xsm4qmXlMHEE05SHM3g0yHGelKqA3iHuZ\/r1cyRanZg=",
       "url": "index.html"
     },
     {
@@ -529,5 +529,5 @@
       "url": "videos\/Splash_modoClaro.mp4"
     }
   ],
-  "version": "KEo1ZpAM"
+  "version": "j+lLOTt4"
 };

@@ -214,4 +214,4 @@ self.addEventListener('notificationclick', event => {
         })
     );
 });
-/* Manifest version: KEo1ZpAM */
+/* Manifest version: j+lLOTt4 */
