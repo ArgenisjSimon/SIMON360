@@ -25,7 +25,7 @@
       "url": "_framework\/icudt.dat"
     },
     {
-      "hash": "sha256-Y9ShSCppxkHTD4it1kKn7K963QIUPYnSEO\/4H5qeJbI=",
+      "hash": "sha256-ETZ3LFyU+UZkImmBUfKUFEYbU9O\/OBqdkRpPSJ5YMGg=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -113,7 +113,7 @@
       "url": "_framework\/Microsoft.JSInterop.WebAssembly.wasm"
     },
     {
-      "hash": "sha256-XxoPdSlUm9Bs8\/Qi310vENrMwsYUGXB6ZdbR+Groyt8=",
+      "hash": "sha256-IC3dsIIVnCeUlJUbVybpOrbmlM4TTlqifHnWcKVwoKw=",
       "url": "_framework\/SIMON_WEB_360.wasm"
     },
     {
@@ -189,7 +189,7 @@
       "url": "_framework\/System.ObjectModel.wasm"
     },
     {
-      "hash": "sha256-GT+eemBc3dXug0ympaIJNY5zc7GGmiiAh4TQ2EIi1yM=",
+      "hash": "sha256-kFpDU4m+E066bEw9HnkG5MWDewAZVdEYETx3W2PHHcY=",
       "url": "_framework\/System.Private.CoreLib.wasm"
     },
     {
@@ -205,7 +205,7 @@
       "url": "_framework\/System.Runtime.Serialization.Primitives.wasm"
     },
     {
-      "hash": "sha256-jXnc1qb4fSMf8en8K1+C9MKN9XHpTdBWcvB9oiXdJtM=",
+      "hash": "sha256-MNLMu7aBc4xRc01mif+ZRrBwkO20kmu5+N3LeG0zgM0=",
       "url": "_framework\/System.Runtime.wasm"
     },
     {
@@ -245,7 +245,7 @@
       "url": "appsettings.Development.json"
     },
     {
-      "hash": "sha256-XCe1TKrzjBD7oMrRzBOO1YAaBqTzVhMjKnpzqeDq7pQ=",
+      "hash": "sha256-F84INnQM7JaevHG0I9ZbcK\/YdoXWHhVTcmb6p4fBPFU=",
       "url": "appsettings.json"
     },
     {
@@ -301,7 +301,7 @@
       "url": "css\/mci-manual.css"
     },
     {
-      "hash": "sha256-+BItCUPaaF+245pY3RAK3I7lZLl4N2LoNPWBzx0UEZY=",
+      "hash": "sha256-cEKNgDSo00mMnyERgGta9du50mI6MNfa2KwM1PjCEB4=",
       "url": "css\/tailwind.build.css"
     },
     {
@@ -329,24 +329,12 @@
       "url": "Imagenes\/Imagen1.png"
     },
     {
-      "hash": "sha256-mga\/NjRvEoqZ2pMvjrgl65RAlDa+POCN5NmRwJKyBE0=",
-      "url": "Imagenes\/LogoCreceArroz.png"
-    },
-    {
       "hash": "sha256-Hgq72CjDrCko1pLitBjYjYpRpqwaEDyTWdDAtfSVzSQ=",
       "url": "Imagenes\/Logo-FLAR.png"
     },
     {
       "hash": "sha256-IwagogU9n327GMlpr6xLIUqdQUSfid85FuJJZKxbth4=",
       "url": "Imagenes\/logo-full.png"
-    },
-    {
-      "hash": "sha256-fscSu8+Tc8Uy9eSqshz5DHfe6sMdBVouxUZFFcNv44s=",
-      "url": "Imagenes\/LogoSimon(1).png"
-    },
-    {
-      "hash": "sha256-H1Kho7Qa0NH7+UuT7g7XqugU1yMu5ZYD2GNCGDg6IhE=",
-      "url": "Imagenes\/logosimon.png"
     },
     {
       "hash": "sha256-JNIBeIG+g\/9UNr1bRCEpZoO7r0d7ae6zl2Ro7+5VgEw=",
@@ -357,8 +345,16 @@
       "url": "Imagenes\/logo-sm2.png"
     },
     {
-      "hash": "sha256-IwagogU9n327GMlpr6xLIUqdQUSfid85FuJJZKxbth4=",
-      "url": "Imagenes\/simon.png"
+      "hash": "sha256-mga\/NjRvEoqZ2pMvjrgl65RAlDa+POCN5NmRwJKyBE0=",
+      "url": "Imagenes\/LogoCreceArroz.png"
+    },
+    {
+      "hash": "sha256-H1Kho7Qa0NH7+UuT7g7XqugU1yMu5ZYD2GNCGDg6IhE=",
+      "url": "Imagenes\/logosimon.png"
+    },
+    {
+      "hash": "sha256-fscSu8+Tc8Uy9eSqshz5DHfe6sMdBVouxUZFFcNv44s=",
+      "url": "Imagenes\/LogoSimon(1).png"
     },
     {
       "hash": "sha256-VhHKUPf4XxkjClA95dsQzaxu\/F5pT90ggbjeNT3AfOc=",
@@ -367,6 +363,10 @@
     {
       "hash": "sha256-CCjSH3JZFd2X1ZlVqf43oMF3Af9tiWpjnAF3qSuI0iE=",
       "url": "Imagenes\/simon-tutor.gif"
+    },
+    {
+      "hash": "sha256-IwagogU9n327GMlpr6xLIUqdQUSfid85FuJJZKxbth4=",
+      "url": "Imagenes\/simon.png"
     },
     {
       "hash": "sha256-Kl+8B2lJuiR0ot9EBbeBAtr8NDCIf8fhDyet88ZB\/4Q=",
@@ -525,17 +525,17 @@
       "url": "lib\/xlsx\/xlsx.full.min.js"
     },
     {
-      "hash": "sha256-wGh\/cF3QEhY03wIcYSFKMEw6oeaCdsK8sqasms1REk4=",
-      "url": "manifest.webmanifest"
-    },
-    {
       "hash": "sha256-Y3j9JluobN4c4s48VSulQyUJoR82Xh1vcBy32NOllhk=",
       "url": "manifest-fitness.webmanifest"
+    },
+    {
+      "hash": "sha256-wGh\/cF3QEhY03wIcYSFKMEw6oeaCdsK8sqasms1REk4=",
+      "url": "manifest.webmanifest"
     },
     {
       "hash": "sha256-4CcnBRxox7QRiz4bwzI08xSAEiMe3TwSeEXdlSX6fOs=",
       "url": "videos\/Splash_modoClaro.mp4"
     }
   ],
-  "version": "4u1A0\/eW"
+  "version": "SWP9CBt6"
 };
