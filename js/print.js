@@ -90,6 +90,79 @@ window.simonPrint.printReporte = function (elementId, titulo, orientacion) {
     }
 };
 
+// Imprime UN elemento de la pantalla, con los estilos de la app (Tailwind).
+//
+// window.print() con "body * { visibility:hidden }" oculta el resto de la
+// pantalla pero NO le quita el lugar: el filtro, el menu y la tabla en
+// pantalla siguen ocupando alto y el PDF sale con una o mas hojas en blanco
+// de mas (Listado de validacion por tablon de Don Nacho, 18NOV2026: un
+// reporte de media hoja salia en 2). Aca el elemento va solo, en un iframe,
+// asi que el PDF tiene exactamente lo que mide el reporte.
+//
+// A diferencia de printReporte, copia las hojas de estilo de la pagina: los
+// reportes armados con clases de Tailwind se ven igual que en pantalla, con
+// sus variantes print:. Sale siempre en modo claro (el iframe no tiene la
+// clase "dark").
+window.simonPrint.imprimirElemento = function (elementId, titulo, orientacion) {
+    var el = document.getElementById(elementId);
+    if (!el) return;
+
+    var horizontal = String(orientacion || '').toLowerCase() === 'landscape';
+    var estilos = Array.from(document.querySelectorAll('link[rel="stylesheet"], style'))
+        .map(function (n) {
+            if (n.tagName === 'LINK') return '<link rel="stylesheet" href="' + n.href + '">';
+            return '<style>' + n.textContent + '</style>';
+        }).join('');
+
+    var html = '<!DOCTYPE html><html><head><meta charset="utf-8">'
+        + '<title>' + ((titulo && String(titulo).trim()) || 'SIMON 360') + '</title>'
+        + estilos
+        + '<style>'
+        + '@page{size:' + (horizontal ? 'landscape' : 'portrait') + ';margin:8mm}'
+        + 'html,body{margin:0;padding:0;background:#fff;}'
+        // Anula las reglas de impresion de la pagina (visibility/position):
+        // aca no hay nada que esconder.
+        + '#' + elementId + ',#' + elementId + ' *{visibility:visible!important}'
+        + '#' + elementId + '{position:static!important;border:0!important;box-shadow:none!important;margin:0!important}'
+        + 'tr{page-break-inside:avoid}thead{display:table-header-group}'
+        + '.no-imprimir{display:none!important}'
+        + '.salto-pagina{page-break-before:always}'
+        + 'body{-webkit-print-color-adjust:exact;print-color-adjust:exact;}'
+        + '</style></head><body>'
+        + el.outerHTML
+        + '</body></html>';
+
+    var marco = document.createElement('iframe');
+    marco.setAttribute('aria-hidden', 'true');
+    marco.style.cssText = 'position:fixed;right:0;bottom:0;width:0;height:0;border:0;visibility:hidden;';
+    document.body.appendChild(marco);
+    var win = marco.contentWindow;
+    win.document.open();
+    win.document.write(html);
+    win.document.close();
+
+    var impreso = false;
+    function imprimir() {
+        if (impreso) return;
+        impreso = true;
+        try { win.focus(); win.print(); }
+        catch (e) { alert('No se pudo imprimir: ' + (e && e.message ? e.message : e)); }
+        setTimeout(function () { if (marco.parentNode) marco.parentNode.removeChild(marco); }, 60000);
+    }
+
+    // Esperar las hojas de estilo y las imagenes (el logo); tope 6 s.
+    var pendientes = Array.from(win.document.querySelectorAll('link[rel="stylesheet"], img'))
+        .filter(function (n) { return n.tagName === 'LINK' ? !n.sheet : !n.complete; });
+    if (pendientes.length === 0) { setTimeout(imprimir, 300); return; }
+    var faltan = pendientes.length;
+    pendientes.forEach(function (n) {
+        function listo() { if (--faltan <= 0) setTimeout(imprimir, 200); }
+        n.addEventListener('load', listo);
+        n.addEventListener('error', listo);
+    });
+    setTimeout(imprimir, 6000);
+};
+
 // Comparte la imagen del comprobante usando el panel nativo del SO (Web Share API).
 // En móvil (Android/iOS) abre el selector del sistema: el usuario elige WhatsApp y
 // la imagen llega como foto en la conversación.
