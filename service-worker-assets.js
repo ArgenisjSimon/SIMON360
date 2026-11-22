@@ -1,4 +1,4 @@
-﻿self.assetsManifest = {
+self.assetsManifest = {
   "assets": [
     {
       "hash": "sha256-gvHfnndfEu1tRf0rFb5988rWq7ITIotOaE8+AMbKYbc=",
@@ -25,7 +25,7 @@
       "url": "_framework\/icudt.dat"
     },
     {
-      "hash": "sha256-ETZ3LFyU+UZkImmBUfKUFEYbU9O\/OBqdkRpPSJ5YMGg=",
+      "hash": "sha256-Cj05iOlPY5sVnGDdHMLVRzbS9hlIgnL8fLiPZFoChUE=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -113,7 +113,7 @@
       "url": "_framework\/Microsoft.JSInterop.WebAssembly.wasm"
     },
     {
-      "hash": "sha256-IC3dsIIVnCeUlJUbVybpOrbmlM4TTlqifHnWcKVwoKw=",
+      "hash": "sha256-VYncts\/7AGzSdWBJd2aX9BkXISWF1VCPK31lyO9HR9E=",
       "url": "_framework\/SIMON_WEB_360.wasm"
     },
     {
@@ -189,7 +189,7 @@
       "url": "_framework\/System.ObjectModel.wasm"
     },
     {
-      "hash": "sha256-kFpDU4m+E066bEw9HnkG5MWDewAZVdEYETx3W2PHHcY=",
+      "hash": "sha256-GT+eemBc3dXug0ympaIJNY5zc7GGmiiAh4TQ2EIi1yM=",
       "url": "_framework\/System.Private.CoreLib.wasm"
     },
     {
@@ -205,7 +205,7 @@
       "url": "_framework\/System.Runtime.Serialization.Primitives.wasm"
     },
     {
-      "hash": "sha256-MNLMu7aBc4xRc01mif+ZRrBwkO20kmu5+N3LeG0zgM0=",
+      "hash": "sha256-jXnc1qb4fSMf8en8K1+C9MKN9XHpTdBWcvB9oiXdJtM=",
       "url": "_framework\/System.Runtime.wasm"
     },
     {
@@ -301,7 +301,7 @@
       "url": "css\/mci-manual.css"
     },
     {
-      "hash": "sha256-cEKNgDSo00mMnyERgGta9du50mI6MNfa2KwM1PjCEB4=",
+      "hash": "sha256-T73y069jkolH8iQkWKiAAF879ZI1vgG3UuMOFxjfke8=",
       "url": "css\/tailwind.build.css"
     },
     {
@@ -329,12 +329,24 @@
       "url": "Imagenes\/Imagen1.png"
     },
     {
+      "hash": "sha256-mga\/NjRvEoqZ2pMvjrgl65RAlDa+POCN5NmRwJKyBE0=",
+      "url": "Imagenes\/LogoCreceArroz.png"
+    },
+    {
       "hash": "sha256-Hgq72CjDrCko1pLitBjYjYpRpqwaEDyTWdDAtfSVzSQ=",
       "url": "Imagenes\/Logo-FLAR.png"
     },
     {
       "hash": "sha256-IwagogU9n327GMlpr6xLIUqdQUSfid85FuJJZKxbth4=",
       "url": "Imagenes\/logo-full.png"
+    },
+    {
+      "hash": "sha256-fscSu8+Tc8Uy9eSqshz5DHfe6sMdBVouxUZFFcNv44s=",
+      "url": "Imagenes\/LogoSimon(1).png"
+    },
+    {
+      "hash": "sha256-H1Kho7Qa0NH7+UuT7g7XqugU1yMu5ZYD2GNCGDg6IhE=",
+      "url": "Imagenes\/logosimon.png"
     },
     {
       "hash": "sha256-JNIBeIG+g\/9UNr1bRCEpZoO7r0d7ae6zl2Ro7+5VgEw=",
@@ -345,16 +357,8 @@
       "url": "Imagenes\/logo-sm2.png"
     },
     {
-      "hash": "sha256-mga\/NjRvEoqZ2pMvjrgl65RAlDa+POCN5NmRwJKyBE0=",
-      "url": "Imagenes\/LogoCreceArroz.png"
-    },
-    {
-      "hash": "sha256-H1Kho7Qa0NH7+UuT7g7XqugU1yMu5ZYD2GNCGDg6IhE=",
-      "url": "Imagenes\/logosimon.png"
-    },
-    {
-      "hash": "sha256-fscSu8+Tc8Uy9eSqshz5DHfe6sMdBVouxUZFFcNv44s=",
-      "url": "Imagenes\/LogoSimon(1).png"
+      "hash": "sha256-IwagogU9n327GMlpr6xLIUqdQUSfid85FuJJZKxbth4=",
+      "url": "Imagenes\/simon.png"
     },
     {
       "hash": "sha256-VhHKUPf4XxkjClA95dsQzaxu\/F5pT90ggbjeNT3AfOc=",
@@ -363,10 +367,6 @@
     {
       "hash": "sha256-CCjSH3JZFd2X1ZlVqf43oMF3Af9tiWpjnAF3qSuI0iE=",
       "url": "Imagenes\/simon-tutor.gif"
-    },
-    {
-      "hash": "sha256-IwagogU9n327GMlpr6xLIUqdQUSfid85FuJJZKxbth4=",
-      "url": "Imagenes\/simon.png"
     },
     {
       "hash": "sha256-Kl+8B2lJuiR0ot9EBbeBAtr8NDCIf8fhDyet88ZB\/4Q=",
@@ -473,7 +473,7 @@
       "url": "js\/offlineStore.js"
     },
     {
-      "hash": "sha256-lH2tLizvjZifzna0sqyECdfirtSs6ib+CGR\/fM4e8\/o=",
+      "hash": "sha256-Edc93Vg5020dv+hXrMSXSwOUHO\/8E0VJWwtLazZ8UYw=",
       "url": "js\/print.js"
     },
     {
@@ -525,17 +525,17 @@
       "url": "lib\/xlsx\/xlsx.full.min.js"
     },
     {
-      "hash": "sha256-Y3j9JluobN4c4s48VSulQyUJoR82Xh1vcBy32NOllhk=",
-      "url": "manifest-fitness.webmanifest"
-    },
-    {
       "hash": "sha256-wGh\/cF3QEhY03wIcYSFKMEw6oeaCdsK8sqasms1REk4=",
       "url": "manifest.webmanifest"
+    },
+    {
+      "hash": "sha256-Y3j9JluobN4c4s48VSulQyUJoR82Xh1vcBy32NOllhk=",
+      "url": "manifest-fitness.webmanifest"
     },
     {
       "hash": "sha256-4CcnBRxox7QRiz4bwzI08xSAEiMe3TwSeEXdlSX6fOs=",
       "url": "videos\/Splash_modoClaro.mp4"
     }
   ],
-  "version": "SWP9CBt6"
+  "version": "vZ4HuUYo"
 };

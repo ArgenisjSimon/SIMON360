@@ -107,11 +107,39 @@ window.simonPrint.imprimirElemento = function (elementId, titulo, orientacion) {
     var el = document.getElementById(elementId);
     if (!el) return;
 
+    // iPhone/iPad: el iframe no sirve. Safari de iOS no imprime un iframe
+    // oculto, y ademas el print() sale despues de esperar estilos e imagenes,
+    // fuera del toque del usuario, y lo descarta sin avisar: el boton "no
+    // hacia nada" (Resumen arrime nucleo, 23NOV2026; en la PC si andaba).
+    // Ahi se imprime la pagina, al instante: las paginas que usan esta funcion
+    // traen sus reglas @media print que dejan solo el reporte y esconden
+    // .no-imprimir. Puede sobrar alguna hoja en blanco, pero sale.
+    var esIos = /iPad|iPhone|iPod/.test(navigator.userAgent)
+        || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1); // iPad con iPadOS
+    if (esIos) {
+        try { window.print(); }
+        catch (e) { alert('No se pudo imprimir: ' + (e && e.message ? e.message : e)); }
+        return;
+    }
+
     var horizontal = String(orientacion || '').toLowerCase() === 'landscape';
-    var estilos = Array.from(document.querySelectorAll('link[rel="stylesheet"], style'))
-        .map(function (n) {
-            if (n.tagName === 'LINK') return '<link rel="stylesheet" href="' + n.href + '">';
-            return '<style>' + n.textContent + '</style>';
+    // Las hojas propias van COPIADAS (su texto), no como <link>. El iframe no
+    // lo controla el service worker, asi que un <link> va al servidor cada vez
+    // (no-cache, sin etag): con la senal de la finca tardaba mas que el tope de
+    // 6 s, o no llegaba, y el PDF salia sin Tailwind -Times, logo gigante, sin
+    // bordes- (Resumen arrime nucleo de Don Nacho, 22NOV2026). Copiando el
+    // texto, el estilo es el mismo que ya esta en pantalla y no hace falta red.
+    // Las de un CDN no dejan leer sus reglas (CORS): esas siguen como <link>.
+    var estilos = Array.from(document.styleSheets)
+        .map(function (hoja) {
+            if (hoja.disabled) return '';
+            var media = hoja.media && hoja.media.mediaText ? ' media="' + hoja.media.mediaText + '"' : '';
+            try {
+                var reglas = Array.from(hoja.cssRules).map(function (r) { return r.cssText; }).join('\n');
+                return '<style' + media + '>' + reglas + '</style>';
+            } catch (e) {
+                return hoja.href ? '<link rel="stylesheet" href="' + hoja.href + '"' + media + '>' : '';
+            }
         }).join('');
 
     var html = '<!DOCTYPE html><html><head><meta charset="utf-8">'
