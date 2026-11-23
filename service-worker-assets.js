@@ -25,7 +25,7 @@ self.assetsManifest = {
       "url": "_framework\/icudt.dat"
     },
     {
-      "hash": "sha256-4SVfe9gKDZywi3FRflzRjYvL3YEZkdvIpEosxeGVHAA=",
+      "hash": "sha256-XC4xwRLu8UBBWj6Vq5R1IMOLNasgwFBglHklmZcRK94=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -113,7 +113,7 @@ self.assetsManifest = {
       "url": "_framework\/Microsoft.JSInterop.WebAssembly.wasm"
     },
     {
-      "hash": "sha256-5OQbE2xJNX5iiNs5E23dWjo2WidrRzESTOesOuEtGvw=",
+      "hash": "sha256-qewnY0NLPtJBSIlxObzW64x2jJOyT3RY74Wm4HkVdhU=",
       "url": "_framework\/SIMON_WEB_360.wasm"
     },
     {
@@ -165,7 +165,7 @@ self.assetsManifest = {
       "url": "_framework\/System.Linq.Expressions.wasm"
     },
     {
-      "hash": "sha256-m1N1diYoBEnzOlmb7arHCT8cRoRyeAa5tfBSed9s55k=",
+      "hash": "sha256-Mdffp8z1vUjA5IIOMU80+EH4tA9EnUlUN\/weoNwFUDI=",
       "url": "_framework\/System.Linq.wasm"
     },
     {
@@ -189,7 +189,7 @@ self.assetsManifest = {
       "url": "_framework\/System.ObjectModel.wasm"
     },
     {
-      "hash": "sha256-QuK\/0cQ6tQ7OfFu07mUf0SecAFZrESLqhaECWL4g9Is=",
+      "hash": "sha256-1gX5bbSAGwljr9g0I81NLENTUqy3+P4ivkS387lh1hA=",
       "url": "_framework\/System.Private.CoreLib.wasm"
     },
     {
@@ -205,7 +205,7 @@ self.assetsManifest = {
       "url": "_framework\/System.Runtime.Serialization.Primitives.wasm"
     },
     {
-      "hash": "sha256-nvnloURcetiP\/69h2KwKXuJG2YlSo+tXyu\/cZDOpf\/Y=",
+      "hash": "sha256-PU4w81YIqAKw17bJuuhAymEZJto1U+Wsxe8ub2Xq8aA=",
       "url": "_framework\/System.Runtime.wasm"
     },
     {
@@ -301,7 +301,7 @@ self.assetsManifest = {
       "url": "css\/mci-manual.css"
     },
     {
-      "hash": "sha256-e2n5pppyNVQLb\/sOyQ0IOhHDSwfLnZbeflQrhgwwc9E=",
+      "hash": "sha256-lrAn0W6aCZzvp5mQljZmHJhPYsehBhdkBDQpFMm9pPo=",
       "url": "css\/tailwind.build.css"
     },
     {
@@ -329,12 +329,24 @@ self.assetsManifest = {
       "url": "Imagenes\/Imagen1.png"
     },
     {
+      "hash": "sha256-mga\/NjRvEoqZ2pMvjrgl65RAlDa+POCN5NmRwJKyBE0=",
+      "url": "Imagenes\/LogoCreceArroz.png"
+    },
+    {
       "hash": "sha256-Hgq72CjDrCko1pLitBjYjYpRpqwaEDyTWdDAtfSVzSQ=",
       "url": "Imagenes\/Logo-FLAR.png"
     },
     {
       "hash": "sha256-IwagogU9n327GMlpr6xLIUqdQUSfid85FuJJZKxbth4=",
       "url": "Imagenes\/logo-full.png"
+    },
+    {
+      "hash": "sha256-fscSu8+Tc8Uy9eSqshz5DHfe6sMdBVouxUZFFcNv44s=",
+      "url": "Imagenes\/LogoSimon(1).png"
+    },
+    {
+      "hash": "sha256-H1Kho7Qa0NH7+UuT7g7XqugU1yMu5ZYD2GNCGDg6IhE=",
+      "url": "Imagenes\/logosimon.png"
     },
     {
       "hash": "sha256-JNIBeIG+g\/9UNr1bRCEpZoO7r0d7ae6zl2Ro7+5VgEw=",
@@ -345,16 +357,8 @@ self.assetsManifest = {
       "url": "Imagenes\/logo-sm2.png"
     },
     {
-      "hash": "sha256-mga\/NjRvEoqZ2pMvjrgl65RAlDa+POCN5NmRwJKyBE0=",
-      "url": "Imagenes\/LogoCreceArroz.png"
-    },
-    {
-      "hash": "sha256-H1Kho7Qa0NH7+UuT7g7XqugU1yMu5ZYD2GNCGDg6IhE=",
-      "url": "Imagenes\/logosimon.png"
-    },
-    {
-      "hash": "sha256-fscSu8+Tc8Uy9eSqshz5DHfe6sMdBVouxUZFFcNv44s=",
-      "url": "Imagenes\/LogoSimon(1).png"
+      "hash": "sha256-IwagogU9n327GMlpr6xLIUqdQUSfid85FuJJZKxbth4=",
+      "url": "Imagenes\/simon.png"
     },
     {
       "hash": "sha256-VhHKUPf4XxkjClA95dsQzaxu\/F5pT90ggbjeNT3AfOc=",
@@ -363,10 +367,6 @@ self.assetsManifest = {
     {
       "hash": "sha256-CCjSH3JZFd2X1ZlVqf43oMF3Af9tiWpjnAF3qSuI0iE=",
       "url": "Imagenes\/simon-tutor.gif"
-    },
-    {
-      "hash": "sha256-IwagogU9n327GMlpr6xLIUqdQUSfid85FuJJZKxbth4=",
-      "url": "Imagenes\/simon.png"
     },
     {
       "hash": "sha256-GjTrcSKwgfsLFYnJP8bELblgFHG8pDIbXPjdadlgOHc=",
@@ -529,17 +529,17 @@ self.assetsManifest = {
       "url": "lib\/xlsx\/xlsx.full.min.js"
     },
     {
-      "hash": "sha256-Y3j9JluobN4c4s48VSulQyUJoR82Xh1vcBy32NOllhk=",
-      "url": "manifest-fitness.webmanifest"
-    },
-    {
       "hash": "sha256-wGh\/cF3QEhY03wIcYSFKMEw6oeaCdsK8sqasms1REk4=",
       "url": "manifest.webmanifest"
+    },
+    {
+      "hash": "sha256-Y3j9JluobN4c4s48VSulQyUJoR82Xh1vcBy32NOllhk=",
+      "url": "manifest-fitness.webmanifest"
     },
     {
       "hash": "sha256-4CcnBRxox7QRiz4bwzI08xSAEiMe3TwSeEXdlSX6fOs=",
       "url": "videos\/Splash_modoClaro.mp4"
     }
   ],
-  "version": "DCAro+ei"
+  "version": "PdzRQWbR"
 };
