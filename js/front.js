@@ -187,6 +187,17 @@
 
     window.getScreenWidth = () => window.innerWidth;
 
+    // Mantiene a la vista la fila marcada con el teclado en una lista desplegable (buscadores).
+    // 'nearest': si ya se ve, no mueve nada; solo corre la lista lo justo.
+    window.verEnLista = (id) => { document.getElementById(id)?.scrollIntoView({ block: 'nearest' }); };
+
+    // Abre un documento HTML en una ventana aparte (lista de picking de la ODP) para imprimirlo sin el menú ni la página detrás.
+    window.oppAbrirImpresion = (html) => {
+        const w = window.open('', '_blank');
+        if (!w) { alert('El navegador bloqueó la ventana de impresión: permita ventanas emergentes para este sitio.'); return; }
+        w.document.open(); w.document.write(html); w.document.close();
+    };
+
     document.addEventListener("DOMContentLoaded", () => {
         document.querySelectorAll("[id^='carousel-']").forEach((carousel) => {
             let isDown = false, startX, scrollLeft;
