@@ -116,6 +116,16 @@
     carousel.scrollTo({left: carousel.scrollLeft + (direction * cardWidth), behavior: 'smooth' });
     };
 
+    // Desliza la barra de chips de categorías del Home (las flechas ‹ ›).
+    // Solo hace falta en pantallas angostas: en escritorio los chips bajan
+    // de línea y no hay nada que deslizar. Avanza casi un ancho de barra,
+    // así el último chip visible queda a la vista como referencia.
+    window.desplazarChipsCategorias = (direccion) => {
+        const barra = document.getElementById('chips-categorias');
+        if (!barra) return;
+        barra.scrollBy({ left: direccion * barra.clientWidth * 0.8, behavior: 'smooth' });
+    };
+
     window.scrollToSection = (index) => {
         const element = document.getElementById(`section-${index}`);
     element?.scrollIntoView({behavior: "smooth", block: "start" });
